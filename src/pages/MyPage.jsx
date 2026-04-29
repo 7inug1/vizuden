@@ -11,6 +11,7 @@ import { STORAGE_KEYS, ensureGuestSessionId, getStoredBoolean, setStoredBoolean 
 import { readPrescriptionHistory, readPrescriptionSaved } from '../lib/prescriptionStorage';
 import { getConsultingPreview } from '../lib/consultingIntake';
 import { isAdminUser } from '../lib/admin';
+import { useReportStatus } from '../hooks/useReportStatus';
 
 const PAGE_SIZE = 5;
 
@@ -50,6 +51,7 @@ export default function MyPage() {
   const navigate = useNavigate();
   const { user, session, isGuest } = useAuth();
   const { nickname, setNickname } = useNickname();
+  const { dbPrescriptions, dbTypeHistory } = useReportStatus();
   const [typeHistory, setTypeHistory] = useState([]);
   const [prescriptionHistory, setPrescriptionHistory] = useState([]);
   const [consultingHistory, setConsultingHistory] = useState([]);
@@ -64,28 +66,57 @@ export default function MyPage() {
   const nickRef = useRef(null);
 
   useEffect(() => {
+    let localType = [];
     try {
-      // 히스토리 배열 우선, 없으면 단건에서 마이그레이션
       const raw = JSON.parse(localStorage.getItem('vizuden_type_history') || '[]');
       if (Array.isArray(raw) && raw.length > 0) {
-        setTypeHistory(raw.filter((e) => e?.code && types[e.code]));
+        localType = raw.filter((e) => e?.code && types[e.code]);
       } else {
         const single = JSON.parse(localStorage.getItem('vizuden_type'));
-        if (single?.code && types[single.code]) {
-          setTypeHistory([single]);
-        }
+        if (single?.code && types[single.code]) localType = [single];
       }
     } catch {}
+    setTypeHistory(localType);
+
+    let localPrescription = [];
     try {
       const rawPrescription = readPrescriptionHistory();
       if (Array.isArray(rawPrescription) && rawPrescription.length > 0) {
-        setPrescriptionHistory(rawPrescription.filter((entry) => entry?.reportId && entry?.savedAt));
+        localPrescription = rawPrescription.filter((entry) => entry?.reportId && entry?.savedAt);
       } else {
         const single = readPrescriptionSaved();
-        if (single?.reportId && single?.savedAt) setPrescriptionHistory([single]);
+        if (single?.reportId && single?.savedAt) localPrescription = [single];
       }
     } catch {}
+    setPrescriptionHistory(localPrescription);
   }, []);
+
+  // DB 데이터로 병합 (로그인 사용자, 새 기기 대응)
+  useEffect(() => {
+    if (dbTypeHistory && dbTypeHistory.length > 0) {
+      const dbEntries = dbTypeHistory
+        .filter((r) => r.code && types[r.code])
+        .map((r) => ({ code: r.code, savedAt: new Date(r.createdAt).getTime() }));
+      setTypeHistory(dbEntries);
+    }
+  }, [dbTypeHistory]);
+
+  useEffect(() => {
+    if (!dbPrescriptions) return;
+    const dbEntries = dbPrescriptions.map((r) => ({
+      reportId: r.id,
+      title: r.title,
+      preview: r.preview,
+      savedAt: new Date(r.createdAt).getTime(),
+      fromType: null,
+    }));
+    if (dbEntries.length === 0) return;
+    setPrescriptionHistory((prev) => {
+      const dbIds = new Set(dbEntries.map((e) => e.reportId));
+      const localOnly = prev.filter((e) => !dbIds.has(e.reportId));
+      return [...dbEntries, ...localOnly].sort((a, b) => b.savedAt - a.savedAt);
+    });
+  }, [dbPrescriptions]);
 
   useEffect(() => {
     let cancelled = false;

@@ -16,6 +16,8 @@ function readLocalStatus() {
 export function useReportStatus() {
   const { user, session, loading: authLoading } = useAuth();
   const [status, setStatus] = useState(() => readLocalStatus());
+  const [dbPrescriptions, setDbPrescriptions] = useState(null);
+  const [dbTypeHistory, setDbTypeHistory] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -45,6 +47,8 @@ export function useReportStatus() {
             reportId: data?.prescription?.reportId || local.prescription.reportId || null,
           },
         });
+        setDbPrescriptions(Array.isArray(data?.prescriptions) ? data.prescriptions : null);
+        setDbTypeHistory(Array.isArray(data?.typeHistory) ? data.typeHistory : null);
       })
       .catch(() => {
         if (!cancelled) setStatus(local);
@@ -61,8 +65,10 @@ export function useReportStatus() {
   return useMemo(
     () => ({
       prescription: status.prescription,
+      dbPrescriptions,
+      dbTypeHistory,
       loading: authLoading || loading,
     }),
-    [authLoading, loading, status]
+    [authLoading, loading, status, dbPrescriptions, dbTypeHistory]
   );
 }
