@@ -243,13 +243,15 @@ export const QUESTIONS = [
     id: 'desiredChange',
     type: 'checkbox',
     heading: '어떤 변화를 가장 먼저\n체감하고 싶나요?',
-    hint: '가장 필요한 변화를 골라주세요',
+    hint: '해당되는 것을 모두 골라주세요',
+    hasOther: true,
     options: [
       { id: 'easy_coord', label: '코디가 매일 자연스럽게 되는 것' },
       { id: 'body_fit', label: '체형이 더 좋아 보이게 입는 것' },
       { id: 'shopping_rule', label: '쇼핑할 때 기준이 생기는 것' },
       { id: 'grooming', label: '헤어와 그루밍이 정리되는 것' },
       { id: 'upgrade', label: '전체적으로 스타일이 올라가는 것' },
+      { id: 'other', label: '기타' },
     ],
   },
   {
