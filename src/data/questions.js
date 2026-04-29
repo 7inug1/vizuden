@@ -1,0 +1,118 @@
+// 12문항: A = 첫 번째 축 방향, B = 두 번째 축 방향
+// axis: 어느 축에 해당하는지
+// scoreA: A 선택 시 증가하는 점수 키
+
+export const questions = [
+  // 축 1 — 동기 (I ↔ R)
+  {
+    id: 1,
+    text: '거울 앞에서 옷을 고를 때 가장 오래 생각하는 건?',
+    optionA: '지금 내 기분이나 상태에 맞는지',
+    optionB: '오늘 만날 사람들 눈에 어떻게 보일지',
+    axis: 'motivation',
+    scoreA: 'I',
+    scoreB: 'R',
+  },
+  {
+    id: 2,
+    text: '새 옷을 샀는데 아무도 알아봐주지 않았다. 어떤가?',
+    optionA: '내가 마음에 들면 충분하다',
+    optionB: '좀 아쉽다. 알아봐줬으면 좋겠다',
+    axis: 'motivation',
+    scoreA: 'I',
+    scoreB: 'R',
+  },
+  {
+    id: 3,
+    text: '옷을 입고 나서 "오늘 잘 입었다"고 느낄 때는?',
+    optionA: '내가 딱 입고 싶었던 걸 입고 나왔을 때',
+    optionB: '그날 만났던 사람들 사이에서 잘 어울렸다고 느낄 때',
+    axis: 'motivation',
+    scoreA: 'I',
+    scoreB: 'R',
+  },
+  // 축 2 — 방향성 (C ↔ D)
+  {
+    id: 4,
+    text: '내 옷장을 보면?',
+    optionA: '비슷한 톤과 스타일이 반복된다',
+    optionB: '다양한 스타일이 섞여 있다',
+    axis: 'orientation',
+    scoreA: 'C',
+    scoreB: 'D',
+  },
+  {
+    id: 5,
+    text: '새 스타일을 시도했다가 잘 안 됐을 때 보통 어떻게 되나?',
+    optionA: '역시 내 스타일대로 입는 게 낫다고 생각한다',
+    optionB: '아쉽지만, 다음엔 다른 걸 또 시도해보고 싶어진다',
+    axis: 'orientation',
+    scoreA: 'C',
+    scoreB: 'D',
+  },
+  {
+    id: 6,
+    text: '마음에 드는 스타일을 발견했을 때?',
+    optionA: '내 기존 스타일과 맞는지 먼저 본다',
+    optionB: '일단 시도해보고 싶다',
+    axis: 'orientation',
+    scoreA: 'C',
+    scoreB: 'D',
+  },
+  // 축 3 — 에너지 (M ↔ E)
+  {
+    id: 7,
+    text: '지금 내 옷장에서 자주 입는 옷들의 구성은?',
+    optionA: '몇 가지 기본 아이템이 대부분을 차지한다',
+    optionB: '상황마다 다른 아이템들이 꽤 다양하게 있다',
+    axis: 'energy',
+    scoreA: 'M',
+    scoreB: 'E',
+  },
+  {
+    id: 8,
+    text: '코디할 때 만족감을 느끼는 순간은?',
+    optionA: '군더더기 없이 딱 맞아떨어질 때',
+    optionB: '레이어링해서 입거나 디테일이 잘 살아날 때',
+    axis: 'energy',
+    scoreA: 'M',
+    scoreB: 'E',
+  },
+  {
+    id: 9,
+    text: '쇼핑 중에 더 피곤하게 느껴지는 상황은?',
+    optionA: '고를 것이 너무 많아서 뭘 골라야 할지 모를 때',
+    optionB: '선택지가 다 비슷비슷하고 새로운 게 없을 때',
+    axis: 'energy',
+    scoreA: 'M',
+    scoreB: 'E',
+  },
+  // 축 4 — 시간성 (T ↔ N)
+  {
+    id: 10,
+    text: '10년 전에 샀던 옷을 지금도 꺼내 입을 수 있다면?',
+    optionA: '뿌듯하다. 그게 진짜 좋은 옷이다',
+    optionB: '그때는 그때, 지금은 지금이다',
+    axis: 'temporality',
+    scoreA: 'T',
+    scoreB: 'N',
+  },
+  {
+    id: 11,
+    text: '쇼핑할 때 더 끌리는 것은?',
+    optionA: '오래도록 질리지 않을 것',
+    optionB: '지금 이 계절, 이 순간에 맞는 것',
+    axis: 'temporality',
+    scoreA: 'T',
+    scoreB: 'N',
+  },
+  {
+    id: 12,
+    text: '지금 유행하는 스타일이 내 취향과 다를 때 어떻게 되나?',
+    optionA: '유행이어도 내 기준에 맞지 않으면 그냥 넘긴다',
+    optionB: '한번쯤 시도해본다. 잘 맞으면 내 것으로 만들 수 있으니까',
+    axis: 'temporality',
+    scoreA: 'T',
+    scoreB: 'N',
+  },
+];

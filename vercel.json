@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/((?!api/|characters/|@|node_modules/|src/).*)", "destination": "/index.html" }
+  ]
+}
