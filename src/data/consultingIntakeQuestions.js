@@ -277,6 +277,28 @@ export const QUESTIONS = [
     ],
   },
   {
+    id: 'contactMethod',
+    type: 'radio',
+    heading: '어디로 연락드리면 될까요?',
+    autoAdvance: true,
+    options: [
+      { id: 'kakao', label: '카카오톡' },
+      { id: 'instagram', label: '인스타그램' },
+      { id: 'email', label: '이메일' },
+    ],
+  },
+  {
+    id: 'contactHandle',
+    type: 'text',
+    heading: '연락 가능한 아이디나\n주소를 알려주세요',
+    placeholderMap: {
+      kakao: '카카오톡 ID를 입력해주세요',
+      instagram: '@인스타그램 아이디를 입력해주세요',
+      email: '이메일 주소를 입력해주세요',
+    },
+    placeholder: '아이디 또는 주소',
+  },
+  {
     id: 'finalNote',
     type: 'text',
     heading: '세션에 꼭 반영됐으면\n하는 게 있나요?',
