@@ -1,42 +1,82 @@
 export const STORAGE_KEYS = {
   authRedirect: 'vizuden_auth_redirect',
+  consultingAccessCode: 'vizuden_consulting_access_code',
   guestSessionId: 'vizuden_guest_session_id',
   guestMode: 'vizuden_guest_mode',
   nickname: 'vizuden_nickname',
   nicknamePromptVisits: 'vizuden_home_visits_without_nickname',
   noticeDismissed: 'vizuden_notice_dismissed_v2',
   onboardingDone: 'vizuden_onboarding_done',
+  prescriptionAccessCode: 'vizuden_access_code',
   trackingSessionId: 'vizuden_tracking_session_id',
   welcomeDone: 'vizuden_welcome_done',
 };
 
+function safeGetStorage() {
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
+function safeGetSessionStorage() {
+  try {
+    return window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
+
 export function getStoredBoolean(key) {
-  return localStorage.getItem(key) === 'true';
+  const storage = safeGetStorage();
+  return storage?.getItem(key) === 'true';
 }
 
 export function setStoredBoolean(key, value) {
-  localStorage.setItem(key, value ? 'true' : 'false');
+  const storage = safeGetStorage();
+  storage?.setItem(key, value ? 'true' : 'false');
 }
 
 export function removeStoredValue(key) {
-  localStorage.removeItem(key);
+  const storage = safeGetStorage();
+  storage?.removeItem(key);
 }
 
 export function getStoredCount(key, fallback = 0) {
-  const value = parseInt(localStorage.getItem(key) ?? '', 10);
+  const storage = safeGetStorage();
+  const value = parseInt(storage?.getItem(key) ?? '', 10);
   return Number.isNaN(value) ? fallback : value;
 }
 
 export function setStoredCount(key, value) {
-  localStorage.setItem(key, String(value));
+  const storage = safeGetStorage();
+  storage?.setItem(key, String(value));
 }
 
 export function getStoredString(key) {
-  return localStorage.getItem(key);
+  const storage = safeGetStorage();
+  return storage?.getItem(key) ?? null;
 }
 
 export function setStoredString(key, value) {
-  localStorage.setItem(key, value);
+  const storage = safeGetStorage();
+  storage?.setItem(key, value);
+}
+
+export function getStoredSessionString(key) {
+  const storage = safeGetSessionStorage();
+  return storage?.getItem(key) ?? null;
+}
+
+export function setStoredSessionString(key, value) {
+  const storage = safeGetSessionStorage();
+  storage?.setItem(key, value);
+}
+
+export function removeStoredSessionValue(key) {
+  const storage = safeGetSessionStorage();
+  storage?.removeItem(key);
 }
 
 export function ensureGuestSessionId() {
@@ -50,15 +90,11 @@ export function ensureGuestSessionId() {
 }
 
 export function ensureTrackingSessionId() {
-  try {
-    const existing = sessionStorage.getItem(STORAGE_KEYS.trackingSessionId);
-    if (existing) return existing;
-    const next = typeof crypto !== 'undefined' && crypto.randomUUID
-      ? crypto.randomUUID()
-      : `session_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-    sessionStorage.setItem(STORAGE_KEYS.trackingSessionId, next);
-    return next;
-  } catch {
-    return ensureGuestSessionId();
-  }
+  const existing = getStoredSessionString(STORAGE_KEYS.trackingSessionId);
+  if (existing) return existing;
+  const next = typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `session_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+  setStoredSessionString(STORAGE_KEYS.trackingSessionId, next);
+  return getStoredSessionString(STORAGE_KEYS.trackingSessionId) ?? ensureGuestSessionId();
 }

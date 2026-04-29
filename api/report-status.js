@@ -25,32 +25,52 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const { data, error } = await supabase
-      .from("reports")
-      .select("id, kind, created_at")
-      .eq("user_id", user.id)
-      .in("kind", ["prescription", "identity"])
-      .order("created_at", { ascending: false });
+    const [{ data: reportsData, error }, { data: typeData }] = await Promise.all([
+      supabase
+        .from("reports")
+        .select("id, kind, title, created_at, free")
+        .eq("user_id", user.id)
+        .in("kind", ["prescription", "identity"])
+        .order("created_at", { ascending: false }),
+      supabase
+        .from("type_completions")
+        .select("type_code, created_at")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false }),
+    ]);
 
     if (error) throw error;
 
     const latestByKind = { prescription: null, identity: null };
-    for (const row of data ?? []) {
+    for (const row of reportsData ?? []) {
       if (!row?.kind || latestByKind[row.kind]) continue;
       latestByKind[row.kind] = row.id;
     }
 
-    const prescription = {
-      done: Boolean(latestByKind.prescription),
-      reportId: latestByKind.prescription,
-    };
+    const prescriptions = (reportsData ?? [])
+      .filter((r) => r.kind === "prescription")
+      .map((r) => ({
+        id: r.id,
+        title: r.title ?? null,
+        preview: r.free?.direction ?? null,
+        createdAt: r.created_at,
+      }));
+
+    const typeHistory = (typeData ?? [])
+      .filter((r) => r.type_code)
+      .map((r) => ({ code: r.type_code, createdAt: r.created_at }));
 
     return res.status(200).json({
-      prescription,
+      prescription: {
+        done: Boolean(latestByKind.prescription),
+        reportId: latestByKind.prescription,
+      },
       identity: {
         done: Boolean(latestByKind.identity),
         reportId: latestByKind.identity,
       },
+      prescriptions,
+      typeHistory,
     });
   } catch (error) {
     console.error("report-status error:", error);

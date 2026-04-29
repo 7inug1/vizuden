@@ -5,9 +5,22 @@ import {
   getStoredBoolean,
   getStoredString,
   removeStoredValue,
+  removeStoredSessionValue,
   setStoredBoolean,
   setStoredString,
 } from '../lib/storage';
+
+function migrateGuestData(accessToken, guestSessionId) {
+  if (!guestSessionId) return;
+  fetch('/api/migrate-guest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ guestSessionId }),
+  }).catch(() => {});
+}
 
 const AuthContext = createContext(null);
 
@@ -38,6 +51,9 @@ export function AuthProvider({ children }) {
       setSession(nextSession ?? null);
       setUser(nextSession?.user ?? null);
       if (nextSession?.user) {
+        if (_event === 'SIGNED_IN') {
+          migrateGuestData(nextSession.access_token, getStoredString(STORAGE_KEYS.guestSessionId));
+        }
         removeStoredValue(STORAGE_KEYS.guestMode);
         setIsGuest(false);
       }
@@ -96,6 +112,10 @@ export function AuthProvider({ children }) {
 
   async function signOut() {
     clearGuestMode();
+    removeStoredValue(STORAGE_KEYS.authRedirect);
+    removeStoredSessionValue(STORAGE_KEYS.prescriptionAccessCode);
+    removeStoredSessionValue(STORAGE_KEYS.consultingAccessCode);
+    removeStoredSessionValue(STORAGE_KEYS.trackingSessionId);
     if (!supabase) return;
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
