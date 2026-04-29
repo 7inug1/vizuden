@@ -16,9 +16,9 @@ export const QUESTIONS = [
   },
   {
     id: 'reference',
-    type: 'radio',
+    type: 'checkbox',
     heading: '어떤 식으로 스타일\n레퍼런스를 찾는 편인가요?',
-    hint: '가장 가까운 것을 골라주세요',
+    hint: '해당되는 것을 모두 골라주세요',
     optional: true,
     hasOther: true,
     options: [
