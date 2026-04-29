@@ -1107,6 +1107,9 @@ export default function PrescriptionPage() {
     if (!q || currentQuestionIndex === -1) return false;
     if (q.optional) return true;
     if (q.type === 'text' || q.type === 'influencer') return textAnswers[currentQuestionIndex].trim().length > 0;
+    if (q.type === 'birthdate') {
+      try { return /^\d{4}$/.test(JSON.parse(textAnswers[currentQuestionIndex] || '{}').year); } catch { return false; }
+    }
     if (q.type === 'fitpic') return fitPics.length > 0;
     return answers[currentQuestionIndex].selectedIds.length > 0;
   }
