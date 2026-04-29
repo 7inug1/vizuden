@@ -231,12 +231,6 @@ export const QUESTIONS = [
     ],
   },
   {
-    id: 'birthdate',
-    type: 'birthdate',
-    heading: '생년월일을\n알려주세요',
-    hint: '연령대와 라이프 스테이지를 고려해 세션 방향을 잡습니다. 월·일은 선택 사항입니다.',
-  },
-  {
     id: 'instagram',
     type: 'text',
     heading: '인스타그램 계정이\n있다면 알려주세요',
