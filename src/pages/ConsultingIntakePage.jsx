@@ -645,6 +645,36 @@ function ConsentScreen({ consents, onToggle, onSubmit, onBack, stepIdx, total })
   );
 }
 
+function LoginGateScreen({ onLogin }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="flex-1 flex flex-col justify-center py-8"
+    >
+      <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">03 VISUAL CONSULTING</p>
+      <h2
+        className="text-2xl font-light text-stone-900 leading-tight mb-4"
+        style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
+      >
+        컨설팅 신청은<br />로그인이 필요해요
+      </h2>
+      <p className="text-sm text-stone-500 leading-relaxed mb-10">
+        일정 조율과 신청 내역 보존을 위해<br />
+        계정이 필요합니다.
+      </p>
+      <button
+        onClick={onLogin}
+        className="w-full py-4 bg-stone-900 text-stone-50 text-sm tracking-widest uppercase
+          hover:bg-stone-800 active:bg-stone-700 transition-colors duration-200"
+      >
+        로그인 / 회원가입
+      </button>
+    </motion.div>
+  );
+}
+
 function DoneScreen({ onHome, onMyPage, user }) {
   return (
     <motion.div
@@ -818,7 +848,7 @@ function resolveQuestion(question, answers) {
 
 export default function ConsultingIntakePage() {
   const navigate = useNavigate();
-  const { session } = useAuth();
+  const { user, session, loading: authLoading } = useAuth();
   const { prescription, loading: statusLoading } = useReportStatus();
   const guestSessionId = ensureGuestSessionId();
   const storedCode = (() => { try { return sessionStorage.getItem('vizuden_consulting_access_code') || ''; } catch { return ''; } })();
@@ -1079,9 +1109,23 @@ export default function ConsultingIntakePage() {
   const isLast = stepIdx === totalSteps - 1;
   const canRenderQuestions = phase === 'questions' && currentQ;
 
+  const showLoginGate = !authLoading && !user;
+
   return (
     <div className="min-h-screen flex flex-col items-center px-6" style={{ backgroundColor: '#F5F2ED' }}>
-      {isBlocked ? (
+      {showLoginGate ? (
+        <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
+          <SiteHeader onLogoClick={() => navigate('/home')} />
+          <LoginGateScreen
+            onLogin={() => navigate('/auth', { state: { nextPath: '/consulting/intake' } })}
+          />
+          <div className="text-center py-8 mt-auto">
+            <p className="text-xs text-stone-400 tracking-widest uppercase">
+              &copy; {new Date().getFullYear()} VIZUDEN
+            </p>
+          </div>
+        </div>
+      ) : isBlocked ? (
         <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
           <SiteHeader onLogoClick={() => navigate('/home')} />
           <PrerequisiteScreen
@@ -1131,19 +1175,28 @@ export default function ConsultingIntakePage() {
                 />
               )}
 
-              {canRenderQuestions && currentQ.type === 'text' && (
-                <TextQuestion
-                  question={currentQ}
-                  stepIdx={stepIdx}
-                  total={totalFlowSteps}
-                  value={textAnswers[currentQuestionIndex]}
-                  onChange={handleTextChange}
-                  onNext={handleNext}
-                  onBack={handleBack}
-                  direction={direction}
-                  isLast={isLast}
-                />
-              )}
+              {canRenderQuestions && currentQ.type === 'text' && (() => {
+                let resolvedQuestion = currentQ;
+                if (currentQ.id === 'contactHandle' && currentQ.placeholderMap) {
+                  const methodIdx = findQuestionIndex('contactMethod');
+                  const selectedMethod = methodIdx !== -1 ? (answers[methodIdx]?.selectedIds?.[0] ?? null) : null;
+                  const dynamicPlaceholder = selectedMethod ? (currentQ.placeholderMap[selectedMethod] ?? currentQ.placeholder) : currentQ.placeholder;
+                  resolvedQuestion = { ...currentQ, placeholder: dynamicPlaceholder };
+                }
+                return (
+                  <TextQuestion
+                    question={resolvedQuestion}
+                    stepIdx={stepIdx}
+                    total={totalFlowSteps}
+                    value={textAnswers[currentQuestionIndex]}
+                    onChange={handleTextChange}
+                    onNext={handleNext}
+                    onBack={handleBack}
+                    direction={direction}
+                    isLast={isLast}
+                  />
+                );
+              })()}
 
               {canRenderQuestions && currentQ.type === 'birthdate' && (
                 <BirthdateQuestion
