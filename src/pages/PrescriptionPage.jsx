@@ -1243,6 +1243,19 @@ export default function PrescriptionPage() {
           />
         )}
 
+        {phase === 'questions' && currentQ && currentQ.type === 'birthdate' && (
+          <BirthdateQuestion
+            question={currentQ}
+            stepIdx={stepIdx}
+            total={totalSteps}
+            value={textAnswers[currentQuestionIndex] ?? ''}
+            onChange={handleTextChange}
+            onNext={handleNext}
+            onBack={handleBack}
+            direction={direction}
+          />
+        )}
+
         {phase === 'questions' && currentQ && currentQ.type === 'fitpic' && (
           <FitPicQuestion
             question={currentQ}
