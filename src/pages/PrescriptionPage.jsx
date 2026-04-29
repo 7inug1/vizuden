@@ -1137,6 +1137,13 @@ export default function PrescriptionPage() {
       const formattedAnswers = QUESTIONS.map((q, i) => {
         if (!shouldShowQuestion(q, answers)) return null;
         if (q.type === 'text') return { question: q.heading, answer: textAnswers[i] };
+        if (q.type === 'birthdate') {
+          try {
+            const { year, month, day } = JSON.parse(textAnswers[i] || '{}');
+            const parts = [year, month ? `${month}월` : null, day ? `${day}일` : null].filter(Boolean);
+            return { question: q.heading, answer: parts.length ? parts.join(' ') : '' };
+          } catch { return { question: q.heading, answer: '' }; }
+        }
         if (q.type === 'fitpic') return { question: q.heading, answer: fitPics.length ? `사진 ${fitPics.length}장 첨부` : '' };
         const resolvedQ = resolveQuestion(q, answers);
         return { question: q.heading, selected: resolveLabels(resolvedQ, answers[i].selectedIds), other: answers[i].otherText };
