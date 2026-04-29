@@ -172,6 +172,12 @@ export const QUESTIONS = [
     hint: '핏과 비율 조언에 반영됩니다',
   },
   {
+    id: 'birthdate',
+    type: 'birthdate',
+    heading: '생년월일을\n알려주세요',
+    hint: '연령대와 라이프 스테이지를 고려해 처방 방향을 잡습니다. 월·일은 선택 사항입니다.',
+  },
+  {
     id: 'weight',
     type: 'text',
     inputType: 'number',
