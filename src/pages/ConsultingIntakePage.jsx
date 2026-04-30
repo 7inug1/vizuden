@@ -848,7 +848,7 @@ function resolveQuestion(question, answers) {
 
 export default function ConsultingIntakePage() {
   const navigate = useNavigate();
-  const { user, session, loading: authLoading } = useAuth();
+  const { user, session } = useAuth();
   const { prescription, loading: statusLoading } = useReportStatus();
   const guestSessionId = ensureGuestSessionId();
   const storedCode = (() => { try { return sessionStorage.getItem('vizuden_consulting_access_code') || ''; } catch { return ''; } })();
@@ -1108,23 +1108,9 @@ export default function ConsultingIntakePage() {
 
   const isLast = stepIdx === totalSteps - 1;
   const canRenderQuestions = phase === 'questions' && currentQ;
-  const showLoginGate = !authLoading && !user;
-
   return (
     <div className="min-h-screen flex flex-col items-center px-6" style={{ backgroundColor: '#F5F2ED' }}>
-      {showLoginGate ? (
-        <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
-          <SiteHeader onLogoClick={() => navigate('/home')} />
-          <LoginGateScreen
-            onLogin={() => navigate('/auth', { state: { nextPath: '/consulting/intake' } })}
-          />
-          <div className="text-center py-8 mt-auto">
-            <p className="text-xs text-stone-400 tracking-widest uppercase">
-              &copy; {new Date().getFullYear()} VIZUDEN
-            </p>
-          </div>
-        </div>
-      ) : isBlocked ? (
+      {isBlocked ? (
         <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
           <SiteHeader onLogoClick={() => navigate('/home')} />
           <PrerequisiteScreen
