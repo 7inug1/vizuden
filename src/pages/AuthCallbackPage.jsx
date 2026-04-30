@@ -20,12 +20,25 @@ export default function AuthCallbackPage() {
       const code = url.searchParams.get('code');
 
       if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (error) {
-          setMessage('로그인 확인에 실패했습니다.');
-          setTimeout(() => navigate('/auth', { replace: true }), 1200);
-          return;
+        await supabase.auth.exchangeCodeForSession(code);
+      }
+
+      // AuthContext가 세션 변경을 반영하기 전에 보호 라우트가 먼저 돌면 /auth로 튕길 수 있다.
+      // 실제 세션이 잡힐 때까지 짧게 대기한 뒤 이동한다.
+      let resolvedSession = null;
+      for (let i = 0; i < 10; i += 1) {
+        const { data } = await supabase.auth.getSession();
+        if (data.session) {
+          resolvedSession = data.session;
+          break;
         }
+        await new Promise((resolve) => window.setTimeout(resolve, 120));
+      }
+
+      if (!resolvedSession) {
+        setMessage('로그인 확인에 시간이 조금 더 필요합니다. 다시 시도해주세요.');
+        setTimeout(() => navigate('/auth', { replace: true }), 1200);
+        return;
       }
 
       const redirect = consumePostAuthRedirect() || '/home';
@@ -44,4 +57,3 @@ export default function AuthCallbackPage() {
     </div>
   );
 }
-
