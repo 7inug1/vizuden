@@ -1,58 +1,61 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 
 export default function AuthCallbackPage() {
   const navigate = useNavigate();
-  const { consumePostAuthRedirect, isSupabaseConfigured } = useAuth();
-  const [message, setMessage] = useState('로그인 정보를 확인하고 있습니다...');
+  const { consumePostAuthRedirect, isSupabaseConfigured, user, loading } = useAuth();
+  const [timedOut, setTimedOut] = useState(false);
+  const redirectPathRef = useRef(null);
+  const didNavigateRef = useRef(false);
 
+  // redirect path를 마운트 시점에 한 번만 소비
   useEffect(() => {
-    async function resolveAuth() {
-      if (!isSupabaseConfigured || !supabase) {
-        setMessage('Supabase 인증 설정이 없어 홈으로 이동합니다.');
-        setTimeout(() => navigate('/home', { replace: true }), 800);
-        return;
-      }
+    redirectPathRef.current = consumePostAuthRedirect() || '/home';
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get('code');
+  // AuthContext에 user가 세팅되면 이동 — ProtectedRoute 타이밍 문제 방지
+  useEffect(() => {
+    if (!loading && user && !didNavigateRef.current) {
+      didNavigateRef.current = true;
+      navigate(redirectPathRef.current || '/home', { replace: true });
+    }
+  }, [loading, user, navigate]);
 
-      if (code) {
-        await supabase.auth.exchangeCodeForSession(code);
-      }
-
-      // AuthContext가 세션 변경을 반영하기 전에 보호 라우트가 먼저 돌면 /auth로 튕길 수 있다.
-      // 실제 세션이 잡힐 때까지 짧게 대기한 뒤 이동한다.
-      let resolvedSession = null;
-      for (let i = 0; i < 10; i += 1) {
-        const { data } = await supabase.auth.getSession();
-        if (data.session) {
-          resolvedSession = data.session;
-          break;
-        }
-        await new Promise((resolve) => window.setTimeout(resolve, 120));
-      }
-
-      if (!resolvedSession) {
-        setMessage('로그인 확인에 시간이 조금 더 필요합니다. 다시 시도해주세요.');
-        setTimeout(() => navigate('/auth', { replace: true }), 1200);
-        return;
-      }
-
-      const redirect = consumePostAuthRedirect() || '/home';
-      navigate(redirect, { replace: true });
+  // OAuth code exchange
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) {
+      navigate('/home', { replace: true });
+      return;
     }
 
-    resolveAuth();
-  }, [consumePostAuthRedirect, isSupabaseConfigured, navigate]);
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).catch(() => {});
+    }
+
+    // 10초 안에 로그인 안 되면 실패 처리
+    const timer = setTimeout(() => setTimedOut(true), 10000);
+    return () => clearTimeout(timer);
+  }, [isSupabaseConfigured, navigate]);
+
+  // 타임아웃 시 /auth로 이동
+  useEffect(() => {
+    if (timedOut && !didNavigateRef.current) {
+      didNavigateRef.current = true;
+      navigate('/auth', { replace: true });
+    }
+  }, [timedOut, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6" style={{ backgroundColor: '#F5F2ED' }}>
       <div className="w-full max-w-sm text-center">
         <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-4">Auth</p>
-        <p className="text-sm text-stone-500 leading-relaxed">{message}</p>
+        <p className="text-sm text-stone-500 leading-relaxed">
+          {timedOut ? '로그인 확인에 실패했습니다. 다시 시도해주세요.' : '로그인 정보를 확인하고 있습니다...'}
+        </p>
       </div>
     </div>
   );
