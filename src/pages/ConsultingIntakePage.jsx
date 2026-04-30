@@ -1108,7 +1108,6 @@ export default function ConsultingIntakePage() {
 
   const isLast = stepIdx === totalSteps - 1;
   const canRenderQuestions = phase === 'questions' && currentQ;
-
   const showLoginGate = !authLoading && !user;
 
   return (
