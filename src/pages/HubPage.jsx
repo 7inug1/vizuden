@@ -423,7 +423,7 @@ export default function HubPage() {
 
         <div className="border-t border-stone-200" />
 
-        <div className="mt-6">
+        <div className="mt-6 flex justify-center">
           <button
             onClick={() => navigate('/services')}
             className="text-xs tracking-widest text-stone-400 uppercase

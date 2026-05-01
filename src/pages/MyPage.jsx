@@ -540,7 +540,13 @@ export default function MyPage() {
           </div>
         )}
 
-        <div className="text-center py-8 mt-auto">
+        {user?.email && (
+          <div className="text-center pb-4 mt-auto">
+            <p className="text-xs text-stone-400">{user.email}</p>
+          </div>
+        )}
+
+        <div className="text-center py-8">
           <p className="text-xs text-stone-400 tracking-widest uppercase">
             &copy; {new Date().getFullYear()} VIZUDEN
           </p>
