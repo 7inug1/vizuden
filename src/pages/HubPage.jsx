@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SiteHeader from '../components/SiteHeader';
+import RecommendBadge from '../components/RecommendBadge';
 import PrescriptionSampleCard from '../components/PrescriptionSampleCard';
 import TypeSamplePreview from '../components/TypeSamplePreview';
 import ConsultingBeforeAfterCard from '../components/ConsultingBeforeAfterCard';
@@ -35,40 +36,6 @@ function isValidNickname(val) {
 }
 
 
-/* ─────────────────────────────────────────
-   RecommendBadge — 추천 말풍선
-───────────────────────────────────────── */
-function RecommendBadge() {
-  return (
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      style={{ position: 'absolute', top: '-12px', right: '12px', zIndex: 1 }}
-    >
-      <div style={{
-        display: 'inline-flex', alignItems: 'center',
-        padding: '3px 10px', border: '1px solid #1c1917',
-        backgroundColor: '#F5F2ED', borderRadius: '999px',
-        fontSize: '10px', letterSpacing: '0.08em', color: '#1c1917', whiteSpace: 'nowrap',
-      }}>
-        추천
-      </div>
-      <div style={{
-        position: 'absolute', bottom: '-6px', right: '20px',
-        width: 0, height: 0,
-        borderLeft: '5px solid transparent', borderRight: '5px solid transparent',
-        borderTop: '6px solid #1c1917',
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '-4px', right: '21px',
-        width: 0, height: 0,
-        borderLeft: '4px solid transparent', borderRight: '4px solid transparent',
-        borderTop: '5px solid #F5F2ED',
-      }} />
-    </motion.div>
-  );
-}
 
 /* ─────────────────────────────────────────
    WelcomeModal — 닉네임 저장 직후 인사
@@ -131,7 +98,7 @@ export function WelcomeModal({ name, onClose }) {
 /* ─────────────────────────────────────────
    NicknameModal — 닉네임 입력 폼만
 ───────────────────────────────────────── */
-function NicknameModal({ onSave, onSkip }) {
+export function NicknameModal({ onSave, onSkip }) {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
   const inputRef = useRef(null);
@@ -202,12 +169,14 @@ function NicknameModal({ onSave, onSkip }) {
           >
             저장하기
           </button>
-          <button
-            onClick={onSkip}
-            className="text-xs text-stone-400 text-center py-1 hover:text-stone-700 transition-colors duration-150"
-          >
-            나중에 하기
-          </button>
+          {onSkip && (
+            <button
+              onClick={onSkip}
+              className="text-xs text-stone-400 text-center py-1 hover:text-stone-700 transition-colors duration-150"
+            >
+              나중에 하기
+            </button>
+          )}
         </div>
       </motion.div>
     </motion.div>
@@ -244,8 +213,8 @@ const SERVICE_DATA = {
   },
   consulting: {
     step: '03',
-    eyebrow: 'VISUAL CONSULTING',
-    title: '비주얼 컨설팅',
+    eyebrow: '1:1 STYLE COACHING',
+    title: '1:1 스타일 코칭',
     body: '스타일 처방전에서 찾은 기준을 바탕으로, 옷장 진단부터 쇼핑과 코디 실행까지 1:1로 함께합니다.',
     cta: '신청하기',
     path: '/consulting/questions',
@@ -410,7 +379,7 @@ export default function HubPage() {
       style={{ backgroundColor: '#F5F2ED' }}
     >
       <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
-        <SiteHeader onLogoClick={() => navigate('/home')} />
+        <SiteHeader onLogoClick={() => navigate('/')} />
 
         <GreetingSection
           nickname={nickname}
