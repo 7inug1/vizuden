@@ -1,7 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SiteHeader from '../components/SiteHeader';
+import ConsultingReviewModal from '../components/ConsultingReviewModal';
+import RecommendBadge from '../components/RecommendBadge';
+import CoachingModal from '../components/CoachingModal';
+import { supabase } from '../lib/supabaseClient';
 import { types } from '../data/types';
 import { typeImages } from '../data/typeImages';
 import { useAuth } from '../context/AuthContext';
@@ -14,6 +18,7 @@ import { isAdminUser } from '../lib/admin';
 import { useReportStatus } from '../hooks/useReportStatus';
 
 const PAGE_SIZE = 5;
+const COACHING_CHARS = ['ICMT', 'RDMT', 'RCET', 'IDET'];
 
 const pageVariants = {
   initial: { opacity: 0, y: 16 },
@@ -47,6 +52,7 @@ function CheckIcon() {
   );
 }
 
+
 export default function MyPage() {
   const navigate = useNavigate();
   const { user, session, isGuest } = useAuth();
@@ -58,11 +64,16 @@ export default function MyPage() {
   const [typePage, setTypePage] = useState(0);
   const [prescriptionPage, setPrescriptionPage] = useState(0);
   const [consultingPage, setConsultingPage] = useState(0);
+  const [unlockedIntakeId, setUnlockedIntakeId] = useState(null);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [editingNick, setEditingNick] = useState(false);
   const [nickInput, setNickInput] = useState('');
   const [nickError, setNickError] = useState('');
   const [showWelcome, setShowWelcome] = useState(false);
   const [welcomeName, setWelcomeName] = useState('');
+  const [coachingCharIdx, setCoachingCharIdx] = useState(0);
+  const [showCoachingModal, setShowCoachingModal] = useState(false);
   const nickRef = useRef(null);
 
   useEffect(() => {
@@ -89,6 +100,11 @@ export default function MyPage() {
       }
     } catch {}
     setPrescriptionHistory(localPrescription);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => setCoachingCharIdx(i => (i + 1) % COACHING_CHARS.length), 3000);
+    return () => clearInterval(t);
   }, []);
 
   // DB 데이터로 병합 (로그인 사용자, 새 기기 대응)
@@ -142,6 +158,20 @@ export default function MyPage() {
   }, [session?.access_token, user?.id]);
 
   useEffect(() => {
+    if (!user || !supabase || consultingHistory.length === 0) return;
+    const unlocked = consultingHistory.find((e) => e.review_unlocked && e.status === 'completed');
+    if (!unlocked) return;
+    setUnlockedIntakeId(unlocked.id);
+    supabase
+      .from('reviews')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('service', 'consulting')
+      .maybeSingle()
+      .then(({ data }) => { if (data) setReviewSubmitted(true); });
+  }, [consultingHistory, user?.id]);
+
+  useEffect(() => {
     if (editingNick && nickRef.current) nickRef.current.focus();
   }, [editingNick]);
 
@@ -185,6 +215,8 @@ export default function MyPage() {
   const latestType = typeHistory[0] ?? null;
   const latestTypeResult = latestType ? types[latestType.code] : null;
 
+  const recommend = typeHistory.length === 0 ? 'type' : prescriptionHistory.length === 0 ? 'prescription' : 'consulting';
+
   const totalTypePages = Math.ceil(typeHistory.length / PAGE_SIZE);
   const pagedTypeHistory = typeHistory.slice(typePage * PAGE_SIZE, (typePage + 1) * PAGE_SIZE);
 
@@ -203,6 +235,9 @@ export default function MyPage() {
     });
   }
 
+  const activeCoachingCode = COACHING_CHARS[coachingCharIdx];
+  const activeCoachingChar = typeImages[activeCoachingCode];
+
   return (
     <motion.div
       variants={pageVariants}
@@ -214,46 +249,36 @@ export default function MyPage() {
       style={{ backgroundColor: '#F5F2ED' }}
     >
       <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
-        <SiteHeader onLogoClick={() => navigate('/home')} />
+        <SiteHeader onLogoClick={() => navigate('/')} />
 
         <div className="flex flex-col py-4 pb-16">
-          {!user && isGuest && (
-            <div className="mb-6 border border-stone-200 px-4 py-4">
-              <p className="text-xs tracking-widest text-stone-400 uppercase mb-2">Guest Mode</p>
-              <p className="text-sm text-stone-500 leading-relaxed mb-4">
-                현재 결과는 이 브라우저에만 저장됩니다. 로그인하면 계정에 보존하고 다른 기기에서도 이어볼 수 있습니다.
-              </p>
-              <button
-                onClick={() => navigate('/auth', { state: { nextPath: '/mypage' } })}
-                className="text-xs tracking-widest text-stone-900 uppercase border-b border-stone-900 pb-px hover:text-stone-500 hover:border-stone-500 transition-colors"
-              >
-                로그인하기 →
-              </button>
+          {user?.email && (
+            <p className="text-xs text-stone-500 mb-4 text-center">{user.email}</p>
+          )}
+
+          {!user && (
+            <div className="mb-6 rounded-2xl overflow-hidden" style={{ backgroundColor: '#EDEAE5', border: '1px solid #E0DCD6' }}>
+              <div className="px-5 py-5">
+                <p className="text-[10px] tracking-[0.28em] text-stone-400 uppercase mb-3">Guest Mode</p>
+                <p className="text-sm text-stone-600 leading-relaxed mb-5">
+                  지금 결과는 이 기기에만 저장돼요. 로그인하면 어디서든 이어볼 수 있어요.
+                </p>
+                <button
+                  onClick={() => navigate('/auth/email', { state: { nextPath: '/mypage' } })}
+                  className="w-full py-3 rounded-xl text-sm font-medium tracking-wide transition-all duration-150 active:scale-[0.98]"
+                  style={{ backgroundColor: '#1C1917', color: '#F5F2ED' }}
+                  onMouseEnter={e => e.currentTarget.style.backgroundColor = '#2C2825'}
+                  onMouseLeave={e => e.currentTarget.style.backgroundColor = '#1C1917'}
+                >
+                  로그인하기
+                </button>
+              </div>
             </div>
           )}
 
           {/* 캐릭터 + 호칭 + 닉네임 */}
           <div className="flex flex-col items-center pt-4 pb-8">
 
-            {/* 유형 호칭 — 캐릭터 위 */}
-            {latestTypeResult && (
-              <motion.div
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="text-center mb-3"
-              >
-                <p className="text-xs font-mono text-stone-300 tracking-widest mb-1">
-                  {latestType.code}
-                </p>
-                <p
-                  className="text-base font-light text-stone-700"
-                  style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
-                >
-                  {latestTypeResult.nameKo}
-                </p>
-              </motion.div>
-            )}
 
             {/* 캐릭터 이미지 */}
             {latestTypeResult ? (
@@ -321,58 +346,74 @@ export default function MyPage() {
 
           {/* TYPE 섹션 */}
           <div className="py-7">
-            <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">① 스타일 유형</p>
+            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">스타일 유형</p>
 
             {typeHistory.length > 0 ? (
               <>
-                <div className="flex flex-col gap-px">
-                  {pagedTypeHistory.map((entry) => {
-                    const typeRes = types[entry.code];
-                    if (!typeRes) return null;
-                    const dateStr = formatDateTime(entry.savedAt);
-                    return (
-                      <button
-                        key={entry.savedAt}
-                        onClick={() => navigate(`/type/result/${entry.code}`, { state: { fromHistory: true } })}
-                        className="flex items-center justify-between py-3.5 border-b border-stone-100
-                          text-left hover:bg-stone-50 -mx-1 px-1 transition-colors group"
-                      >
-                        <div className="flex flex-col gap-1">
-                          <span className="text-sm font-light text-stone-800 leading-tight">
-                            {typeRes.nameKo}
-                          </span>
-                          <span className="text-xs font-mono text-stone-400 tabular-nums">
-                            {entry.code} · {dateStr}
-                          </span>
-                        </div>
-                        <span className="text-stone-300 group-hover:text-stone-500 transition-colors text-xs">→</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {totalTypePages > 1 && (
-                  <div className="flex items-center justify-between mt-4">
-                    <button onClick={() => setTypePage((p) => Math.max(0, p - 1))} disabled={typePage === 0}
-                      className="text-xs text-stone-400 uppercase tracking-wider disabled:opacity-30 hover:text-stone-900 transition-colors">
-                      ← 이전
-                    </button>
-                    <span className="text-xs text-stone-400 tabular-nums">{typePage + 1} / {totalTypePages}</span>
-                    <button onClick={() => setTypePage((p) => Math.min(totalTypePages - 1, p + 1))} disabled={typePage === totalTypePages - 1}
-                      className="text-xs text-stone-400 uppercase tracking-wider disabled:opacity-30 hover:text-stone-900 transition-colors">
-                      다음 →
-                    </button>
+                {/* 최근 결과 — 콤팩트 카드 */}
+                <button
+                  onClick={() => navigate(`/type/result/${typeHistory[0].code}`, { state: { fromHistory: true } })}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl border border-stone-200 bg-white mb-5 group hover:border-stone-300 transition-all duration-150 active:scale-[0.99]"
+                  style={{ boxShadow: '0 1px 4px 0 rgba(0,0,0,0.05)' }}
+                >
+                  <div className="shrink-0 flex items-center justify-center" style={{ width: 36, height: 44 }}>
+                    {(() => {
+                      const c = typeHistory[0].code;
+                      return (
+                        <svg width="36" height="36" viewBox="0 0 42 42" fill="none">
+                          <line x1="21" y1="19" x2="21" y2="16" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                          <line x1="21" y1="23" x2="21" y2="26" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                          <line x1="19" y1="21" x2="16" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                          <line x1="23" y1="21" x2="26" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                          <circle cx="21" cy="21" r="1.8" fill="#1c1917" opacity="0.5"/>
+                          <text x="21" y="12" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917">{c[0]}</text>
+                          <text x="33" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917">{c[1]}</text>
+                          <text x="21" y="36" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917">{c[2]}</text>
+                          <text x="9" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917">{c[3]}</text>
+                        </svg>
+                      );
+                    })()}
                   </div>
-                )}
+                  <div className="flex-1 min-w-0 text-left">
+                    <p className="text-[10px] font-mono text-stone-400 tracking-widest">{typeHistory[0].code}</p>
+                    <p className="text-[14px] font-medium text-stone-800 leading-snug mt-0.5">{types[typeHistory[0].code]?.nameKo}</p>
+                    <p className="text-[11px] text-stone-400 mt-0.5">{formatDateTime(typeHistory[0].savedAt)}</p>
+                  </div>
+                </button>
+
               </>
             ) : (
-              <div>
-                <p className="text-sm text-stone-400 leading-relaxed mb-5">아직 유형 진단을 하지 않았습니다.</p>
-                <button onClick={() => navigate('/type/questions', { state: { source: 'mypage' } })}
-                  className="text-xs tracking-widest text-stone-900 uppercase border-b border-stone-900 pb-px hover:text-stone-500 hover:border-stone-500 transition-colors">
-                  유형 진단하기 →
+              <>
+                <p className="text-sm text-stone-500 leading-relaxed mb-1">아직 유형 테스트를 하지 않으셨어요.</p>
+                <p className="text-sm text-stone-400 leading-relaxed mb-4">내 스타일 DNA가 어떤 유형인지 지금 확인해보세요.</p>
+                <div className="relative">
+                  {recommend === 'type' && <RecommendBadge />}
+                <button
+                  onClick={() => navigate('/type/questions', { state: { source: 'mypage' } })}
+                  className="w-full px-5 py-4 rounded-3xl bg-white border border-stone-200 text-left transition-all duration-150 active:scale-[0.98] hover:border-stone-300 flex items-center gap-4"
+                  style={{ boxShadow: '0 1px 8px 0 rgba(0,0,0,0.06)' }}
+                >
+                  <div className="shrink-0 flex items-center justify-center" style={{ width: 48, height: 56 }}>
+                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                      <line x1="21" y1="19" x2="21" y2="16" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                      <line x1="21" y1="23" x2="21" y2="26" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                      <line x1="19" y1="21" x2="16" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                      <line x1="23" y1="21" x2="26" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
+                      <circle cx="21" cy="21" r="1.8" fill="#1c1917" opacity="0.5"/>
+                      <text x="21" y="12" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">I</text>
+                      <text x="21" y="36" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">R</text>
+                      <text x="33" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">C</text>
+                      <text x="9" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">D</text>
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(28,25,23,0.3)' }}>STYLE TYPE</p>
+                    <p className="text-[17px] font-medium tracking-tight text-stone-800 leading-snug">스타일 유형 테스트</p>
+                    <p className="mt-1 text-[12px] text-stone-400 leading-relaxed">12문항 · 1분 소요</p>
+                  </div>
                 </button>
-              </div>
+                </div>
+              </>
             )}
           </div>
 
@@ -380,75 +421,117 @@ export default function MyPage() {
 
           {/* PRESCRIPTION 섹션 */}
           <div className="py-7">
-            <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">② 스타일 처방전</p>
+            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">스타일 처방전</p>
 
             {prescriptionHistory.length > 0 ? (
               <>
-                <div className="flex flex-col gap-px">
-                  {pagedPrescriptionHistory.map((entry) => {
-                    const dateStr = formatDateTime(entry.savedAt);
-                    const title = entry.title || '스타일 처방전';
-                    const preview = entry.preview || entry.free?.insight || null;
-                    return (
-                      <button
-                        key={entry.savedAt}
-                        onClick={() => navigate(`/prescription/result/${entry.reportId}`)}
-                        className="flex items-start justify-between py-4 border-b border-stone-100
-                          text-left hover:bg-stone-50 -mx-1 px-1 transition-colors group"
-                      >
-                        <div className="flex flex-col gap-1.5 flex-1 pr-3">
-                          <span className="text-sm font-light text-stone-800 leading-snug">
-                            {title}
-                          </span>
-                          {preview && (
-                            <span
-                              className="text-xs text-stone-400 leading-relaxed"
-                              style={{
-                                display: '-webkit-box',
-                                WebkitLineClamp: 2,
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden',
-                              }}
-                            >
-                              {preview}
-                            </span>
-                          )}
-                          <span className="text-xs font-mono text-stone-300 tabular-nums">
-                            {entry.fromType ? `${entry.fromType} · ` : ''}{dateStr}
-                          </span>
+                {/* 최근 처방전 — 콤팩트 카드 */}
+                {(() => {
+                  const latest = prescriptionHistory[0];
+                  const latestTitle = latest.title || '스타일 처방전';
+                  const latestPreview = latest.preview || latest.free?.insight || null;
+                  return (
+                    <button
+                      onClick={() => navigate(`/prescription/result/${latest.reportId}`)}
+                      className="w-full flex items-center gap-3 p-3 rounded-2xl mb-5 group transition-all duration-150 active:scale-[0.99]"
+                      style={{ backgroundColor: '#E8E2D9', border: '1px solid #DDD7CE', boxShadow: '0 1px 4px 0 rgba(0,0,0,0.05)' }}
+                      onMouseEnter={e => e.currentTarget.style.backgroundColor = '#DDD6CB'}
+                      onMouseLeave={e => e.currentTarget.style.backgroundColor = '#E8E2D9'}
+                    >
+                      <div className="shrink-0 flex items-center justify-center" style={{ width: 36, height: 44 }}>
+                        <div style={{ position: 'relative', width: 28, height: 36, borderRadius: 3 }}>
+                          <div style={{ position: 'absolute', top: 2, left: 2, width: 26, height: 34, borderRadius: 3, backgroundColor: '#D6CEC4', border: '1px solid #C0B9AF' }} />
+                          <div style={{ position: 'absolute', top: 0, left: 0, width: 26, height: 34, borderRadius: 3, backgroundColor: '#FAF8F5', border: '1px solid #D0C9BF', display: 'flex', flexDirection: 'column', padding: '4px 4px 3px', gap: 2.5 }}>
+                            <div style={{ fontFamily: 'Georgia, serif', fontSize: 7, fontWeight: 600, color: '#6B5E52', letterSpacing: '0.04em', lineHeight: 1 }}>Rx</div>
+                            {[100, 70, 85].map((w, i) => (
+                              <div key={i} style={{ height: 1.5, borderRadius: 2, width: `${w}%`, backgroundColor: i === 0 ? '#8C7B6E' : '#C8C0B8' }} />
+                            ))}
+                            <div style={{ height: 1, backgroundColor: '#E0D9D2', marginTop: 0.5 }} />
+                            {[60, 80].map((w, i) => (
+                              <div key={i} style={{ height: 1.5, borderRadius: 2, width: `${w}%`, backgroundColor: '#C8C0B8' }} />
+                            ))}
+                          </div>
                         </div>
-                        <span className="text-stone-300 group-hover:text-stone-500 transition-colors text-xs shrink-0 mt-0.5">→</span>
-                      </button>
-                    );
-                  })}
-                </div>
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="text-[14px] font-medium text-stone-800 leading-snug">{latestTitle}</p>
+                        {latestPreview && (
+                          <p className="text-[11px] mt-0.5 leading-relaxed"
+                            style={{ color: '#8C8278', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {latestPreview}
+                          </p>
+                        )}
+                        <p className="text-[11px] text-stone-400 mt-0.5">
+                          {latest.fromType ? `${latest.fromType} · ` : ''}{formatDateTime(latest.savedAt)}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })()}
 
-                {totalPrescriptionPages > 1 && (
-                  <div className="flex items-center justify-between mt-4">
-                    <button onClick={() => setPrescriptionPage((p) => Math.max(0, p - 1))} disabled={prescriptionPage === 0}
-                      className="text-xs text-stone-400 uppercase tracking-wider disabled:opacity-30 hover:text-stone-900 transition-colors">
-                      ← 이전
-                    </button>
-                    <span className="text-xs text-stone-400 tabular-nums">{prescriptionPage + 1} / {totalPrescriptionPages}</span>
-                    <button onClick={() => setPrescriptionPage((p) => Math.min(totalPrescriptionPages - 1, p + 1))} disabled={prescriptionPage === totalPrescriptionPages - 1}
-                      className="text-xs text-stone-400 uppercase tracking-wider disabled:opacity-30 hover:text-stone-900 transition-colors">
-                      다음 →
-                    </button>
+                {/* 이전 기록 */}
+                {prescriptionHistory.length > 1 && (
+                  <div>
+                    <p className="text-[10px] tracking-[0.24em] text-stone-300 uppercase mb-2">이전 기록</p>
+                    <div className="flex flex-col">
+                      {prescriptionHistory.slice(1, 5).map((entry) => {
+                        const entryTitle = entry.title || '스타일 처방전';
+                        const entryDate = formatDateTime(entry.savedAt);
+                        return (
+                          <button
+                            key={entry.savedAt}
+                            onClick={() => navigate(`/prescription/result/${entry.reportId}`)}
+                            className="flex items-center justify-between py-3 px-2 rounded-xl border-b border-stone-100 text-left group transition-all duration-150"
+                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#EDE9E3'}
+                            onMouseLeave={e => e.currentTarget.style.backgroundColor = ''}
+                          >
+                            <div className="flex flex-col gap-0.5">
+                              <span className="text-sm font-light text-stone-700 leading-tight">{entryTitle}</span>
+                              <span className="text-xs font-mono text-stone-400 tabular-nums">
+                                {entry.fromType ? `${entry.fromType} · ` : ''}{entryDate}
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </>
             ) : (
-              <div>
-                <p className="text-sm text-stone-400 leading-relaxed mb-5">
-                  아직 스타일 처방전 보고서가 없습니다.
-                </p>
+              <>
+                <p className="text-sm text-stone-500 leading-relaxed mb-1">처방전을 아직 받아보지 않으셨네요.</p>
+                <p className="text-sm text-stone-400 leading-relaxed mb-4">내 커리어·라이프스타일·추구미를 분석한 AI 스타일 보고서를 받아보세요.</p>
+                <div className="relative">
+                  {recommend === 'prescription' && <RecommendBadge />}
                 <button
                   onClick={() => navigate('/prescription')}
-                  className="text-xs tracking-widest text-stone-900 uppercase border-b border-stone-900 pb-px hover:text-stone-500 hover:border-stone-500 transition-colors"
+                  className="w-full px-5 py-4 rounded-3xl text-left transition-all duration-150 active:scale-[0.98] flex items-center gap-4"
+                  style={{ backgroundColor: '#E8E2D9', border: '1px solid #DDD7CE', boxShadow: '0 1px 8px 0 rgba(0,0,0,0.05)' }}
                 >
-                  처방전 만들기 →
+                  <div className="shrink-0 flex items-center justify-center" style={{ width: 48, height: 56 }}>
+                    <div style={{ position: 'relative', width: 36, height: 46, borderRadius: 4 }}>
+                      <div style={{ position: 'absolute', top: 3, left: 3, width: 33, height: 43, borderRadius: 4, backgroundColor: '#E0D9CF', border: '1px solid #C8BFB3' }} />
+                      <div style={{ position: 'absolute', top: 0, left: 0, width: 33, height: 43, borderRadius: 4, backgroundColor: '#FAF8F5', border: '1px solid #D6CFC6', display: 'flex', flexDirection: 'column', padding: '5px 5px 4px', gap: 3 }}>
+                        <div style={{ fontFamily: 'Georgia, serif', fontSize: 9, fontWeight: 600, color: '#6B5E52', letterSpacing: '0.04em', lineHeight: 1 }}>Rx</div>
+                        {[100, 75, 85].map((w, i) => (
+                          <div key={i} style={{ height: 2, borderRadius: 2, width: `${w}%`, backgroundColor: i === 0 ? '#8C7B6E' : '#C8C0B8' }} />
+                        ))}
+                        <div style={{ height: 1, backgroundColor: '#E0D9D2', marginTop: 1 }} />
+                        {[65, 80].map((w, i) => (
+                          <div key={i} style={{ height: 2, borderRadius: 2, width: `${w}%`, backgroundColor: '#C8C0B8' }} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(28,25,23,0.3)' }}>AI STYLE REPORT</p>
+                    <p className="text-[17px] font-medium tracking-tight text-stone-800 leading-snug">스타일 처방전</p>
+                    <p className="mt-1 text-[12px] leading-relaxed" style={{ color: '#8C8278' }}>스타일 진단 AI 보고서 · 약 5분 소요</p>
+                  </div>
                 </button>
-              </div>
+                </div>
+              </>
             )}
           </div>
 
@@ -456,74 +539,131 @@ export default function MyPage() {
 
           {/* CONSULTING 섹션 */}
           <div className="py-7">
-            <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">③ 비주얼 컨설팅</p>
+            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">1:1 스타일 코칭</p>
 
             {consultingHistory.length > 0 ? (
               <>
-                <div className="flex flex-col gap-px">
-                  {pagedConsultingHistory.map((entry) => {
-                    const dateStr = formatDateTime(entry.created_at);
-                    const preview = getConsultingPreview(entry.answers);
-                    return (
-                      <button
-                        key={entry.id}
-                        onClick={() => navigate(`/consulting/intakes/${entry.id}`)}
-                        className="flex items-start justify-between py-4 border-b border-stone-100
-                          text-left hover:bg-stone-50 -mx-1 px-1 transition-colors group"
-                      >
-                        <div className="flex flex-col gap-1.5 flex-1 pr-3">
-                          <span className="text-sm font-light text-stone-800 leading-snug">
-                            비주얼 컨설팅 사전 답변
-                          </span>
-                          {preview && (
-                            <span
-                              className="text-xs text-stone-400 leading-relaxed"
-                              style={{
-                                display: '-webkit-box',
-                                WebkitLineClamp: 2,
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden',
-                              }}
-                            >
-                              {preview}
-                            </span>
-                          )}
-                          <span className="text-xs font-mono text-stone-300 tabular-nums">
-                            {dateStr}
-                          </span>
-                        </div>
-                        <span className="text-stone-300 group-hover:text-stone-500 transition-colors text-xs shrink-0 mt-0.5">→</span>
-                      </button>
-                    );
-                  })}
-                </div>
+                {/* 최근 신청 — 콤팩트 카드 */}
+                {(() => {
+                  const latest = consultingHistory[0];
+                  const latestDate = formatDateTime(latest.created_at);
+                  const latestPreview = getConsultingPreview(latest.answers);
+                  return (
+                    <button
+                      onClick={() => navigate(`/consulting/intakes/${latest.id}`)}
+                      className="w-full flex items-center gap-3 p-3 rounded-2xl mb-5 group transition-all duration-150 active:scale-[0.99]"
+                      style={{ backgroundColor: '#26211D', border: '1px solid #3A332D', boxShadow: '0 2px 12px 0 rgba(0,0,0,0.18)' }}
+                      onMouseEnter={e => e.currentTarget.style.backgroundColor = '#2E2721'}
+                      onMouseLeave={e => e.currentTarget.style.backgroundColor = '#26211D'}
+                    >
+                      <div className="shrink-0 flex items-center justify-center overflow-hidden" style={{ width: 36, height: 44 }}>
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={activeCoachingCode}
+                            src={activeCoachingChar}
+                            alt=""
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="object-contain object-bottom"
+                            style={{ height: 44, width: 36 }}
+                          />
+                        </AnimatePresence>
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="text-[14px] font-medium leading-snug" style={{ color: '#F0EBE4' }}>1:1 스타일 코칭</p>
+                        {latestPreview && (
+                          <p className="text-[11px] mt-0.5 leading-relaxed"
+                            style={{ color: 'rgba(240,235,228,0.45)', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {latestPreview}
+                          </p>
+                        )}
+                        <p className="text-[11px] mt-0.5" style={{ color: 'rgba(240,235,228,0.35)' }}>{latestDate}</p>
+                      </div>
+                    </button>
+                  );
+                })()}
 
-                {totalConsultingPages > 1 && (
-                  <div className="flex items-center justify-between mt-4">
-                    <button onClick={() => setConsultingPage((p) => Math.max(0, p - 1))} disabled={consultingPage === 0}
-                      className="text-xs text-stone-400 uppercase tracking-wider disabled:opacity-30 hover:text-stone-900 transition-colors">
-                      ← 이전
-                    </button>
-                    <span className="text-xs text-stone-400 tabular-nums">{consultingPage + 1} / {totalConsultingPages}</span>
-                    <button onClick={() => setConsultingPage((p) => Math.min(totalConsultingPages - 1, p + 1))} disabled={consultingPage === totalConsultingPages - 1}
-                      className="text-xs text-stone-400 uppercase tracking-wider disabled:opacity-30 hover:text-stone-900 transition-colors">
-                      다음 →
-                    </button>
+                {/* 이전 기록 */}
+                {consultingHistory.length > 1 && (
+                  <div>
+                    <p className="text-[10px] tracking-[0.24em] text-stone-300 uppercase mb-2">이전 기록</p>
+                    <div className="flex flex-col">
+                      {consultingHistory.slice(1, 5).map((entry) => {
+                        const entryDate = formatDateTime(entry.created_at);
+                        const entryPreview = getConsultingPreview(entry.answers);
+                        return (
+                          <button
+                            key={entry.id}
+                            onClick={() => navigate(`/consulting/intakes/${entry.id}`)}
+                            className="flex items-center justify-between py-3 px-2 rounded-xl border-b border-stone-100 text-left group transition-all duration-150"
+                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#EDE9E3'}
+                            onMouseLeave={e => e.currentTarget.style.backgroundColor = ''}
+                          >
+                            <div className="flex flex-col gap-0.5">
+                              <span className="text-sm font-light text-stone-700 leading-tight">1:1 스타일 코칭 신청</span>
+                              <span className="text-xs font-mono text-stone-400 tabular-nums">
+                                {entryPreview ? `${entryPreview.slice(0, 20)}… · ` : ''}{entryDate}
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {unlockedIntakeId && (
+                  <div className="mt-5">
+                    {reviewSubmitted ? (
+                      <p className="text-xs text-stone-400 tracking-wide">후기를 보내주셨습니다. 감사합니다.</p>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setShowReviewModal(true)}
+                        className="text-xs tracking-widest text-stone-900 uppercase border-b border-stone-900 pb-px hover:text-stone-500 hover:border-stone-500 transition-colors"
+                      >
+                        후기 남기기 →
+                      </button>
+                    )}
                   </div>
                 )}
               </>
             ) : (
-              <div>
-                <p className="text-sm text-stone-400 leading-relaxed mb-5">
-                  아직 비주얼 컨설팅 사전 답변이 없습니다.
-                </p>
+              <>
+                <p className="text-sm text-stone-500 leading-relaxed mb-1">아직 코칭을 신청하지 않으셨어요.</p>
+                <p className="text-sm text-stone-400 leading-relaxed mb-4">나에게 맞는 스타일 방향을 전문가와 함께 잡아보세요.</p>
+                <div className="relative">
+                  {recommend === 'consulting' && <RecommendBadge />}
                 <button
-                  onClick={() => navigate('/services')}
-                  className="text-xs tracking-widest text-stone-900 uppercase border-b border-stone-900 pb-px hover:text-stone-500 hover:border-stone-500 transition-colors"
+                  onClick={() => setShowCoachingModal(true)}
+                  className="w-full px-5 py-4 rounded-3xl text-left transition-all duration-150 active:scale-[0.98] flex items-center gap-4"
+                  style={{ backgroundColor: '#26211D', border: '1px solid #3A332D', boxShadow: '0 2px 16px 0 rgba(0,0,0,0.22)' }}
                 >
-                  서비스 보러가기 →
+                  <div className="shrink-0 flex items-center justify-center overflow-hidden" style={{ width: 48, height: 56 }}>
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={activeCoachingCode}
+                        src={activeCoachingChar}
+                        alt=""
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="object-contain object-bottom"
+                        style={{ height: 56, width: 48 }}
+                      />
+                    </AnimatePresence>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(240,235,228,0.4)' }}>1:1 COACHING</p>
+                    <p className="text-[17px] font-medium tracking-tight leading-snug" style={{ color: '#F0EBE4' }}>1:1 스타일 코칭</p>
+                    <p className="mt-1 text-[12px] leading-relaxed" style={{ color: 'rgba(240,235,228,0.45)' }}>남성 맞춤형 스타일 코칭</p>
+                  </div>
                 </button>
-              </div>
+                </div>
+              </>
             )}
           </div>
 
@@ -540,12 +680,6 @@ export default function MyPage() {
           </div>
         )}
 
-        {user?.email && (
-          <div className="text-center pb-4 mt-auto">
-            <p className="text-xs text-stone-400">{user.email}</p>
-          </div>
-        )}
-
         <div className="text-center py-8">
           <p className="text-xs text-stone-400 tracking-widest uppercase">
             &copy; {new Date().getFullYear()} VIZUDEN
@@ -559,6 +693,30 @@ export default function MyPage() {
             key="welcome"
             name={welcomeName}
             onClose={() => setShowWelcome(false)}
+          />
+        )}
+        {showReviewModal && user && unlockedIntakeId && (
+          <ConsultingReviewModal
+            key="review"
+            userId={user.id}
+            intakeId={unlockedIntakeId}
+            defaultName={nickname || user.user_metadata?.name || user.user_metadata?.full_name || ''}
+            onClose={() => setShowReviewModal(false)}
+            onSubmitted={() => {
+              setReviewSubmitted(true);
+              setShowReviewModal(false);
+            }}
+          />
+        )}
+        {showCoachingModal && (
+          <CoachingModal
+            key="coaching"
+            onClose={() => setShowCoachingModal(false)}
+            prescriptionDone={prescriptionHistory.length > 0}
+            onNavigate={() => {
+              setShowCoachingModal(false);
+              navigate('/prescription');
+            }}
           />
         )}
       </AnimatePresence>
