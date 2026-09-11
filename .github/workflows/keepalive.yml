@@ -1,0 +1,27 @@
+# Supabase 를 깨워 둔다.
+#
+# 무료 플랜은 7일 동안 아무도 안 두드리면 프로젝트를 멈춘다. 방문자가 왔을 때
+# 죽어 있으면 서비스가 없는 것과 같아서, 매일 한 번 가벼운 조회를 보낸다.
+#
+# Vercel 의 crons 를 쓰지 않는 이유: 크론 설정은 vercel.json 에 있어 배포가
+# 필요한데, 지금 함수가 14개라 무료 플랜 상한(12개)에 걸려 배포가 거부된다.
+# 여기서 부르면 배포와 무관하게 돈다.
+
+name: keepalive
+
+on:
+  schedule:
+    - cron: "0 18 * * *"   # UTC 18:00 = KST 03:00
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Supadata 를 거치지 않는 가벼운 조회로 DB 를 깨운다
+        run: |
+          code=$(curl -s -o /tmp/out.json -w "%{http_code}" --max-time 60 \
+            https://vizuden.com/api/type-count)
+          echo "HTTP $code"; cat /tmp/out.json; echo
+          # 실패를 조용히 넘기지 않는다 — 멈춘 것도 모르게 되면 의미가 없다
+          test "$code" = "200"
