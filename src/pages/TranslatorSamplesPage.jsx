@@ -5,6 +5,9 @@ import ComingSoonBadge from '../components/ComingSoonBadge';
 
 const CREAM = '#F5F2ED';
 
+// 설문을 끝까지 마치고 실제로 생성된 보고서. 본인 것이라 그대로 공개한다.
+const REAL_REPORT_ID = 'ae7001d7-18c1-4d2a-b85e-44c037d04cfe';
+
 const SAMPLES = [
   {
     id: 'teo-yoo',
@@ -75,7 +78,7 @@ export default function TranslatorSamplesPage() {
           </div>
 
 
-          {/* 샘플 목록 */}
+          {/* 샘플 목록 — 가상 인물 */}
           <div className="flex flex-col gap-3">
             {SAMPLES.map((s) => (
               <SampleCard
@@ -84,6 +87,36 @@ export default function TranslatorSamplesPage() {
                 onClick={() => s.available && navigate(`/translator/${s.id}`)}
               />
             ))}
+          </div>
+
+          {/* 실제 사례 — 위 넷은 인물을 보고 쓴 것이고, 이건 설문을 끝까지 마친
+              사람에게 실제로 나온 결과물이다. 둘은 성격이 달라 구분해서 보여준다. */}
+          <div className="mt-8">
+            <p className="text-[11px] tracking-[0.16em] text-stone-400 uppercase mb-3">
+              Real Report
+            </p>
+            <div
+              onClick={() => navigate(`/translator/report/${REAL_REPORT_ID}`)}
+              className="flex items-center gap-4 px-4 py-4 rounded-xl bg-white border border-stone-200
+                         active:scale-[0.98] transition-transform cursor-pointer"
+            >
+              <div
+                className="w-12 h-12 shrink-0 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: '#EFEAE2' }}
+              >
+                <span className="text-[18px]">📄</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-stone-900" style={{ letterSpacing: '-0.01em' }}>
+                  실제 사용자 번역서
+                </p>
+                <p className="text-[11px] text-stone-400 mb-0.5">jinu gee</p>
+                <p className="text-xs text-stone-400 leading-relaxed">
+                  25개 질문에 직접 답하고 받은 결과물. 위 샘플과 달리 실제로 생성된 것.
+                </p>
+              </div>
+              <span className="shrink-0 text-stone-300 text-sm">→</span>
+            </div>
           </div>
 
         </div>

@@ -9,6 +9,7 @@ import { useReportStatus } from '../hooks/useReportStatus';
 import { useNickname } from '../context/NicknameContext';
 import { NicknameModal } from './HubPage';
 import BetaCodeModal from '../components/BetaCodeModal';
+import TranslatorStartModal from '../components/TranslatorStartModal';
 import TranslatorStartButton from '../components/TranslatorStartButton';
 import { STORAGE_KEYS, getStoredString, setStoredString } from '../lib/storage';
 
@@ -36,6 +37,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const [charIdx, setCharIdx] = useState(0);
   const [showCodeModal, setShowCodeModal] = useState(false);
+  const [showStart, setShowStart] = useState(false);
   const { prescription, dbTypeHistory } = useReportStatus();
   const { nickname, setNickname } = useNickname();
   const [localTypeDone, setLocalTypeDone] = useState(false);
@@ -202,43 +204,9 @@ export default function LandingPage() {
             {/* ② 번역서 — 다크 히어로 */}
             <div className="relative">
               {recommend === 'translator' && <RecommendBadge />}
-              {/* 코드를 먼저 묻지 않는다. 하루 한도를 넘겼을 때만 제출 단계에서 받는다 */}
-              <TranslatorStartButton onClick={() => navigate('/translator/questions')} />
-
-              {/* 설문은 25문항·5분이 든다. 그전에 결과물이 어떤지 볼 수 있어야 한다.
-                  글자 한 줄로는 묻혀서, 실려 있는 인물의 얼굴을 먼저 보여준다. */}
-              <button
-                onClick={() => navigate('/translator/samples')}
-                className="w-full mt-2.5 px-4 py-3.5 rounded-2xl flex items-center gap-3
-                           transition-all duration-150 active:scale-[0.98]"
-                style={{ backgroundColor: '#FFFFFF', border: '1px solid #E2DACE' }}
-              >
-                <div className="flex shrink-0 items-center">
-                  {['IDMT', 'RDMT', 'ICMT', 'ICMN'].map((code, i) => (
-                    <img
-                      key={code}
-                      src={`/characters/${code}.png`}
-                      alt=""
-                      className="w-8 h-8 object-contain rounded-full"
-                      style={{
-                        backgroundColor: '#F5F2ED',
-                        border: '1.5px solid #FFFFFF',
-                        marginLeft: i === 0 ? 0 : -10,
-                        zIndex: 4 - i,
-                      }}
-                    />
-                  ))}
-                </div>
-                <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[13.5px] font-medium" style={{ color: '#2A241E' }}>
-                    샘플 번역서 먼저 보기
-                  </p>
-                  <p className="text-[11px] mt-0.5" style={{ color: 'rgba(58,48,40,0.5)' }}>
-                    유태오 · 봉태규 · 스티븐 연 · 손석구
-                  </p>
-                </div>
-                <span className="shrink-0 text-[15px]" style={{ color: 'rgba(58,48,40,0.35)' }}>→</span>
-              </button>
+              {/* 두 갈래를 같은 크기로 보여준다 — 설문 전에 결과물을 볼 수 있다는 것이
+                  부차적으로 보이지 않게. 코드는 하루 한도를 넘겼을 때만 받는다. */}
+              <TranslatorStartButton onClick={() => setShowStart(true)} />
             </div>
 
             {/* ③ 1:1 코칭 — 준비 중, 임시 숨김 */}
@@ -291,6 +259,7 @@ export default function LandingPage() {
         {showNickModal && (
           <NicknameModal key="nickname" onSave={handleNickSave} onSkip={handleNickSkip} />
         )}
+        {showStart && <TranslatorStartModal onClose={() => setShowStart(false)} />}
         {showCodeModal && (
           <BetaCodeModal onClose={() => setShowCodeModal(false)} showSamplesLink />
         )}
