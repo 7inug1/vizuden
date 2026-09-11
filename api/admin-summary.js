@@ -48,7 +48,7 @@ export default async function handler(req, res) {
         .order("created_at", { ascending: false }),
       supabase
         .from("consulting_intakes")
-        .select("id, user_id, status, created_at")
+        .select("id, user_id, status, review_unlocked, created_at")
         .not("user_id", "is", null)
         .order("created_at", { ascending: false }),
       supabase
@@ -107,6 +107,7 @@ export default async function handler(req, res) {
         consultingCount: 0,
         latestConsultingIntakeId: null,
         latestConsultingStatus: null,
+        latestConsultingReviewUnlocked: false,
         feedbackCount: 0,
         recentActivityAt: null,
       });
@@ -145,6 +146,7 @@ export default async function handler(req, res) {
       if (!entry.latestConsultingIntakeId) {
         entry.latestConsultingIntakeId = row.id;
         entry.latestConsultingStatus = row.status || "submitted";
+        entry.latestConsultingReviewUnlocked = !!row.review_unlocked;
       }
       bumpRecent(entry, row.created_at);
     }

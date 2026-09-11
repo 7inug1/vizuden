@@ -55,3 +55,16 @@ export function getConsentItems(consents) {
     consents.photo ? '오프라인 쇼핑 사진 촬영 동의' : null,
   ].filter(Boolean);
 }
+
+const CONSULTING_STATUS_LABELS = {
+  submitted: '신청 접수',
+  contacted: '연락 완료',
+  scheduled: '일정 확정',
+  completed: '컨설팅 완료',
+  cancelled: '진행 취소',
+};
+
+export function getConsultingStatusLabel(status) {
+  if (!status || typeof status !== 'string') return '신청 접수';
+  return CONSULTING_STATUS_LABELS[status] || status;
+}

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/AuthContext';
@@ -19,13 +19,19 @@ import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentFailPage from './pages/PaymentFailPage';
 import ServicesPage from './pages/ServicesPage';
 import AboutPage from './pages/AboutPage';
-import ConsultingIntakePage from './pages/ConsultingIntakePage';
-import ConsultingIntakeDetailPage from './pages/ConsultingIntakeDetailPage';
+import TranslatorIntakePage from './pages/TranslatorIntakePage';
+import TranslatorReportPage from './pages/TranslatorReportPage';
+import TranslatorReportV2Demo from './pages/TranslatorReportV2Demo';
+import TranslatorIntakeDetailPage from './pages/TranslatorIntakeDetailPage';
 import AdminPage from './pages/AdminPage';
 import AdminUserPage from './pages/AdminUserPage';
 import AdminPrescriptionPage from './pages/AdminPrescriptionPage';
-import ConsultingDetailPage from './pages/ConsultingDetailPage';
+import TranslatorDetailPage from './pages/TranslatorDetailPage';
+import SampleReportPage from './pages/SampleReportPage';
 import LandingPage from './pages/LandingPage';
+import TranslatorResultPage from './pages/TranslatorResultPage';
+import TranslatorSamplesPage from './pages/TranslatorSamplesPage';
+import TranslatorPage from './pages/TranslatorPage';
 import FloatingFeedbackButton from './components/FloatingFeedbackButton';
 
 function ScrollToTop() {
@@ -54,18 +60,27 @@ function ProtectedRoute({ children }) {
   return <Navigate to="/auth/email" replace state={{ nextPath }} />;
 }
 
+function RedirectHome() {
+  return <Navigate to="/" replace />;
+}
+
+function TranslatorSampleRedirect() {
+  const { personaId } = useParams();
+  return <Navigate to={`/translator/${personaId}`} replace />;
+}
+
 function AnimatedRoutes() {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<Navigate to="/auth/email" replace />} />
+        <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/email" element={<AuthEmailPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
-        <Route path="/login" element={<Navigate to="/auth/email" replace />} />
-        <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="/type" element={<Navigate to="/" replace />} />
+        <Route path="/login" element={<RedirectHome />} />
+        <Route path="/home" element={<RedirectHome />} />
+        <Route path="/type" element={<RedirectHome />} />
         <Route path="/type/questions" element={<QuizPage />} />
         <Route path="/type/result/:code" element={<ResultPage />} />
         <Route path="/prescription" element={<PrescriptionPage />} />
@@ -74,20 +89,31 @@ function AnimatedRoutes() {
         <Route path="/prescription/result/:reportId" element={<PrescriptionResultPage />} />
         <Route path="/prescription/payment/success" element={<ProtectedRoute><PaymentSuccessPage /></ProtectedRoute>} />
         <Route path="/prescription/payment/fail" element={<ProtectedRoute><PaymentFailPage /></ProtectedRoute>} />
-        <Route path="/identity" element={<Navigate to="/home" replace />} />
-        <Route path="/identity/questions" element={<Navigate to="/home" replace />} />
-        <Route path="/identity/result/:reportId" element={<Navigate to="/home" replace />} />
-        <Route path="/coaching" element={<Navigate to="/home" replace />} />
-        <Route path="/consulting/questions" element={<ConsultingIntakePage />} />
-        <Route path="/consulting/intakes/:intakeId" element={<ProtectedRoute><ConsultingIntakeDetailPage /></ProtectedRoute>} />
-        <Route path="/services" element={<Navigate to="/" replace />} />
-        <Route path="/services/consulting" element={<ConsultingDetailPage />} />
+        <Route path="/translator/questions" element={<TranslatorIntakePage />} />
+        <Route path="/translator/report/demo" element={<TranslatorReportV2Demo />} />
+        <Route path="/translator/report/me" element={<TranslatorReportV2Demo persona="me" />} />
+        <Route path="/translator/report/:intakeId" element={<TranslatorReportPage />} />
+        <Route path="/translator/samples" element={<TranslatorSamplesPage />} />
+        <Route path="/translator/sample/:personaId" element={<TranslatorSampleRedirect />} />
+        <Route path="/translator/result/:reportId" element={<TranslatorResultPage />} />
+        <Route path="/translator/:personaId" element={<SampleReportPage />} />
+        <Route path="/translator" element={<Navigate to="/translator/samples" replace />} />
+        <Route path="/translators" element={<Navigate to="/translator/samples" replace />} />
+        <Route path="/identity" element={<RedirectHome />} />
+        <Route path="/identity/questions" element={<RedirectHome />} />
+        <Route path="/identity/result/:reportId" element={<RedirectHome />} />
+        <Route path="/coaching" element={<RedirectHome />} />
+        <Route path="/consulting/questions" element={<Navigate to="/translator/questions" replace />} />
+        <Route path="/consulting/report/:intakeId" element={<TranslatorReportPage />} />
+        <Route path="/consulting/intakes/:intakeId" element={<RedirectHome />} />
+        <Route path="/services" element={<RedirectHome />} />
+        <Route path="/services/consulting" element={<RedirectHome />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
-        <Route path="/admin/user/:userId" element={<ProtectedRoute><AdminUserPage /></ProtectedRoute>} />
-        <Route path="/admin/prescription/:reportId" element={<ProtectedRoute><AdminPrescriptionPage /></ProtectedRoute>} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/user/:userId" element={<AdminUserPage />} />
+        <Route path="/admin/prescription/:reportId" element={<AdminPrescriptionPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="*" element={<ProtectedRoute><NotFoundPage /></ProtectedRoute>} />
+        <Route path="*" element={<RedirectHome />} />
       </Routes>
     </AnimatePresence>
   );

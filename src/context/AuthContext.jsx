@@ -42,6 +42,9 @@ export function AuthProvider({ children }) {
       if (!mounted) return;
       setSession(data.session ?? null);
       setUser(data.session?.user ?? null);
+      if (data.session?.user && data.session?.access_token) {
+        migrateGuestData(data.session.access_token, getStoredString(STORAGE_KEYS.guestSessionId));
+      }
       setLoading(false);
     });
 
@@ -114,7 +117,7 @@ export function AuthProvider({ children }) {
     clearGuestMode();
     removeStoredValue(STORAGE_KEYS.authRedirect);
     removeStoredSessionValue(STORAGE_KEYS.prescriptionAccessCode);
-    removeStoredSessionValue(STORAGE_KEYS.consultingAccessCode);
+    removeStoredSessionValue(STORAGE_KEYS.translatorAccessCode);
     removeStoredSessionValue(STORAGE_KEYS.trackingSessionId);
     if (!supabase) return;
     const { error } = await supabase.auth.signOut();

@@ -1,0 +1,370 @@
+{
+  "version": 2,
+  "issue": {
+    "season": "2026 SUMMER",
+    "no": "0001"
+  },
+  "naming": {
+    "name": "비움의 소재주의자",
+    "tagline": "덜어낼수록 선명해지는 사람"
+  },
+  "diagnosis": {
+    "observed": {
+      "label": "관찰 — 사진에서 본 것",
+      "lead": "방향은 이미 끝나 있어요. 문제는 마감입니다.",
+      "body": "무지 이너, 뉴트럴 톤, 군더더기 없는 실루엣 — 고를 줄 아는 사람의 옷장이에요. 그런데 목선이 살짝 늘어난 면 티가 보여요. 심플과 '아무거나'는 한 끗 차이인데, 그 한 끗이 재질과 마감이에요. 님의 스타일이 흐려 보이는 날은 방향이 틀린 날이 아니라 마감이 무너진 날입니다."
+    },
+    "tension": {
+      "label": "긴장 — 답변 사이에서 읽은 것",
+      "lead": "눈에 띄고 싶지 않다면서, 나다운 스타일을 원한다고 했어요.",
+      "body": "모순 같지만 아니에요. 님이 원하는 건 '시선을 끄는 것'이 아니라 '기억에 남는 것'이거든요. 시선은 색과 로고가 끌지만, 기억은 재질과 태도가 남겨요. 16년 무명과 심플한 군생활을 좋아했다고 말하는 사람 — 님에게 비움은 결핍이 아니라 취향의 완성형이에요. 그래서 님의 답은 화려해지는 게 아니라, 지금의 심플을 한 단계 좋은 재질로 올리는 겁니다."
+    },
+    "reference": {
+      "label": "추구미 — 구자경이라는 답",
+      "body": "닮고 싶은 인물에 자기가 연기한 배역을 적는 사람은 드물어요. 남의 스타일을 동경하는 게 아니라, 이미 자기 안에 있는 모습을 확인받고 싶은 거예요. 구자경의 말 없는 담백함 — 그건 님이 만든 인물이니까, 님이 이미 가진 것입니다."
+    },
+    "verdict": "그래서 이름을 이렇게 붙입니다 — 비움의 소재주의자. 덜어내는 것으로 존재하고, 남긴 것의 재질로 말하는 사람. 이 가이드북의 모든 규정은 이 한 줄에서 나옵니다.",
+    "compare": {
+      "bad": {
+        "title": "유니클로 에어리즘 AiRism 메쉬 베이직 크루넥 코튼 반팔 티셔츠 기능성 가벼운 이너티",
+        "link": "https://smartstore.naver.com/main/products/11457907820",
+        "image": "https://shopping-phinf.pstatic.net/main_8900241/89002418185.2.jpg",
+        "price": 17900,
+        "brand": "유니클로",
+        "mall": "BSC 스토어",
+        "label": "그냥 얇은 면 티",
+        "note": "두 달이면 목선이 무너져요 — 방치"
+      },
+      "good": {
+        "title": "원픽 남성 티셔츠 반팔 여름 캐주얼 라운드넥 프린트 탑",
+        "link": "https://smartstore.naver.com/main/products/13648202618",
+        "image": "https://shopping-phinf.pstatic.net/main_9119271/91192713396.jpg",
+        "price": 26300,
+        "brand": "원픽",
+        "mall": "원픽세이브",
+        "label": "230g 헤비코튼",
+        "note": "무게가 형태를 지켜요 — 비움"
+      }
+    },
+    "photo": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/20220801_Son_Seok-koo_%EC%86%90%EC%84%9D%EA%B5%AC_Marie_Claire_Korea_%281%29.jpg",
+      "credit": "Photo: Marie Claire Korea · CC BY 3.0 · Wikimedia Commons",
+      "points": [
+        {
+          "x": 18,
+          "y": 66,
+          "label": "어깨선 정위치 — 다부진 상체가 섭니다"
+        },
+        {
+          "x": 47,
+          "y": 53,
+          "label": "무광 니트·하이넥 — 재질로 말하는 착장"
+        },
+        {
+          "x": 72,
+          "y": 80,
+          "label": "단색 — 시선이 얼굴에 남습니다"
+        }
+      ]
+    }
+  },
+  "rules": [
+    "옷은 재질로 고르세요. 디자인이 먼저 눈에 들어오는 옷은 님 옷이 아닙니다.",
+    "색은 그레이·네이비·베이지 밖에서 사지 마세요.",
+    "이번 시즌, 아우터 딱 한 벌만. 나머지 옷장은 이미 끝나 있습니다."
+  ],
+  "system": {
+    "colors": {
+      "core": [
+        {
+          "name": "차콜 그레이",
+          "hex": "#3a3a3c",
+          "note": "기본 축 — 상·하의 어디든",
+          "products": [
+            {
+              "title": "헤지스 마이크로 조직 카라 니트 HZSW5B551",
+              "link": "https://search.shopping.naver.com/catalog/57612292767",
+              "image": "https://shopping-phinf.pstatic.net/main_5761229/57612292767.20251106162542.jpg",
+              "price": 88280,
+              "brand": "헤지스",
+              "mall": "네이버"
+            },
+            {
+              "title": "지오지아 슬럽 반팔 카라 니트 ABG2ET1101",
+              "link": "https://search.shopping.naver.com/catalog/59491364854",
+              "image": "https://shopping-phinf.pstatic.net/main_5949136/59491364854.20260621070717.jpg",
+              "price": 43120,
+              "brand": "지오지아",
+              "mall": "네이버"
+            }
+          ]
+        },
+        {
+          "name": "딥 네이비",
+          "hex": "#2c3549",
+          "note": "포멀이 필요한 날의 답",
+          "products": [
+            {
+              "title": "라코스테 반팔 옥스포드 셔츠 CH1917 56G",
+              "link": "https://search.shopping.naver.com/catalog/60487669836",
+              "image": "https://shopping-phinf.pstatic.net/main_6048766/60487669836.20260617151514.jpg",
+              "price": 112770,
+              "brand": "라코스테",
+              "mall": "네이버"
+            },
+            {
+              "title": "지오다노 옥스포드 반팔 셔츠",
+              "link": "https://search.shopping.naver.com/catalog/59932756715",
+              "image": "https://shopping-phinf.pstatic.net/main_5993275/59932756715.20260619162344.jpg",
+              "price": 18240,
+              "brand": "지오다노",
+              "mall": "네이버"
+            }
+          ]
+        },
+        {
+          "name": "웜 베이지",
+          "hex": "#cbbfa8",
+          "note": "가을 웜톤의 얼굴빛을 올리는 색",
+          "products": [
+            {
+              "title": "지오지아 쿨소재 테이퍼드핏 치노팬츠 ABF2PP1105",
+              "link": "https://search.shopping.naver.com/catalog/59683991070",
+              "image": "https://shopping-phinf.pstatic.net/main_5968399/59683991070.20260619162336.jpg",
+              "price": 22900,
+              "brand": "지오지아",
+              "mall": "네이버"
+            },
+            {
+              "title": "지오다노 테이퍼드핏 여름 치노 팬츠 면바지",
+              "link": "https://search.shopping.naver.com/catalog/60004075221",
+              "image": "https://shopping-phinf.pstatic.net/main_6000407/60004075221.20260628070602.jpg",
+              "price": 21250,
+              "brand": "지오다노",
+              "mall": "네이버"
+            }
+          ]
+        },
+        {
+          "name": "오프 화이트",
+          "hex": "#f2efe8",
+          "note": "이너 전용 — 순백보다 부드럽게",
+          "products": [
+            {
+              "title": "뉴에라 에센셜 임브로이더리 오버핏 무지 티셔츠 13570096",
+              "link": "https://search.shopping.naver.com/catalog/58298245230",
+              "image": "https://shopping-phinf.pstatic.net/main_5829824/58298245230.20260623071015.jpg",
+              "price": 66100,
+              "brand": "뉴에라",
+              "mall": "네이버"
+            },
+            {
+              "title": "폴햄 쿨 반팔 무지 티셔츠 st0901",
+              "link": "https://search.shopping.naver.com/catalog/59751566661",
+              "image": "https://shopping-phinf.pstatic.net/main_5975156/59751566661.20260628084611.jpg",
+              "price": 14490,
+              "brand": "폴햄",
+              "mall": "네이버"
+            }
+          ]
+        }
+      ],
+      "banned": [
+        {
+          "name": "원색 레드·오렌지",
+          "hex": "#c0392b",
+          "reason": "시선을 부르는 색 — 님의 방향과 반대"
+        },
+        {
+          "name": "파스텔 핑크·민트",
+          "hex": "#e8b4c8",
+          "reason": "님의 무게감과 어긋남"
+        }
+      ]
+    },
+    "silhouette": [
+      {
+        "item": "상의",
+        "spec": "어깨선은 어깨 끝 정위치. 오버핏이어도 어깨는 정확한 옷으로 — 다부진 상체는 흘리지 말고 세울 것"
+      },
+      {
+        "item": "하의",
+        "spec": "밑단 19–20cm 스트레이트, 기장은 복사뼈에서 끊기게. 와이드는 발등을 덮는 순간 흐트러짐"
+      },
+      {
+        "item": "아우터",
+        "spec": "힙을 반쯤 덮는 기장, 미니멀 라펠. 몸을 조이지 않되 선은 살아 있게"
+      }
+    ],
+    "fabric": [
+      "면은 230g 이상 헤비코튼 — 목선이 늘어나지 않는 무게",
+      "니트·재킷은 울 60% 이상 — 재질이 전부인 옷장에서 혼용률은 스펙",
+      "광택 나는 기능성 소재 금지 — 무광이 님의 질감"
+    ],
+    "dont": [
+      {
+        "rule": "로고가 보이는 옷",
+        "reason": "님의 얼굴이 이미 로고입니다"
+      },
+      {
+        "rule": "한 착장에 세 가지 색 이상",
+        "reason": "색이 늘수록 재질이 안 보여요"
+      },
+      {
+        "rule": "낡음을 빈티지로 착각",
+        "reason": "목선 늘어난 티는 비움이 아니라 방치"
+      }
+    ]
+  },
+  "action": {
+    "wardrobe": {
+      "keep": [
+        "무지 티·니트 전부",
+        "그레이·네이비 슬랙스"
+      ],
+      "tailor": [
+        "슬랙스 기장 3cm 수선 — 복사뼈에서 끊기게. 만 원으로 인상이 달라집니다"
+      ],
+      "release": [
+        "목선 늘어난 티 전부",
+        "그래픽·로고 있는 것 전부"
+      ]
+    },
+    "fill": [
+      {
+        "priority": 1,
+        "item": "차콜 발마칸 코트",
+        "why": "재질이 전부인 옷 — 님의 처방 ①을 한 벌로 증명",
+        "budget": "60–80만원"
+      },
+      {
+        "priority": 2,
+        "item": "무광 블랙 더비",
+        "why": "행사와 일상을 한 켤레로",
+        "budget": "30만원 안팎"
+      }
+    ],
+    "tpo": [
+      {
+        "name": "행사·무대",
+        "look": "차콜 셋업 + 오프화이트 이너 + 무광 더비"
+      },
+      {
+        "name": "일상",
+        "look": "헤비코튼 티 + 그레이 슬랙스 + 발마칸"
+      }
+    ],
+    "releaseImages": [
+      {
+        "title": "남자 반팔티 오버핏 그래픽 프린팅 레터링 아이스 분또 티셔츠 빅사이즈",
+        "link": "https://smartstore.naver.com/main/products/11855241572",
+        "image": "https://shopping-phinf.pstatic.net/main_8939975/89399752166.2.jpg",
+        "price": 21500,
+        "brand": "프린트스타",
+        "mall": "해시노멀",
+        "label": "그래픽·로고"
+      },
+      {
+        "title": "아디다스 나이키 빅사이즈 여름 기능성 면 라운드 커플 쿨 티셔츠 반팔 반팔티 운동복",
+        "link": "https://smartstore.naver.com/main/products/6440869043",
+        "image": "https://shopping-phinf.pstatic.net/main_8398536/83985369376.1.jpg",
+        "price": 17900,
+        "brand": "아디다스",
+        "mall": "하이스포티",
+        "label": "빅로고"
+      }
+    ]
+  },
+  "letter": {
+    "body": "16년 무명을 버티게 한 그 심플한 생활이, 지금 님의 옷장에 그대로 있습니다. 저희가 한 일은 새 스타일을 만든 게 아니라 님이 이미 살아온 방식을 옷의 언어로 번역한 것뿐이에요. 덜어낼수록 님이 남습니다 — 그건 님이 저희보다 먼저 알고 있던 사실이고요.",
+    "principle": "혼자 쇼핑할 때는 단 하나만 — 만졌을 때 좋은가. 눈보다 손을 믿으세요.",
+    "next": "가을이 오면 아우터의 계절입니다. 그때 다시 봅시다.",
+    "signed": "VIZUDEN 스타일 번역가"
+  },
+  "looks": [
+    {
+      "id": "daily",
+      "name": "일상",
+      "caption": "재질 좋은 기본 셋 — 아무것도 안 한 것처럼 보이는 게 목표",
+      "items": [
+        {
+          "role": "상의",
+          "name": "헤비코튼 무지 반팔티 오프화이트",
+          "title": "(매장)라코스테 베이직 헤비저지 반팔 티셔츠 오프화이트 TH315E-56G 001",
+          "link": "https://smartstore.naver.com/main/products/13622282018",
+          "image": "https://shopping-phinf.pstatic.net/main_9116679/91166792435.jpg",
+          "price": 65400,
+          "mall": "에버크루리테일",
+          "brand": "라코스테"
+        },
+        {
+          "role": "하의",
+          "name": "그레이 와이드 슬랙스",
+          "title": "후러브스아트 유니섹스 세미 와이드 밴딩 슬랙스",
+          "link": "https://search.shopping.naver.com/catalog/59931945933",
+          "image": "https://shopping-phinf.pstatic.net/main_5993194/59931945933.20260628070556.jpg",
+          "price": 29700,
+          "mall": "네이버",
+          "brand": "후러브스아트"
+        },
+        {
+          "role": "아우터",
+          "name": "차콜 발마칸 코트",
+          "title": "지오지아 세미 오버 발마칸 코트 ABC4CG3103",
+          "link": "https://search.shopping.naver.com/catalog/54390694648",
+          "image": "https://shopping-phinf.pstatic.net/main_5439069/54390694648.20260703071744.jpg",
+          "price": 56680,
+          "mall": "네이버",
+          "brand": "지오지아"
+        },
+        {
+          "role": "신발",
+          "name": "스웨이드 로퍼 브라운",
+          "title": "반스 로퍼 53 스웨이드",
+          "link": "https://search.shopping.naver.com/catalog/59488205974",
+          "image": "https://shopping-phinf.pstatic.net/main_5948820/59488205974.20260621070942.jpg",
+          "price": 65500,
+          "mall": "네이버",
+          "brand": "반스"
+        }
+      ]
+    },
+    {
+      "id": "formal",
+      "name": "행사·무대",
+      "caption": "차콜 셋업 하나로 끝 — 색이 없을수록 얼굴이 남는다",
+      "items": [
+        {
+          "role": "셋업",
+          "name": "차콜 수트 셋업",
+          "title": "파렌하이트 봄 여름 남자 정장 SS 차콜 그레이 세미오버핏 캐주얼 스판 셋업 반더블 수트",
+          "link": "https://smartstore.naver.com/main/products/13147380798",
+          "image": "https://shopping-phinf.pstatic.net/main_9069189/90691891890.jpg",
+          "price": 159000,
+          "mall": "파렌하이트 북수원",
+          "brand": "파렌하이트"
+        },
+        {
+          "role": "이너",
+          "name": "오프화이트 셔츠 레귤러핏",
+          "title": "망고 레귤러 핏 셔츠 오프화이트 10891534 M9122D2YM A11 142873515",
+          "link": "https://www.trenbe.com/good/142873515?utm_source=naver&inflow=naver&utm_campaign=ns&utm_medium=affiliate&utm_term={query}&utm_content=142873515&n_t_param=trenbecps&t_dt_pc",
+          "image": "https://shopping-phinf.pstatic.net/main_5971103/59711031374.jpg",
+          "price": 84100,
+          "mall": "트렌비",
+          "brand": "망고"
+        },
+        {
+          "role": "신발",
+          "name": "무광 블랙 더비 슈즈",
+          "title": "허시파피 무광 더비슈즈 3MR521",
+          "link": "https://search.shopping.naver.com/catalog/59495855399",
+          "image": "https://shopping-phinf.pstatic.net/main_5949585/59495855399.20260619170717.jpg",
+          "price": 116690,
+          "mall": "네이버",
+          "brand": "허시파피"
+        }
+      ]
+    }
+  ]
+}

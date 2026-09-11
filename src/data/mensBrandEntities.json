@@ -1,0 +1,4626 @@
+[
+  {
+    "name_ko": "유니클로",
+    "name_en": "UNIQLO",
+    "aliases": [
+      "Uniqlo"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "유니클로 U",
+    "name_en": "UNIQLO U",
+    "aliases": [
+      "Uniqlo U"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "UNIQLO",
+    "relationship_label": "sub",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "유니클로 : C",
+    "name_en": "UNIQLO : C",
+    "aliases": [
+      "Uniqlo : C",
+      "UNIQLO C"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "UNIQLO",
+    "relationship_label": "sub",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "유니클로 and JW 앤더슨",
+    "name_en": "UNIQLO and JW ANDERSON",
+    "aliases": [
+      "Uniqlo and JW Anderson",
+      "UNIQLO x JW ANDERSON"
+    ],
+    "origin_country": "JP",
+    "entity_type": "collaboration",
+    "parent_name_en": "UNIQLO",
+    "relationship_label": "sub",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "무인양품",
+    "name_en": "MUJI",
+    "aliases": [
+      "Muji",
+      "무지"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "지오다노",
+    "name_en": "GIORDANO",
+    "aliases": [
+      "Giordano"
+    ],
+    "origin_country": "HK",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "무신사 스탠다드",
+    "name_en": "MUSINSA STANDARD",
+    "aliases": [
+      "Musinsa Standard"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "에잇세컨즈",
+    "name_en": "8 seconds",
+    "aliases": [
+      "8SECONDS",
+      "8 Seconds"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "스파오",
+    "name_en": "SPAO",
+    "aliases": [
+      "Spao"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "탑텐",
+    "name_en": "TOPTEN10",
+    "aliases": [
+      "Topten10",
+      "탑텐10"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "헤지스",
+    "name_en": "HAZZYS",
+    "aliases": [
+      "Hazzys"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "헤지스 블루",
+    "name_en": "HAZZYS BLUE",
+    "aliases": [
+      "Hazzys Blue"
+    ],
+    "origin_country": "KR",
+    "entity_type": "line",
+    "parent_name_en": "HAZZYS",
+    "relationship_label": "sub",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "디스이즈네버댓",
+    "name_en": "thisisneverthat",
+    "aliases": [
+      "Thisisneverthat",
+      "TINT"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "streetwear",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "커버낫",
+    "name_en": "COVERNAT",
+    "aliases": [
+      "Covernat"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "streetwear",
+      "americana"
+    ]
+  },
+  {
+    "name_ko": "인사일런스",
+    "name_en": "INSILENCE",
+    "aliases": [
+      "Insilence"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "프리즘웍스",
+    "name_en": "FRIZMWORKS",
+    "aliases": [
+      "FrizmWORKS",
+      "Frizmworks"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "streetwear",
+      "heritage",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "드로우핏",
+    "name_en": "DRAW FIT",
+    "aliases": [
+      "Draw Fit",
+      "DRAWFIT"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "파르티멘토",
+    "name_en": "PARTIMENTO",
+    "aliases": [
+      "Partimento"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "vintage",
+      "americana",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "렉토",
+    "name_en": "RECTO",
+    "aliases": [
+      "Recto"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "classic",
+      "korean",
+      "minimal",
+      "일상"
+    ]
+  },
+  {
+    "name_ko": "앤더슨벨",
+    "name_en": "ANDERSSON BELL",
+    "aliases": [
+      "Andersson Bell"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "포터리",
+    "name_en": "POTTERY",
+    "aliases": [
+      "Pottery"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "minimal",
+      "workwear",
+      "korean",
+      "절제",
+      "일상"
+    ]
+  },
+  {
+    "name_ko": "코스",
+    "name_en": "COS",
+    "aliases": [
+      "Cos"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "minimal",
+      "european",
+      "일상",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "아르켓",
+    "name_en": "ARKET",
+    "aliases": [
+      "Arket"
+    ],
+    "origin_country": "SE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "minimal",
+      "scandinavian",
+      "일상"
+    ]
+  },
+  {
+    "name_ko": "자라",
+    "name_en": "ZARA",
+    "aliases": [
+      "Zara"
+    ],
+    "origin_country": "ES",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "자라 오리진스",
+    "name_en": "ZARA ORIGINS",
+    "aliases": [
+      "Zara Origins"
+    ],
+    "origin_country": "ES",
+    "entity_type": "line",
+    "parent_name_en": "ZARA",
+    "relationship_label": "sub",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "마시모두띠",
+    "name_en": "Massimo Dutti",
+    "aliases": [
+      "MASSIMO DUTTI"
+    ],
+    "origin_country": "ES",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "classic",
+      "european",
+      "tailored"
+    ]
+  },
+  {
+    "name_ko": "빈폴멘",
+    "name_en": "BEANPOLE MEN",
+    "aliases": [
+      "Beanpole Men",
+      "빈폴 맨"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "폴로 랄프 로렌",
+    "name_en": "POLO RALPH LAUREN",
+    "aliases": [
+      "Polo Ralph Lauren"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "americana",
+      "classic",
+      "preppy",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "세터",
+    "name_en": "SATUR",
+    "aliases": [
+      "Satur"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "아더 에러",
+    "name_en": "ADER ERROR",
+    "aliases": [
+      "Ader Error",
+      "ADERERROR"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "메종 미네드",
+    "name_en": "MAISON MINED",
+    "aliases": [
+      "Maison Mined"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "엘엠씨",
+    "name_en": "LMC",
+    "aliases": [
+      "Lost Management Cities"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "streetwear"
+    ]
+  },
+  {
+    "name_ko": "코드그라피",
+    "name_en": "CODEGRAPHY",
+    "aliases": [
+      "Codegraphy"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "아모멘토",
+    "name_en": "AMOMENTO",
+    "aliases": [
+      "Amomento"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "오디너리피플",
+    "name_en": "ORDINARY PEOPLE",
+    "aliases": [
+      "Ordinarypeople",
+      "Ordinary People"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "streetwear"
+    ]
+  },
+  {
+    "name_ko": "이스트로그",
+    "name_en": "EASTLOGUE",
+    "aliases": [
+      "Eastlogue"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "workwear",
+      "heritage",
+      "americana",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "브라운야드",
+    "name_en": "BROWNYARD",
+    "aliases": [
+      "Brownyard"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "workwear",
+      "heritage"
+    ]
+  },
+  {
+    "name_ko": "포스트 아카이브 팩션",
+    "name_en": "POST ARCHIVE FACTION (PAF)",
+    "aliases": [
+      "POST ARCHIVE FACTION",
+      "PAF",
+      "Post Archive Faction"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "technical",
+      "avant-garde",
+      "기능미",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "산산기어",
+    "name_en": "SAN SAN GEAR",
+    "aliases": [
+      "San San Gear",
+      "SANSANGEAR"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "korean",
+      "functional"
+    ]
+  },
+  {
+    "name_ko": "아조바이아조",
+    "name_en": "AJOBYAJO",
+    "aliases": [
+      "Ajobyajo"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "avant-garde",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "르917셉템버",
+    "name_en": "LE 17 SEPTEMBRE",
+    "aliases": [
+      "Le 17 Septembre"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "minimal",
+      "french",
+      "contemporary",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "우영미",
+    "name_en": "WOOYOUNGMI",
+    "aliases": [
+      "Wooyoungmi"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "tailored",
+      "contemporary",
+      "클래식"
+    ]
+  },
+  {
+    "name_ko": "준지",
+    "name_en": "JUUN.J",
+    "aliases": [
+      "Juun.J",
+      "JUUN J"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "dark",
+      "avant-garde",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "솔리드 옴므",
+    "name_en": "SOLID HOMME",
+    "aliases": [
+      "Solid Homme"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "classic",
+      "tailored"
+    ]
+  },
+  {
+    "name_ko": "시스템옴므",
+    "name_en": "SYSTEM HOMME",
+    "aliases": [
+      "System Homme"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "송지오",
+    "name_en": "SONGZIO",
+    "aliases": [
+      "Songzio"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "dark",
+      "tailored",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "벌스데이수트",
+    "name_en": "BIRTHDAYSUIT",
+    "aliases": [
+      "Birthdaysuit"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "트릴리온",
+    "name_en": "TRILLION",
+    "aliases": [
+      "Thetrillion",
+      "Trillion"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "아페쎄",
+    "name_en": "A.P.C.",
+    "aliases": [
+      "APC",
+      "A P C"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "french",
+      "classic",
+      "절제",
+      "일상"
+    ]
+  },
+  {
+    "name_ko": "바버",
+    "name_en": "Barbour",
+    "aliases": [
+      "BARBOUR"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "칼하트 WIP",
+    "name_en": "Carhartt WIP",
+    "aliases": [
+      "CARHARTT WIP"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "workwear",
+      "americana",
+      "일상",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "C.P. 컴퍼니",
+    "name_en": "C.P. Company",
+    "aliases": [
+      "CP Company",
+      "C P Company"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "스톤 아일랜드",
+    "name_en": "Stone Island",
+    "aliases": [
+      "STONE ISLAND"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "technical",
+      "italian",
+      "contemporary",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "비바스튜디오",
+    "name_en": "VIVASTUDIO",
+    "aliases": [
+      "Vivastudio"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "유니폼 브릿지",
+    "name_en": "UNIFORM BRIDGE",
+    "aliases": [
+      "Uniform Bridge"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "에스피오나지",
+    "name_en": "ESPIONAGE",
+    "aliases": [
+      "Espionage"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "87MM",
+    "name_en": "87MM",
+    "aliases": [
+      "87mm"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "streetwear"
+    ]
+  },
+  {
+    "name_ko": "Mmlg",
+    "name_en": "Mmlg",
+    "aliases": [
+      "MMLG"
+    ],
+    "origin_country": "KR",
+    "entity_type": "line",
+    "parent_name_en": "87MM",
+    "relationship_label": "sub",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "그라미치",
+    "name_en": "GRAMICCI",
+    "aliases": [
+      "Gramicci"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "americana",
+      "heritage",
+      "일상"
+    ]
+  },
+  {
+    "name_ko": "라이풀 미니멀 가먼츠",
+    "name_en": "LIFUL MINIMAL GARMENTS",
+    "aliases": [
+      "Liful Minimal Garments",
+      "LIFUL"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "minimal",
+      "korean",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "예일",
+    "name_en": "YALE",
+    "aliases": [
+      "Yale"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "크리틱",
+    "name_en": "CRITIC",
+    "aliases": [
+      "Critic"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "CPGN 스튜디오",
+    "name_en": "CPGN STUDIO",
+    "aliases": [
+      "Cpgn Studio",
+      "CPGN"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "에프씨엠엠",
+    "name_en": "FCMM",
+    "aliases": [
+      "Fcmm"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "널디",
+    "name_en": "NERDY",
+    "aliases": [
+      "Nerdy"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "위캔더스",
+    "name_en": "WKNDRS",
+    "aliases": [
+      "Wkndrs"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "빔즈",
+    "name_en": "BEAMS",
+    "aliases": [
+      "Beams"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "유나이티드 애로우즈",
+    "name_en": "UNITED ARROWS",
+    "aliases": [
+      "United Arrows"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "contemporary",
+      "select shop"
+    ]
+  },
+  {
+    "name_ko": "뷰티앤유스 유나이티드 애로우즈",
+    "name_en": "BEAUTY&YOUTH UNITED ARROWS",
+    "aliases": [
+      "Beauty&Youth United Arrows",
+      "BEAUTY AND YOUTH UNITED ARROWS"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "UNITED ARROWS",
+    "relationship_label": "sub",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "나나미카",
+    "name_en": "nanamica",
+    "aliases": [
+      "Nanamica"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "outdoor",
+      "japanese",
+      "minimal",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "스노우피크",
+    "name_en": "Snow Peak",
+    "aliases": [
+      "SNOW PEAK"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "outdoor",
+      "japanese",
+      "functional",
+      "기능미",
+      "탐험",
+      "노마드"
+    ]
+  },
+  {
+    "name_ko": "파타고니아",
+    "name_en": "Patagonia",
+    "aliases": [
+      "PATAGONIA"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "outdoor",
+      "functional",
+      "americana",
+      "기능미",
+      "탐험"
+    ]
+  },
+  {
+    "name_ko": "아크테릭스",
+    "name_en": "Arc'teryx",
+    "aliases": [
+      "ARC'TERYX",
+      "Arcteryx"
+    ],
+    "origin_country": "CA",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "뉴발란스",
+    "name_en": "New Balance",
+    "aliases": [
+      "NEW BALANCE"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "americana",
+      "스포츠",
+      "heritage"
+    ]
+  },
+  {
+    "name_ko": "아식스",
+    "name_en": "ASICS",
+    "aliases": [
+      "Asics"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "살로몬",
+    "name_en": "Salomon",
+    "aliases": [
+      "SALOMON"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "technical",
+      "functional"
+    ]
+  },
+  {
+    "name_ko": "리바이스",
+    "name_en": "Levi's",
+    "aliases": [
+      "LEVI'S",
+      "Levis"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "americana",
+      "heritage",
+      "denim",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "디키즈",
+    "name_en": "Dickies",
+    "aliases": [
+      "DICKIES"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "챔피온",
+    "name_en": "Champion",
+    "aliases": [
+      "CHAMPION"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "americana",
+      "streetwear",
+      "heritage"
+    ]
+  },
+  {
+    "name_ko": "러셀 애슬레틱",
+    "name_en": "Russell Athletic",
+    "aliases": [
+      "RUSSELL ATHLETIC"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "닥터마틴",
+    "name_en": "Dr. Martens",
+    "aliases": [
+      "DR. MARTENS",
+      "Dr Martens"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "heritage",
+      "british",
+      "workwear"
+    ]
+  },
+  {
+    "name_ko": "파라부트",
+    "name_en": "Paraboot",
+    "aliases": [
+      "PARABOOT"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "french",
+      "classic",
+      "heritage",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "클레망",
+    "name_en": "KLEMAN",
+    "aliases": [
+      "Kleman"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "레드 윙",
+    "name_en": "Red Wing Shoes",
+    "aliases": [
+      "RED WING",
+      "Red Wing"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "workwear",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "오어슬로우",
+    "name_en": "orSlow",
+    "aliases": [
+      "ORSLOW"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "workwear",
+      "americana",
+      "amekaji",
+      "minimal",
+      "일상"
+    ]
+  },
+  {
+    "name_ko": "니들스",
+    "name_en": "Needles",
+    "aliases": [
+      "NEEDLES"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "amekaji",
+      "workwear",
+      "heritage",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "엔지니어드 가먼츠",
+    "name_en": "Engineered Garments",
+    "aliases": [
+      "ENGINEERED GARMENTS"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "workwear",
+      "americana",
+      "amekaji",
+      "헤리티지",
+      "탐험"
+    ]
+  },
+  {
+    "name_ko": "사우스2 웨스트8",
+    "name_en": "South2 West8",
+    "aliases": [
+      "SOUTH2 WEST8"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "amekaji",
+      "outdoor",
+      "heritage"
+    ]
+  },
+  {
+    "name_ko": "캐피탈",
+    "name_en": "KAPITAL",
+    "aliases": [
+      "Kapital"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "amekaji",
+      "heritage",
+      "western",
+      "헤리티지",
+      "탐험",
+      "노마드"
+    ]
+  },
+  {
+    "name_ko": "오라리",
+    "name_en": "AURALEE",
+    "aliases": [
+      "Auralee"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "코모리",
+    "name_en": "COMOLI",
+    "aliases": [
+      "Comoli"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "야에카",
+    "name_en": "YAECA",
+    "aliases": [
+      "Yaeca"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese",
+      "organic",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "그라프페이퍼",
+    "name_en": "Graphpaper",
+    "aliases": [
+      "GRAPHPAPER"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "마카웨어",
+    "name_en": "markaware",
+    "aliases": [
+      "MARKAWARE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese",
+      "절제",
+      "organic"
+    ]
+  },
+  {
+    "name_ko": "마카",
+    "name_en": "marka",
+    "aliases": [
+      "MARKA"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "캡틴 선샤인",
+    "name_en": "Kaptain Sunshine",
+    "aliases": [
+      "KAPTAIN SUNSHINE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "amekaji",
+      "japanese",
+      "classic",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "프레시서비스",
+    "name_en": "FreshService",
+    "aliases": [
+      "FRESHSERVICE",
+      "Fresh Service"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "앤드 원더",
+    "name_en": "and wander",
+    "aliases": [
+      "AND WANDER",
+      "And Wander"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "골드윈",
+    "name_en": "Goldwin",
+    "aliases": [
+      "GOLDWIN"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "노스페이스",
+    "name_en": "The North Face",
+    "aliases": [
+      "THE NORTH FACE",
+      "TNF"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "technical",
+      "americana"
+    ]
+  },
+  {
+    "name_ko": "노스페이스 퍼플 라벨",
+    "name_en": "THE NORTH FACE PURPLE LABEL",
+    "aliases": [
+      "The North Face Purple Label",
+      "TNF Purple Label"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "The North Face",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "노스 프로젝트",
+    "name_en": "Norse Projects",
+    "aliases": [
+      "NORSE PROJECTS"
+    ],
+    "origin_country": "DK",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "scandinavian",
+      "outdoor",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "아워 레가시",
+    "name_en": "Our Legacy",
+    "aliases": [
+      "OUR LEGACY"
+    ],
+    "origin_country": "SE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "scandinavian",
+      "contemporary",
+      "절제",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "아크네 스튜디오",
+    "name_en": "Acne Studios",
+    "aliases": [
+      "ACNE STUDIOS"
+    ],
+    "origin_country": "SE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "minimal",
+      "scandinavian",
+      "contemporary",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "르메르",
+    "name_en": "Lemaire",
+    "aliases": [
+      "LEMAIRE"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "minimal",
+      "french",
+      "quiet luxury",
+      "절제",
+      "여행",
+      "노마드"
+    ]
+  },
+  {
+    "name_ko": "메종 키츠네",
+    "name_en": "Maison Kitsune",
+    "aliases": [
+      "MAISON KITSUNE",
+      "Maison Kitsuné"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "french",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "유니버설 웍스",
+    "name_en": "Universal Works",
+    "aliases": [
+      "UNIVERSAL WORKS"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "와이엠씨",
+    "name_en": "YMC",
+    "aliases": [
+      "You Must Create"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "british",
+      "contemporary",
+      "heritage"
+    ]
+  },
+  {
+    "name_ko": "마가렛 하울",
+    "name_en": "MARGARET HOWELL",
+    "aliases": [
+      "Margaret Howell"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "british",
+      "classic",
+      "절제",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "엠에이치엘",
+    "name_en": "MHL.",
+    "aliases": [
+      "MHL"
+    ],
+    "origin_country": "GB",
+    "entity_type": "line",
+    "parent_name_en": "MARGARET HOWELL",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "세프르",
+    "name_en": "SEFR",
+    "aliases": [
+      "Séfr",
+      "Sefr"
+    ],
+    "origin_country": "SE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "scandinavian",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "드레익스",
+    "name_en": "Drake's",
+    "aliases": [
+      "DRAKE'S",
+      "Drakes"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "드레익스 캐주얼",
+    "name_en": "Drake's Casual",
+    "aliases": [
+      "DRAKE'S CASUAL"
+    ],
+    "origin_country": "GB",
+    "entity_type": "line",
+    "parent_name_en": "Drake's",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "토니웩",
+    "name_en": "TONYWACK",
+    "aliases": [
+      "Tonywack"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "쿠어",
+    "name_en": "COOR",
+    "aliases": [
+      "Coor"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "로파이",
+    "name_en": "LOFI",
+    "aliases": [
+      "Lofi"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "수아레",
+    "name_en": "SUARE",
+    "aliases": [
+      "Suare"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "제멋",
+    "name_en": "ZEMETA",
+    "aliases": [
+      "Zemeta"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "토피",
+    "name_en": "TOFFEE",
+    "aliases": [
+      "Toffee"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "다이와 피어39",
+    "name_en": "DAIWA PIER39",
+    "aliases": [
+      "Daiwa Pier39",
+      "Daiwa Pier 39"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "테아토라",
+    "name_en": "TEATORA",
+    "aliases": [
+      "Teatora"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "technical",
+      "travel",
+      "기능미",
+      "노마드"
+    ]
+  },
+  {
+    "name_ko": "논네이티브",
+    "name_en": "nonnative",
+    "aliases": [
+      "NONNATIVE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "outdoor",
+      "japanese",
+      "minimal",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "헨더 스킴",
+    "name_en": "Hender Scheme",
+    "aliases": [
+      "HENDER SCHEME"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "비즈빔",
+    "name_en": "visvim",
+    "aliases": [
+      "Visvim",
+      "VISVIM"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "amekaji",
+      "heritage",
+      "western",
+      "handcraft",
+      "헤리티지",
+      "노마드",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "언더커버",
+    "name_en": "UNDERCOVER",
+    "aliases": [
+      "Undercover"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "avant-garde",
+      "japanese",
+      "실험",
+      "경계 없음"
+    ]
+  },
+  {
+    "name_ko": "더블탭스",
+    "name_en": "WTAPS",
+    "aliases": [
+      "Wtaps"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "streetwear",
+      "heritage",
+      "japanese",
+      "밀리터리"
+    ]
+  },
+  {
+    "name_ko": "네이버후드",
+    "name_en": "NEIGHBORHOOD",
+    "aliases": [
+      "Neighborhood"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "workwear",
+      "heritage",
+      "japanese",
+      "바이커"
+    ]
+  },
+  {
+    "name_ko": "소프넷",
+    "name_en": "SOPHNET.",
+    "aliases": [
+      "Sophnet",
+      "SOPHNET"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "유니폼 익스페리먼트",
+    "name_en": "uniform experiment",
+    "aliases": [
+      "UNIFORM EXPERIMENT"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "SOPHNET.",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "에프씨리얼브리스톨",
+    "name_en": "F.C.Real Bristol",
+    "aliases": [
+      "F.C. Real Bristol",
+      "FC Real Bristol",
+      "FCRB"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "SOPHNET.",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "아프레쎄",
+    "name_en": "A.PRESSE",
+    "aliases": [
+      "Apresse"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "슈타인",
+    "name_en": "ssstein",
+    "aliases": [
+      "stein",
+      "SSSTEIN"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "니트",
+    "name_en": "NEAT",
+    "aliases": [
+      "Neat"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese",
+      "tailored",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "시오타",
+    "name_en": "CIOTA",
+    "aliases": [
+      "Ciota"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "나이스네스",
+    "name_en": "NICENESS",
+    "aliases": [
+      "Niceness"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "헤릴",
+    "name_en": "HERILL",
+    "aliases": [
+      "Herill"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "에이톤",
+    "name_en": "ATON",
+    "aliases": [
+      "Aton"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "스틸바이핸드",
+    "name_en": "STILL BY HAND",
+    "aliases": [
+      "Still By Hand"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese",
+      "craft",
+      "장인",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "하트라",
+    "name_en": "HATRA",
+    "aliases": [
+      "Hatra"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "애프터프레이",
+    "name_en": "AFTER PRAY",
+    "aliases": [
+      "After Pray"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "N.HOOLYWOOD",
+    "name_en": "N.HOOLYWOOD",
+    "aliases": [
+      "N Hoolywood",
+      "NHOOLYWOOD"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "dark",
+      "heritage",
+      "americana"
+    ]
+  },
+  {
+    "name_ko": "N.HOOLYWOOD COMPILE",
+    "name_en": "N.HOOLYWOOD COMPILE",
+    "aliases": [
+      "N.Hoolywood Compile",
+      "NHOOLYWOOD COMPILE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "N.HOOLYWOOD",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "화이트 마운티니어링",
+    "name_en": "White Mountaineering",
+    "aliases": [
+      "WHITE MOUNTAINEERING"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "outdoor",
+      "japanese",
+      "technical",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "meanswhile",
+    "name_en": "meanswhile",
+    "aliases": [
+      "MEANSWHILE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "technical",
+      "outdoor",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "마운틴 리서치",
+    "name_en": "Mountain Research",
+    "aliases": [
+      "MOUNTAIN RESEARCH"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "outdoor",
+      "japanese",
+      "heritage"
+    ]
+  },
+  {
+    "name_ko": "언유즈드",
+    "name_en": "UNUSED",
+    "aliases": [
+      "Unused"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "avant-garde",
+      "dark",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "DIGAWEL",
+    "name_en": "DIGAWEL",
+    "aliases": [
+      "Digawel"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "Sasquatchfabrix.",
+    "name_en": "Sasquatchfabrix.",
+    "aliases": [
+      "Sasquatchfabrix",
+      "SASQUATCHFABRIX"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "avant-garde",
+      "folk",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "더블렛",
+    "name_en": "doublet",
+    "aliases": [
+      "Doublet",
+      "DOUBLET"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "칠드런 오브 더 디스코던스",
+    "name_en": "Children of the Discordance",
+    "aliases": [
+      "CHILDREN OF THE DISCORDANCE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "JieDa",
+    "name_en": "JieDa",
+    "aliases": [
+      "JIEDA"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "베드 포드",
+    "name_en": "BED j.w. FORD",
+    "aliases": [
+      "Bed jw Ford",
+      "BED J.W. FORD"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "다이리쿠",
+    "name_en": "DAIRIKU",
+    "aliases": [
+      "Dairiku"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "TTT MSW",
+    "name_en": "TTT MSW",
+    "aliases": [
+      "Ttt Msw",
+      "TTT_MSW"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "마수",
+    "name_en": "MASU",
+    "aliases": [
+      "Masu"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "dark",
+      "contemporary",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "KHOKI",
+    "name_en": "KHOKI",
+    "aliases": [
+      "Khoki"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "타이가 타카하시",
+    "name_en": "Taiga Takahashi",
+    "aliases": [
+      "TAIGA TAKAHASHI",
+      "T.T"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "amekaji",
+      "헤리티지",
+      "craft"
+    ]
+  },
+  {
+    "name_ko": "스튜디오 니콜슨",
+    "name_en": "Studio Nicholson",
+    "aliases": [
+      "STUDIO NICHOLSON"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "british",
+      "contemporary",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "mfpen",
+    "name_en": "mfpen",
+    "aliases": [
+      "MFPEN",
+      "Mfpen"
+    ],
+    "origin_country": "DK",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "scandinavian",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "카미엘 포트헨스",
+    "name_en": "Camiel Fortgens",
+    "aliases": [
+      "CAMIEL FORTGENS"
+    ],
+    "origin_country": "NL",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "AFFXWRKS",
+    "name_en": "AFFXWRKS",
+    "aliases": [
+      "Affxwrks",
+      "AFFIX"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "ROA",
+    "name_en": "ROA",
+    "aliases": [
+      "Roa"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "outdoor",
+      "technical",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "엑슬림",
+    "name_en": "XLIM",
+    "aliases": [
+      "Xlim"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "리얼 맥코이",
+    "name_en": "The Real McCoy's",
+    "aliases": [
+      "THE REAL MCCOY'S",
+      "Real McCoys"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "amekaji",
+      "헤리티지",
+      "밀리터리"
+    ]
+  },
+  {
+    "name_ko": "버즈 릭슨",
+    "name_en": "Buzz Rickson's",
+    "aliases": [
+      "BUZZ RICKSON'S",
+      "Buzz Ricksons"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "토이즈 맥코이",
+    "name_en": "TOYS McCOY",
+    "aliases": [
+      "Toys Mccoy",
+      "TOYS MCCOY"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "amekaji",
+      "헤리티지",
+      "밀리터리"
+    ]
+  },
+  {
+    "name_ko": "풀카운트",
+    "name_en": "FULLCOUNT",
+    "aliases": [
+      "Fullcount"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "웨어하우스",
+    "name_en": "WAREHOUSE & CO.",
+    "aliases": [
+      "Warehouse & Co.",
+      "WAREHOUSE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "denim",
+      "heritage",
+      "americana",
+      "amekaji",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "슈가 케인",
+    "name_en": "Sugar Cane",
+    "aliases": [
+      "SUGAR CANE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "denim",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "퍼 오브 갓",
+    "name_en": "Fear of God",
+    "aliases": [
+      "FEAR OF GOD"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "minimal",
+      "workwear",
+      "americana",
+      "어두운 미니멀",
+      "노마드",
+      "내면"
+    ]
+  },
+  {
+    "name_ko": "에센셜",
+    "name_en": "ESSENTIALS",
+    "aliases": [
+      "Fear of God ESSENTIALS",
+      "Essentials Fear of God"
+    ],
+    "origin_country": "US",
+    "entity_type": "line",
+    "parent_name_en": "Fear of God",
+    "relationship_label": "sub",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "릭 오웬스",
+    "name_en": "Rick Owens",
+    "aliases": [
+      "RICK OWENS"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "avant-garde",
+      "어두운 미니멀",
+      "경계 없음"
+    ]
+  },
+  {
+    "name_ko": "다크쉐도우",
+    "name_en": "DRKSHDW",
+    "aliases": [
+      "Drkshdw",
+      "Rick Owens DRKSHDW"
+    ],
+    "origin_country": "IT",
+    "entity_type": "line",
+    "parent_name_en": "Rick Owens",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "보리스 비잔 사베리",
+    "name_en": "Boris Bidjan Saberi",
+    "aliases": [
+      "BORIS BIDJAN SABERI",
+      "BBS"
+    ],
+    "origin_country": "DE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "avant-garde",
+      "어두운 미니멀",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "캐롤 크리스찬 포엘",
+    "name_en": "Carol Christian Poell",
+    "aliases": [
+      "CAROL CHRISTIAN POELL",
+      "CCP"
+    ],
+    "origin_country": "AT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "avant-garde",
+      "craft",
+      "어두운 미니멀"
+    ]
+  },
+  {
+    "name_ko": "마르지엘라",
+    "name_en": "Maison Margiela",
+    "aliases": [
+      "MAISON MARGIELA",
+      "Margiela"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "avant-garde",
+      "minimal",
+      "deconstructed",
+      "절제",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "엠엠식스 메종 마르지엘라",
+    "name_en": "MM6 Maison Margiela",
+    "aliases": [
+      "MM6",
+      "Mm6 Maison Margiela"
+    ],
+    "origin_country": "FR",
+    "entity_type": "line",
+    "parent_name_en": "Maison Margiela",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "요지 야마모토",
+    "name_en": "Yohji Yamamoto",
+    "aliases": [
+      "YOHJI YAMAMOTO"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "avant-garde",
+      "japanese",
+      "어두운 미니멀",
+      "절제",
+      "내면"
+    ]
+  },
+  {
+    "name_ko": "와이즈 포 맨",
+    "name_en": "Y's for men",
+    "aliases": [
+      "Y'S FOR MEN",
+      "Ys for men"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "Yohji Yamamoto",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "준야 와타나베",
+    "name_en": "JUNYA WATANABE",
+    "aliases": [
+      "Junya Watanabe"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "꼼데가르송 옴므",
+    "name_en": "COMME des GARCONS HOMME",
+    "aliases": [
+      "Comme des Garcons Homme",
+      "CdG Homme"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "avant-garde",
+      "japanese",
+      "실험",
+      "경계 없음"
+    ]
+  },
+  {
+    "name_ko": "꼼데가르송 옴므 플뤼스",
+    "name_en": "COMME des GARCONS HOMME PLUS",
+    "aliases": [
+      "Comme des Garcons Homme Plus",
+      "CdG Homme Plus"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "avant-garde",
+      "japanese",
+      "실험",
+      "경계 없음"
+    ]
+  },
+  {
+    "name_ko": "꼼데가르송 셔츠",
+    "name_en": "COMME des GARCONS SHIRT",
+    "aliases": [
+      "Comme des Garcons Shirt",
+      "CdG Shirt"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "포스트오버롤즈",
+    "name_en": "Post O'Alls",
+    "aliases": [
+      "POST O'ALLS",
+      "Post Overalls"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "workwear",
+      "americana",
+      "amekaji",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "라코스테",
+    "name_en": "Lacoste",
+    "aliases": [
+      "LACOSTE"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "classic",
+      "french",
+      "스포츠"
+    ]
+  },
+  {
+    "name_ko": "라코스테 라이브",
+    "name_en": "LACOSTE LIVE",
+    "aliases": [
+      "Lacoste Live"
+    ],
+    "origin_country": "FR",
+    "entity_type": "line",
+    "parent_name_en": "Lacoste",
+    "relationship_label": "sub",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "락피쉬웨더웨어",
+    "name_en": "Rockfish Weatherwear",
+    "aliases": [
+      "ROCKFISH WEATHERWEAR"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "korean",
+      "technical"
+    ]
+  },
+  {
+    "name_ko": "유스",
+    "name_en": "YOUTH",
+    "aliases": [
+      "Youth"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "썬러브",
+    "name_en": "SUNLOVE",
+    "aliases": [
+      "Sunlove"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "포터 클래식",
+    "name_en": "Porter Classic",
+    "aliases": [
+      "PORTER CLASSIC"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "craft",
+      "heritage",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "아나토미카",
+    "name_en": "Anatomica",
+    "aliases": [
+      "ANATOMICA"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "나이젤 카본",
+    "name_en": "Nigel Cabourn",
+    "aliases": [
+      "NIGEL CABOURN"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "british",
+      "workwear",
+      "헤리티지",
+      "밀리터리"
+    ]
+  },
+  {
+    "name_ko": "Ten c",
+    "name_en": "Ten c",
+    "aliases": [
+      "TEN C",
+      "Ten C"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "italian",
+      "craft",
+      "heritage",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "AUBERGE",
+    "name_en": "AUBERGE",
+    "aliases": [
+      "Auberge"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "포터",
+    "name_en": "PORTER",
+    "aliases": [
+      "Porter",
+      "Yoshida Porter"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "japanese",
+      "functional",
+      "craft",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "요시다 포터",
+    "name_en": "YOSHIDA & Co.",
+    "aliases": [
+      "Yoshida & Co.",
+      "Yoshida Kaban"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "미하라 야스히로",
+    "name_en": "Maison MIHARA YASUHIRO",
+    "aliases": [
+      "MIHARA YASUHIRO",
+      "Maison Mihara Yasuhiro"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "avant-garde",
+      "japanese",
+      "deconstructed",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "아워셀브스",
+    "name_en": "OURSELVES",
+    "aliases": [
+      "Ourselves"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "도큐먼트",
+    "name_en": "Document",
+    "aliases": [
+      "DOCUMENT"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "모이프",
+    "name_en": "MOIF",
+    "aliases": [
+      "Moif"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "디세이셉트",
+    "name_en": "DESEYCEPT",
+    "aliases": [
+      "Deseycept"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "아워 유니폼",
+    "name_en": "Our Uniform",
+    "aliases": [
+      "OUR UNIFORM"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "에이카 화이트",
+    "name_en": "AECA WHITE",
+    "aliases": [
+      "Aeca White"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "브랜디드",
+    "name_en": "BRANDED",
+    "aliases": [
+      "Branded"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "레졸루트",
+    "name_en": "RESOLUTE",
+    "aliases": [
+      "Resolute"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "denim",
+      "heritage",
+      "japanese",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "빔즈 플러스",
+    "name_en": "BEAMS PLUS",
+    "aliases": [
+      "Beams Plus"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "BEAMS",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "유나이티드 애로우즈 앤 선즈",
+    "name_en": "UNITED ARROWS & SONS",
+    "aliases": [
+      "United Arrows and Sons",
+      "United Arrows & Sons"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "UNITED ARROWS",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "골드윈 제로",
+    "name_en": "Goldwin 0",
+    "aliases": [
+      "GOLDWIN 0"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "Goldwin",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "블러암스",
+    "name_en": "blurhms",
+    "aliases": [
+      "Blurhms",
+      "BLURHMS"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "blurhmsROOTSTOCK",
+    "name_en": "blurhmsROOTSTOCK",
+    "aliases": [
+      "blurhms Rootstock",
+      "BLURHMSROOTSTOCK"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "blurhms",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "칼레",
+    "name_en": "Cale",
+    "aliases": [
+      "CALE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "HEUGN",
+    "name_en": "HEUGN",
+    "aliases": [
+      "Heugn"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "PHLANNEL",
+    "name_en": "PHLANNEL",
+    "aliases": [
+      "Phlannel"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese",
+      "절제",
+      "tailored"
+    ]
+  },
+  {
+    "name_ko": "KIJIMA TAKAYUKI",
+    "name_en": "KIJIMA TAKAYUKI",
+    "aliases": [
+      "Kijima Takayuki"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "craft",
+      "headwear",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "Sillage",
+    "name_en": "Sillage",
+    "aliases": [
+      "SILLAGE"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "japanese",
+      "minimal",
+      "craft",
+      "절제",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "CASEY CASEY",
+    "name_en": "CASEY CASEY",
+    "aliases": [
+      "Casey Casey"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "french",
+      "craft",
+      "minimal",
+      "장인",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "De Bonne Facture",
+    "name_en": "De Bonne Facture",
+    "aliases": [
+      "DE BONNE FACTURE"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "classic",
+      "french",
+      "craft",
+      "장인",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "Bergfabel",
+    "name_en": "Bergfabel",
+    "aliases": [
+      "BERGFABEL"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "LOWNN",
+    "name_en": "LOWNN",
+    "aliases": [
+      "Lownn"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "korean",
+      "minimal",
+      "quiet luxury",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "키코 코스타디노브",
+    "name_en": "Kiko Kostadinov",
+    "aliases": [
+      "KIKO KOSTADINOV"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "avant-garde",
+      "contemporary",
+      "실험",
+      "경계 없음"
+    ]
+  },
+  {
+    "name_ko": "나마체코",
+    "name_en": "NAMACHEKO",
+    "aliases": [
+      "Namacheko"
+    ],
+    "origin_country": "BE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "avant-garde",
+      "contemporary",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "Jan Jan Van Essche",
+    "name_en": "Jan Jan Van Essche",
+    "aliases": [
+      "JAN JAN VAN ESSCHE"
+    ],
+    "origin_country": "BE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "craft",
+      "avant-garde",
+      "belgian",
+      "장인",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "Ziggy Chen",
+    "name_en": "Ziggy Chen",
+    "aliases": [
+      "ZIGGY CHEN"
+    ],
+    "origin_country": "CN",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "craft",
+      "avant-garde",
+      "어두운 미니멀",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "Stoffa",
+    "name_en": "Stoffa",
+    "aliases": [
+      "STOFFA"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "minimal",
+      "neapolitan",
+      "craft",
+      "장인",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "Evan Kinori",
+    "name_en": "Evan Kinori",
+    "aliases": [
+      "EVAN KINORI"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "minimal",
+      "craft",
+      "california",
+      "절제",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "Monitaly",
+    "name_en": "Monitaly",
+    "aliases": [
+      "MONITALY"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "amekaji",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "맨틀",
+    "name_en": "MAN-TLE",
+    "aliases": [
+      "Mantle",
+      "MAN TLE"
+    ],
+    "origin_country": "AU",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "german",
+      "contemporary",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "코모리노트",
+    "name_en": "KOMORI NOTE",
+    "aliases": [
+      "Komori Note"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "케일",
+    "name_en": "CAYL",
+    "aliases": [
+      "Cayl"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "korean",
+      "functional",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "하이커 워크샵",
+    "name_en": "hiker workshop",
+    "aliases": [
+      "Hiker Workshop"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "슬로우",
+    "name_en": "SLOW",
+    "aliases": [
+      "Slow"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "minimal",
+      "craft",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "브리핑",
+    "name_en": "BRIEFING",
+    "aliases": [
+      "Briefing"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "functional",
+      "outdoor",
+      "technical"
+    ]
+  },
+  {
+    "name_ko": "마스터피스",
+    "name_en": "master-piece",
+    "aliases": [
+      "Master-piece",
+      "MASTER-PIECE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "백잭",
+    "name_en": "bagjack",
+    "aliases": [
+      "Bagjack",
+      "BAGJACK"
+    ],
+    "origin_country": "DE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "OLD JOE",
+    "name_en": "OLD JOE",
+    "aliases": [
+      "Old Joe"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "amekaji",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "ARTS&SCIENCE",
+    "name_en": "ARTS&SCIENCE",
+    "aliases": [
+      "Arts & Science",
+      "ARTS AND SCIENCE"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "Cristaseya",
+    "name_en": "Cristaseya",
+    "aliases": [
+      "CRISTASEYA"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "craft",
+      "minimal",
+      "mediterranean",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "Toogood",
+    "name_en": "Toogood",
+    "aliases": [
+      "TOOGOOD"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "british",
+      "workwear",
+      "craft",
+      "기능미",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "BODE",
+    "name_en": "BODE",
+    "aliases": [
+      "Bode"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "americana",
+      "craft",
+      "vintage",
+      "헤리티지",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "GUIDI",
+    "name_en": "GUIDI",
+    "aliases": [
+      "Guidi"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "dark",
+      "avant-garde",
+      "italian",
+      "craft",
+      "어두운 미니멀",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "CamperLab",
+    "name_en": "CamperLab",
+    "aliases": [
+      "CAMPERLAB",
+      "Camper Lab"
+    ],
+    "origin_country": "ES",
+    "entity_type": "line",
+    "parent_name_en": "Camper",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "캠퍼",
+    "name_en": "Camper",
+    "aliases": [
+      "CAMPER"
+    ],
+    "origin_country": "ES",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "올든",
+    "name_en": "Alden",
+    "aliases": [
+      "ALDEN"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "heritage",
+      "americana",
+      "craft",
+      "장인",
+      "classic"
+    ]
+  },
+  {
+    "name_ko": "제이엠 웨스턴",
+    "name_en": "J.M. Weston",
+    "aliases": [
+      "JM Weston",
+      "J M Weston"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "heritage",
+      "french",
+      "craft",
+      "장인",
+      "classic"
+    ]
+  },
+  {
+    "name_ko": "트리커즈",
+    "name_en": "Tricker's",
+    "aliases": [
+      "TRICKER'S",
+      "Trickers"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "heritage",
+      "british",
+      "craft",
+      "장인",
+      "classic"
+    ]
+  },
+  {
+    "name_ko": "에드워드 그린",
+    "name_en": "Edward Green",
+    "aliases": [
+      "EDWARD GREEN"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "heritage",
+      "british",
+      "craft",
+      "장인",
+      "classic"
+    ]
+  },
+  {
+    "name_ko": "존 롭",
+    "name_en": "John Lobb",
+    "aliases": [
+      "JOHN LOBB"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "heritage",
+      "british",
+      "craft",
+      "장인",
+      "classic"
+    ]
+  },
+  {
+    "name_ko": "Rolling dub trio",
+    "name_en": "Rolling dub trio",
+    "aliases": [
+      "ROLLING DUB TRIO"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "craft",
+      "heritage",
+      "japanese",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "Officine Creative",
+    "name_en": "Officine Creative",
+    "aliases": [
+      "OFFICINE CREATIVE"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "Marsell",
+    "name_en": "Marsell",
+    "aliases": [
+      "MARSELL"
+    ],
+    "origin_country": "IT",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "italian",
+      "craft",
+      "avant-garde",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "메종 스페셜",
+    "name_en": "MAISON SPECIAL",
+    "aliases": [
+      "Maison Special"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "라드 뮤지션",
+    "name_en": "LAD MUSICIAN",
+    "aliases": [
+      "Lad Musician"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "dark",
+      "japanese",
+      "rock",
+      "어두운 미니멀"
+    ]
+  },
+  {
+    "name_ko": "리틀빅",
+    "name_en": "LITTLEBIG",
+    "aliases": [
+      "Littlebig"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "avant-garde",
+      "playful"
+    ]
+  },
+  {
+    "name_ko": "요크",
+    "name_en": "YOKE",
+    "aliases": [
+      "Yoke"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "RANRA",
+    "name_en": "RANRA",
+    "aliases": [
+      "Ranra"
+    ],
+    "origin_country": "IS",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "scandinavian",
+      "technical",
+      "avant-garde"
+    ]
+  },
+  {
+    "name_ko": "3MAN",
+    "name_en": "3MAN",
+    "aliases": [
+      "Three Man"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "Song for the Mute",
+    "name_en": "Song for the Mute",
+    "aliases": [
+      "SONG FOR THE MUTE"
+    ],
+    "origin_country": "AU",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "australian",
+      "minimal",
+      "contemporary",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "에인트크랙",
+    "name_en": "Ain't Crack",
+    "aliases": [
+      "Aint Crack"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "ON x POST ARCHIVE FACTION",
+    "name_en": "ON x POST ARCHIVE FACTION",
+    "aliases": [
+      "On x Post Archive Faction",
+      "ON x PAF"
+    ],
+    "origin_country": "CH",
+    "entity_type": "collaboration",
+    "parent_name_en": "POST ARCHIVE FACTION (PAF)",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "SEVEN BY SEVEN",
+    "name_en": "SEVEN BY SEVEN",
+    "aliases": [
+      "Seven by Seven"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "workwear",
+      "heritage"
+    ]
+  },
+  {
+    "name_ko": "COMFY OUTDOOR GARMENT",
+    "name_en": "COMFY OUTDOOR GARMENT",
+    "aliases": [
+      "Comfy Outdoor Garment",
+      "CMF OUTDOOR GARMENT"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "is-ness",
+    "name_en": "is-ness",
+    "aliases": [
+      "IS-NESS",
+      "Isness"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "MOUT RECON TAILOR",
+    "name_en": "MOUT RECON TAILOR",
+    "aliases": [
+      "Mout Recon Tailor"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "technical",
+      "japanese",
+      "outdoor",
+      "기능미"
+    ]
+  },
+  {
+    "name_ko": "ALLEGE",
+    "name_en": "ALLEGE",
+    "aliases": [
+      "Allege"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "SHINYAKOZUKA",
+    "name_en": "SHINYAKOZUKA",
+    "aliases": [
+      "Shinyakozuka"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "SUGARHILL",
+    "name_en": "SUGARHILL",
+    "aliases": [
+      "Sugarhill"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "stein",
+    "name_en": "stein",
+    "aliases": [
+      "STEIN"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "minimal",
+      "contemporary",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "Jil Sander",
+    "name_en": "Jil Sander",
+    "aliases": [
+      "JIL SANDER"
+    ],
+    "origin_country": "DE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "minimal",
+      "german",
+      "quiet luxury",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "Uniqlo U by Lemaire",
+    "name_en": "Uniqlo U by Lemaire",
+    "aliases": [
+      "UNIQLO U by Lemaire",
+      "Lemaire x Uniqlo"
+    ],
+    "origin_country": "JP",
+    "entity_type": "collaboration",
+    "parent_name_en": "UNIQLO",
+    "relationship_label": "sub",
+    "price_tier": 1
+  },
+  {
+    "name_ko": "A-COLD-WALL*",
+    "name_en": "A-COLD-WALL*",
+    "aliases": [
+      "A Cold Wall",
+      "ACW"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "Craig Green",
+    "name_en": "Craig Green",
+    "aliases": [
+      "CRAIG GREEN"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "avant-garde",
+      "technical",
+      "british",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "Our Legacy WORK SHOP",
+    "name_en": "Our Legacy WORK SHOP",
+    "aliases": [
+      "OUR LEGACY WORK SHOP",
+      "Work Shop"
+    ],
+    "origin_country": "SE",
+    "entity_type": "line",
+    "parent_name_en": "Our Legacy",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "CMMN SWDN",
+    "name_en": "CMMN SWDN",
+    "aliases": [
+      "Common Sweden"
+    ],
+    "origin_country": "SE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "Veilance",
+    "name_en": "Veilance",
+    "aliases": [
+      "VEILANCE",
+      "Arc'teryx Veilance"
+    ],
+    "origin_country": "CA",
+    "entity_type": "line",
+    "parent_name_en": "Arc'teryx",
+    "relationship_label": "sub",
+    "price_tier": 4
+  },
+  {
+    "name_ko": "HOKA",
+    "name_en": "HOKA",
+    "aliases": [
+      "Hoka"
+    ],
+    "origin_country": "FR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "technical",
+      "functional"
+    ]
+  },
+  {
+    "name_ko": "MERRELL 1TRL",
+    "name_en": "MERRELL 1TRL",
+    "aliases": [
+      "Merrell 1TRL"
+    ],
+    "origin_country": "US",
+    "entity_type": "line",
+    "parent_name_en": "Merrell",
+    "relationship_label": "sub",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "Merrell",
+    "name_en": "Merrell",
+    "aliases": [
+      "MERRELL"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "outdoor",
+      "functional",
+      "americana"
+    ]
+  },
+  {
+    "name_ko": "SOUTH FISH",
+    "name_en": "SOUTH FISH",
+    "aliases": [
+      "South Fish"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "minimal"
+    ]
+  },
+  {
+    "name_ko": "LIEU HOMME",
+    "name_en": "LIEU HOMME",
+    "aliases": [
+      "Lieu Homme"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "INSPECTOR",
+    "name_en": "INSPECTOR",
+    "aliases": [
+      "Inspector"
+    ],
+    "origin_country": "KR",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 2,
+    "style_tags": [
+      "korean",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "MAATEE&SONS",
+    "name_en": "MAATEE&SONS",
+    "aliases": [
+      "Maatee&Sons"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "heritage",
+      "japanese",
+      "workwear",
+      "헤리티지"
+    ]
+  },
+  {
+    "name_ko": "ULTERIOR",
+    "name_en": "ULTERIOR",
+    "aliases": [
+      "Ulterior"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "minimal",
+      "tailored",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "SEEALL",
+    "name_en": "SEEALL",
+    "aliases": [
+      "Seeall"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "korean",
+      "dark",
+      "avant-garde",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "IRENISA",
+    "name_en": "IRENISA",
+    "aliases": [
+      "Irenisa"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "RAKINES",
+    "name_en": "RAKINES",
+    "aliases": [
+      "Rakines"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "minimal",
+      "japanese"
+    ]
+  },
+  {
+    "name_ko": "amachi.",
+    "name_en": "amachi.",
+    "aliases": [
+      "AMACHI."
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "TAAKK",
+    "name_en": "TAAKK",
+    "aliases": [
+      "Taakk"
+    ],
+    "origin_country": "JP",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "japanese",
+      "avant-garde",
+      "dark",
+      "실험"
+    ]
+  },
+  {
+    "name_ko": "Needles Rebuild",
+    "name_en": "REBUILD by NEEDLES",
+    "aliases": [
+      "Rebuild by Needles",
+      "REBUILD BY NEEDLES"
+    ],
+    "origin_country": "JP",
+    "entity_type": "line",
+    "parent_name_en": "Needles",
+    "relationship_label": "sub",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "Engineered Garments WORKADAY",
+    "name_en": "Engineered Garments WORKADAY",
+    "aliases": [
+      "WORKADAY",
+      "EG WORKADAY"
+    ],
+    "origin_country": "US",
+    "entity_type": "line",
+    "parent_name_en": "Engineered Garments",
+    "relationship_label": "sub",
+    "price_tier": 2
+  },
+  {
+    "name_ko": "Sunflower",
+    "name_en": "Sunflower",
+    "aliases": [
+      "SUNFLOWER"
+    ],
+    "origin_country": "DK",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3,
+    "style_tags": [
+      "scandinavian",
+      "minimal",
+      "contemporary"
+    ]
+  },
+  {
+    "name_ko": "Jan Machenhauer",
+    "name_en": "Jan Machenhauer",
+    "aliases": [
+      "JAN MACHENHAUER"
+    ],
+    "origin_country": "DK",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  },
+  {
+    "name_ko": "O Project",
+    "name_en": "O Project",
+    "aliases": [
+      "O PROJECT"
+    ],
+    "origin_country": "BE",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "japanese",
+      "minimal",
+      "craft",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "Wales Bonner",
+    "name_en": "Wales Bonner",
+    "aliases": [
+      "WALES BONNER"
+    ],
+    "origin_country": "GB",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "heritage",
+      "craft",
+      "diaspora",
+      "장인"
+    ]
+  },
+  {
+    "name_ko": "Hed Mayner",
+    "name_en": "Hed Mayner",
+    "aliases": [
+      "HED MAYNER"
+    ],
+    "origin_country": "IL",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 4,
+    "style_tags": [
+      "minimal",
+      "tailored",
+      "contemporary",
+      "절제"
+    ]
+  },
+  {
+    "name_ko": "ERL",
+    "name_en": "ERL",
+    "aliases": [
+      "Erl"
+    ],
+    "origin_country": "US",
+    "entity_type": "brand",
+    "parent_name_en": null,
+    "relationship_label": "main",
+    "price_tier": 3
+  }
+]

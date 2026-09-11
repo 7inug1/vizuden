@@ -1180,6 +1180,21 @@ export default function PrescriptionResultPage() {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [staggerActive]);
 
+  useEffect(() => {
+    const setMeta = (sel, val) => document.querySelector(sel)?.setAttribute('content', val);
+    const ogImage = 'https://vizuden.com/api/og-png?page=prescription';
+    const ogTitle = 'VIZUDEN — AI 스타일 처방전';
+    const ogDesc = '커리어·취향·라이프스타일 기반 AI 진단. 나만의 스타일 기준을 처방받으세요.';
+    document.title = ogTitle;
+    setMeta('meta[property="og:title"]', ogTitle);
+    setMeta('meta[property="og:description"]', ogDesc);
+    setMeta('meta[property="og:image"]', ogImage);
+    setMeta('meta[name="twitter:title"]', ogTitle);
+    setMeta('meta[name="twitter:description"]', ogDesc);
+    setMeta('meta[name="twitter:image"]', ogImage);
+    return () => { document.title = 'VIZUDEN — 스타일 정체성 진단'; };
+  }, []);
+
   // ── 스트리밍 완료 시 URL을 최종 reportId로 교체 ──────────────
   useEffect(() => {
     if (streamData.status === 'done' && streamData.reportId && !paramReportId) {

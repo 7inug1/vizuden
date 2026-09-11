@@ -9,7 +9,7 @@ export default function LoginNudgeBlock({ heading, sub, nextPath }) {
         <p className="text-xs text-stone-400 leading-relaxed mt-1 mb-5">{sub}</p>
       )}
       <button
-        onClick={() => navigate('/auth', { state: { nextPath } })}
+        onClick={() => navigate('/auth/email', { state: { nextPath } })}
         className="w-full py-4 bg-stone-900 text-stone-50 text-sm tracking-widest uppercase
           hover:bg-stone-800 active:bg-stone-700 transition-colors duration-200"
       >

@@ -49,7 +49,7 @@ export default function AdminPrescriptionPage() {
   }, [reportId, session?.access_token]);
 
   if (!loading && (!user || !isAdminUser(user.id))) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const answers = Array.isArray(data?.answers) ? data.answers : [];
