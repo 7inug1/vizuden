@@ -783,26 +783,15 @@ export default function TranslatorIntakePage() {
     try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ answers, otherAnswers })); } catch {}
   }, [answers, otherAnswers, isDev]);
 
-  // URL/세션 코드가 있으면 자동 검증 후 questions 진입
+  /* 입구에서 코드를 묻지 않는다.
+   *
+   *  코드를 가진 사람만 들어올 수 있으면 방문자는 결과물을 볼 수 없다.
+   *  누구나 설문을 시작하고, 하루 한도를 넘겼을 때 제출 단계에서만 코드를 받는다
+   *  (서버가 429 를 돌려준다). 코드를 이미 들고 온 경우는 그대로 통과시킨다. */
   useEffect(() => {
-    if (isDev) { setPhase('questions'); return; }
     if (statusLoading || phase !== 'check') return;
-    const codeToCheck = accessCode.trim();
-    if (!codeToCheck) { setPhase('code'); return; }
-    setCodeLoading(true);
-    fetch('/api/translator-intake', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: codeToCheck }),
-    })
-      .then(r => r.json())
-      .then(({ valid }) => {
-        if (valid) { setPhase('questions'); }
-        else { setPhase('code'); setCodeError('유효하지 않은 코드예요.'); }
-      })
-      .catch(() => { setPhase('code'); setCodeError('코드 확인 중 오류가 발생했어요.'); })
-      .finally(() => setCodeLoading(false));
-  }, [isDev, statusLoading, phase]);
+    setPhase('questions');
+  }, [statusLoading, phase]);
 
   const visibleQs = QUESTIONS.filter((q) => isVisible(q, answers));
   const curQ = visibleQs[curIdx] || visibleQs[0];
@@ -893,6 +882,8 @@ export default function TranslatorIntakePage() {
       const { valid } = await res.json().catch(() => ({ valid: false }));
       if (!valid) { setCodeError('유효하지 않은 코드예요.'); return; }
       try { sessionStorage.setItem('vizuden_translator_access_code', trimmed); } catch {}
+      // 한도에 막혀 여기 왔다면 답변이 이미 다 차 있다 — 설문으로 되돌리지 않고
+      // 그대로 제출을 잇는다.
       setPhase('questions');
     } catch {
       setCodeError('코드 확인 중 오류가 발생했어요.');
@@ -932,6 +923,17 @@ export default function TranslatorIntakePage() {
         }),
       });
 
+      // 하루 한도를 넘겼다 — 이때만 코드를 받는다. 답변은 그대로 남아 있어
+      // 코드를 넣으면 이어서 제출된다.
+      if (res.status === 429) {
+        const payload = await res.json().catch(() => ({}));
+        setSubmitting(false);
+        setPhase('code');
+        setCodeError(
+          `오늘 무료 체험 ${payload?.limit ?? 3}회를 다 쓰셨어요. 베타 코드가 있으면 입력해 주세요.`
+        );
+        return;
+      }
       if (res.status === 403) {
         const payload = await res.json().catch(() => ({}));
         setSubmitting(false);
