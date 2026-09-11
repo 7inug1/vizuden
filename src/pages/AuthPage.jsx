@@ -2,25 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { typeImages } from '../data/typeImages';
-import { types } from '../data/types';
 import { getAuthCallbackUrl } from '../lib/authRedirect';
-
-const CHAR_OFFSET = {
-  ICEN: { img: { transform: 'translateX(8px)' } },
-  IDEN: { img: { transform: 'translateX(-4px)' } },
-  IDMT: { img: { transform: 'translateX(-4px)' } },
-  RCEN: { img: { transform: 'translateX(-4px)' } },
-  RDEN: { img: { transform: 'translateX(-4px)' } },
-  RDMN: { img: { transform: 'translateX(-4px)' } },
-};
-
-const TYPE_ENTRIES = Object.entries(typeImages).map(([code, src]) => ({
-  code,
-  src,
-  nameKo: types[code]?.nameKo || code,
-}));
-const REEL = [...TYPE_ENTRIES, ...TYPE_ENTRIES];
 
 function GoogleIcon() {
   return (
@@ -52,7 +34,7 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (!loading && user) {
-      navigate('/home', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [loading, navigate, user]);
 
@@ -72,100 +54,36 @@ export default function AuthPage() {
 
   function handleGuest() {
     continueAsGuest();
-    navigate('/home', { replace: true });
+    navigate('/', { replace: true });
   }
 
   return (
-    <div className="min-h-svh flex flex-col" style={{ backgroundColor: '#F5F2ED' }}>
-      {/* 상단: 캐러셀 영역 */}
-      <div className="flex flex-col">
-        {/* 브랜드 */}
-        <motion.header
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center justify-center pb-8"
-          style={{ paddingTop: '8px' }}
-        >
-          <span className="text-3xl tracking-[0.18em] text-stone-900 font-medium select-none">
-            VIZUDEN
-          </span>
-        </motion.header>
+    <div className="min-h-svh flex flex-col justify-center" style={{ backgroundColor: '#F5F2ED' }}>
 
-        {/* 캐러셀 */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full select-none relative mt-6"
-          style={{ height: 160 }}
-          onDragStart={(e) => e.preventDefault()}
-        >
-          <div className="overflow-hidden h-full">
-            <div
-              className="flex gap-4 items-end h-full"
-              style={{
-                width: 'max-content',
-                animation: 'reel-scroll 44s linear infinite',
-              }}
-            >
-              {REEL.map((entry, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center shrink-0"
-                  style={{ width: 110 }}
-                >
-                  <img
-                    src={entry.src}
-                    alt={entry.nameKo}
-                    draggable="false"
-                    style={{
-                      height: 154,
-                      width: 110,
-                      objectFit: 'contain',
-                      objectPosition: 'bottom center',
-                      WebkitUserDrag: 'none',
-                      pointerEvents: 'none',
-                      ...(CHAR_OFFSET[entry.code]?.img || {}),
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div
-            className="absolute left-0 top-0 bottom-0 pointer-events-none"
-            style={{ width: 64, background: 'linear-gradient(to right, #F5F2ED 10%, transparent)' }}
-          />
-          <div
-            className="absolute right-0 top-0 bottom-0 pointer-events-none"
-            style={{ width: 64, background: 'linear-gradient(to left, #F5F2ED 10%, transparent)' }}
-          />
-        </motion.div>
-
-        {/* 카피 */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-          className="text-center mt-6 mb-2 text-lg font-light text-stone-600"
-          style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
-        >
-          드디어, 나한테 맞는 걸 알았다
-        </motion.p>
-      </div>
-
-      {/* 하단: 버튼 시트 */}
+      {/* VIZUDEN 로고 */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full px-6 pb-8 pt-4"
-        style={{
-          background: 'linear-gradient(to bottom, transparent, #F5F2ED 12%)',
-        }}
+        transition={{ duration: 0.5 }}
+        className="text-center px-6"
+      >
+        <p className="text-[34px] font-medium tracking-[0.18em] text-stone-900 select-none">
+          VIZUDEN
+        </p>
+      </motion.div>
+
+      {/* 로고 ↔ 버튼 간격 */}
+      <div style={{ height: 'clamp(24px, 5svh, 48px)' }} />
+
+      {/* 버튼 시트 */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full px-6"
       >
         <div className="mx-auto max-w-sm flex flex-col gap-3">
+
           {/* 구글 */}
           <button
             onClick={handleGoogle}
@@ -192,24 +110,6 @@ export default function AuthPage() {
             <span>이메일로 시작하기</span>
           </button>
 
-          {/* 구분선 */}
-          <div className="flex items-center gap-3 my-1">
-            <div className="flex-1 h-px bg-stone-200" />
-            <span className="text-[10px] tracking-[0.22em] text-stone-400 uppercase">or</span>
-            <div className="flex-1 h-px bg-stone-200" />
-          </div>
-
-          {/* 게스트 */}
-          <button
-            onClick={handleGuest}
-            className="w-full py-3 text-stone-500 text-sm tracking-wide transition-colors duration-150 hover:text-stone-800"
-          >
-            게스트로 먼저 둘러보기 →
-          </button>
-
-          <p className="text-[11px] text-stone-400 text-center leading-relaxed -mt-1">
-            결과는 현재 브라우저에 저장됩니다
-          </p>
         </div>
       </motion.div>
     </div>

@@ -1,6 +1,6 @@
 export const STORAGE_KEYS = {
   authRedirect: 'vizuden_auth_redirect',
-  consultingAccessCode: 'vizuden_consulting_access_code',
+  translatorAccessCode: 'vizuden_translator_access_code',
   guestSessionId: 'vizuden_guest_session_id',
   guestMode: 'vizuden_guest_mode',
   nickname: 'vizuden_nickname',

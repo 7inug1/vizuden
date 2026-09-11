@@ -1,0 +1,15 @@
+*.sql
+*.md
+.DS_Store
+.vercel/
+node_modules/
+dist/
+docs/
+content/
+.env
+.env.*
+*.test.jsx
+*.test.js
+src/test/
+api/type-count.js
+public/demo-me.jpg

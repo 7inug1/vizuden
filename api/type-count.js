@@ -19,12 +19,23 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   if (req.method === "GET") {
-    const { count, error } = await supabase
+    const { data, count, error } = await supabase
       .from("type_completions")
-      .select("*", { count: "exact", head: true });
+      .select("type_code", { count: "exact" })
+      .not("type_code", "is", null)
+      .limit(10000); // Supabase 기본 limit 1000 → 분포 계산 오류 방지
 
     if (error) return res.status(500).json({ error: error.message });
-    return res.status(200).json({ count: count ?? 0 });
+
+    const distribution = {};
+    (data ?? []).forEach(({ type_code }) => {
+      distribution[type_code] = (distribution[type_code] || 0) + 1;
+    });
+
+    // distribution 합계로 분모 재계산 (limit 초과 시 count보다 정확)
+    const distTotal = Object.values(distribution).reduce((a, b) => a + b, 0);
+
+    return res.status(200).json({ count: distTotal, distribution });
   }
 
   if (req.method === "POST") {
@@ -47,6 +58,7 @@ export default async function handler(req, res) {
         .insert({
           type_code: type_code ?? null,
           user_id: user?.id ?? null,
+          email: user?.email ?? null,
           guest_session_id: guest_session_id ?? null,
           session_id: session_id ?? null,
           source_path: source_path ?? null,

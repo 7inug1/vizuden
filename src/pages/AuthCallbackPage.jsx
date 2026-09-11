@@ -26,7 +26,7 @@ export default function AuthCallbackPage() {
   // OAuth code exchange
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) {
-      navigate('/home', { replace: true });
+      navigate('/', { replace: true });
       return;
     }
 

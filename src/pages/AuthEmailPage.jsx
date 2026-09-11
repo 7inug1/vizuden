@@ -18,7 +18,7 @@ export default function AuthEmailPage() {
 
   useEffect(() => {
     if (!loading && user) {
-      navigate('/home', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [loading, navigate, user]);
 
@@ -56,7 +56,7 @@ export default function AuthEmailPage() {
         style={{ paddingTop: '8px' }}
       >
         <button
-          onClick={() => navigate('/auth', { state: { nextPath } })}
+          onClick={() => navigate('/')}
           className="text-3xl tracking-[0.18em] text-stone-900 font-medium hover:text-stone-400 transition-colors duration-200"
         >
           VIZUDEN
@@ -72,7 +72,7 @@ export default function AuthEmailPage() {
       >
         <div className="mx-auto w-full max-w-sm">
           <button
-            onClick={() => navigate('/auth', { state: { nextPath } })}
+            onClick={() => navigate('/')}
             className="text-[11px] tracking-[0.2em] text-stone-400 uppercase mb-8 hover:text-stone-700 transition-colors duration-150"
           >
             ← 돌아가기

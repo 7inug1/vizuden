@@ -1260,9 +1260,9 @@ export default function PrescriptionPage() {
   const { session } = useAuth();
   const { prescription } = useReportStatus();
 
-  // DEV 환경에서만 ?fill=1·2 동작
-  const devFillParam = import.meta.env.DEV ? searchParams.get('fill') : null;
-  const devFill = devFillParam === '1' || devFillParam === '2';
+  // 운영에서는 fill=1만 허용하고, fill=2는 DEV 전용으로 유지
+  const fillParam = searchParams.get('fill');
+  const devFill = fillParam === '1' || (import.meta.env.DEV && fillParam === '2');
 
   const fromType = location.state?.type ?? (() => {
     try { const saved = JSON.parse(localStorage.getItem('vizuden_type')); return saved?.code ?? null; } catch { return null; }
@@ -1275,13 +1275,13 @@ export default function PrescriptionPage() {
   const [stepIdx, setStepIdx] = useState(0);
   const [answers, setAnswers] = useState(() => {
     if (!devFill) return Array(PRESCRIPTION_TOTAL).fill(null).map(emptyAnswer);
-    const preset = devFillParam === '2' ? _DEV_FILL_ANSWERS_2 : _DEV_FILL_ANSWERS_BASE;
+    const preset = import.meta.env.DEV && fillParam === '2' ? _DEV_FILL_ANSWERS_2 : _DEV_FILL_ANSWERS_BASE;
     return preset.map((a) => ({ ...a, selectedIds: [...a.selectedIds] }));
   });
   const handleNextRef = useRef(null);
   const [textAnswers, setTextAnswers] = useState(() => {
     if (!devFill) return Array(PRESCRIPTION_TOTAL).fill('');
-    return [...(devFillParam === '2' ? _DEV_FILL_TEXT_2 : _DEV_FILL_TEXT_BASE)];
+    return [...(import.meta.env.DEV && fillParam === '2' ? _DEV_FILL_TEXT_2 : _DEV_FILL_TEXT_BASE)];
   });
   const [fitPics, setFitPics] = useState([]);
   const [fitPicPreviews, setFitPicPreviews] = useState([]);

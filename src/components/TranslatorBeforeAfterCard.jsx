@@ -1,4 +1,4 @@
-export default function ConsultingBeforeAfterCard({ className = '' }) {
+export default function TranslatorBeforeAfterCard({ className = '' }) {
   return (
     <div
       className={className}

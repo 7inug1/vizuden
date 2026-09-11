@@ -33,9 +33,9 @@ export default function RecommendBadge() {
             overflow: 'visible',
           }}
         >
-          <path d="M-0.5,-1 L10.5,-1 L5,6 Z" fill="#F5F2ED" />
-          <line x1="0" y1="-1" x2="5" y2="6" stroke="#1c1917" strokeWidth="1" />
-          <line x1="10" y1="-1" x2="5" y2="6" stroke="#1c1917" strokeWidth="1" />
+          <path d="M-0.5,-2 L10.5,-2 L5,6 Z" fill="#F5F2ED" />
+          <line x1="0" y1="-1" x2="5" y2="6" stroke="#1c1917" strokeWidth="0.85" />
+          <line x1="10" y1="-1" x2="5" y2="6" stroke="#1c1917" strokeWidth="0.85" />
         </svg>
       </div>
     </motion.div>

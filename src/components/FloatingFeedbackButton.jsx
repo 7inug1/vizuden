@@ -14,7 +14,7 @@ const CATEGORY_OPTIONS = [
 ];
 
 function getPageType(pathname) {
-  if (pathname === '/home') return 'home';
+  if (pathname === '/') return 'home';
   if (pathname === '/services') return 'services';
   if (pathname === '/mypage') return 'mypage';
   if (pathname === '/type') return 'home';
@@ -22,7 +22,7 @@ function getPageType(pathname) {
   if (/^\/type\/result\/[^/]+$/.test(pathname)) return 'type_result';
   if (pathname === '/prescription' || pathname === '/prescription/questions') return 'prescription_questions';
   if (/^\/prescription\/result\/[^/]+$/.test(pathname)) return 'prescription_result';
-  if (pathname === '/consulting' || pathname === '/identity') return 'consulting_landing';
+  if (pathname === '/consulting' || pathname === '/identity') return 'translator_landing';
   if (pathname === '/prescription/payment/success') return 'prescription_payment_success';
   if (pathname === '/prescription/payment/fail') return 'prescription_payment_fail';
   return 'other';
@@ -173,7 +173,9 @@ function FeedbackModal({ context, guestSessionId, onClose, userId }) {
 
             <div className="flex items-center justify-between mt-2 mb-4">
               <p className="text-[11px] text-stone-400">현재 페이지 문맥이 함께 저장됩니다.</p>
-              <p className="text-[11px] text-stone-400">{message.trim().length}/1000</p>
+              <p className="text-[11px]" style={{ color: message.trim().length < 5 ? '#a8a29e' : '#d6d3d1' }}>
+                {message.trim().length < 5 ? `${message.trim().length}/5자 이상 입력 시 전송 가능` : `${message.trim().length}/1000`}
+              </p>
             </div>
 
             {status === 'error' && errorMsg ? (
@@ -201,13 +203,13 @@ export default function FloatingFeedbackButton() {
   const [open, setOpen] = useState(false);
 
   const hidden =
-    location.pathname === '/auth' ||
+    location.pathname === '/' ||
     location.pathname === '/auth/email' ||
     location.pathname === '/auth/callback';
 
   const context = useMemo(
-    () => getRouteContext(location.pathname, location.state),
-    [location.pathname, location.state]
+    () => (hidden ? null : getRouteContext(location.pathname, location.state)),
+    [hidden, location.pathname, location.state]
   );
 
   if (hidden) return null;

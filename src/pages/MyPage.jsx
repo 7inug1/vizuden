@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SiteHeader from '../components/SiteHeader';
-import ConsultingReviewModal from '../components/ConsultingReviewModal';
+import TranslatorReviewModal from '../components/TranslatorReviewModal';
 import RecommendBadge from '../components/RecommendBadge';
-import CoachingModal from '../components/CoachingModal';
 import { supabase } from '../lib/supabaseClient';
 import { types } from '../data/types';
 import { typeImages } from '../data/typeImages';
@@ -12,13 +11,9 @@ import { useAuth } from '../context/AuthContext';
 import { useNickname } from '../context/NicknameContext';
 import { WelcomeModal } from './HubPage';
 import { STORAGE_KEYS, ensureGuestSessionId, getStoredBoolean, setStoredBoolean } from '../lib/storage';
-import { readPrescriptionHistory, readPrescriptionSaved } from '../lib/prescriptionStorage';
-import { getConsultingPreview } from '../lib/consultingIntake';
+import { getConsultingPreview } from '../lib/translatorIntake';
 import { isAdminUser } from '../lib/admin';
 import { useReportStatus } from '../hooks/useReportStatus';
-
-const PAGE_SIZE = 5;
-const COACHING_CHARS = ['ICMT', 'RDMT', 'RCET', 'IDET'];
 
 const pageVariants = {
   initial: { opacity: 0, y: 16 },
@@ -52,18 +47,34 @@ function CheckIcon() {
   );
 }
 
+// 번역서 문서 아이콘 (랜딩 번역서 버튼과 동일 계열)
+function ReportIcon({ size = 34 }) {
+  const w = size * 0.76;
+  return (
+    <div style={{ position: 'relative', width: w, height: size, borderRadius: 4 }}>
+      <div style={{ position: 'absolute', top: 2, left: 2, width: w - 3, height: size - 3, borderRadius: 4, backgroundColor: '#D6CEC4', border: '1px solid #C0B9AF' }} />
+      <div style={{ position: 'absolute', top: 0, left: 0, width: w - 3, height: size - 3, borderRadius: 4, backgroundColor: '#FAF8F5', border: '1px solid #D0C9BF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <svg width={w * 0.6} height={size * 0.6} viewBox="0 0 22 26" fill="none">
+          <rect x="1" y="1" width="10" height="1.8" rx="0.9" fill="#6B5E52" />
+          <rect x="1" y="4.5" width="7" height="1.8" rx="0.9" fill="#6B5E52" opacity="0.45" />
+          <line x1="5" y1="13" x2="17" y2="13" stroke="#9C8E84" strokeWidth="1.2" strokeLinecap="round" />
+          <polyline points="14,10.2 17.2,13 14,15.8" stroke="#9C8E84" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <rect x="11" y="19.8" width="10" height="1.8" rx="0.9" fill="#6B5E52" />
+          <rect x="11" y="23.3" width="6" height="1.8" rx="0.9" fill="#6B5E52" opacity="0.45" />
+        </svg>
+      </div>
+    </div>
+  );
+}
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const { user, session, isGuest } = useAuth();
+  const { user, session } = useAuth();
   const { nickname, setNickname } = useNickname();
-  const { dbPrescriptions, dbTypeHistory } = useReportStatus();
+  const { dbTypeHistory } = useReportStatus();
   const [typeHistory, setTypeHistory] = useState([]);
-  const [prescriptionHistory, setPrescriptionHistory] = useState([]);
-  const [consultingHistory, setConsultingHistory] = useState([]);
-  const [typePage, setTypePage] = useState(0);
-  const [prescriptionPage, setPrescriptionPage] = useState(0);
-  const [consultingPage, setConsultingPage] = useState(0);
+  const [translatorHistory, setTranslatorHistory] = useState([]);
+  const [translatorLoaded, setTranslatorLoaded] = useState(false);
   const [unlockedIntakeId, setUnlockedIntakeId] = useState(null);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -72,8 +83,6 @@ export default function MyPage() {
   const [nickError, setNickError] = useState('');
   const [showWelcome, setShowWelcome] = useState(false);
   const [welcomeName, setWelcomeName] = useState('');
-  const [coachingCharIdx, setCoachingCharIdx] = useState(0);
-  const [showCoachingModal, setShowCoachingModal] = useState(false);
   const nickRef = useRef(null);
 
   useEffect(() => {
@@ -88,23 +97,6 @@ export default function MyPage() {
       }
     } catch {}
     setTypeHistory(localType);
-
-    let localPrescription = [];
-    try {
-      const rawPrescription = readPrescriptionHistory();
-      if (Array.isArray(rawPrescription) && rawPrescription.length > 0) {
-        localPrescription = rawPrescription.filter((entry) => entry?.reportId && entry?.savedAt);
-      } else {
-        const single = readPrescriptionSaved();
-        if (single?.reportId && single?.savedAt) localPrescription = [single];
-      }
-    } catch {}
-    setPrescriptionHistory(localPrescription);
-  }, []);
-
-  useEffect(() => {
-    const t = setInterval(() => setCoachingCharIdx(i => (i + 1) % COACHING_CHARS.length), 3000);
-    return () => clearInterval(t);
   }, []);
 
   // DB 데이터로 병합 (로그인 사용자, 새 기기 대응)
@@ -117,27 +109,11 @@ export default function MyPage() {
     }
   }, [dbTypeHistory]);
 
-  useEffect(() => {
-    if (!dbPrescriptions) return;
-    const dbEntries = dbPrescriptions.map((r) => ({
-      reportId: r.id,
-      title: r.title,
-      preview: r.preview,
-      savedAt: new Date(r.createdAt).getTime(),
-      fromType: null,
-    }));
-    if (dbEntries.length === 0) return;
-    setPrescriptionHistory((prev) => {
-      const dbIds = new Set(dbEntries.map((e) => e.reportId));
-      const localOnly = prev.filter((e) => !dbIds.has(e.reportId));
-      return [...dbEntries, ...localOnly].sort((a, b) => b.savedAt - a.savedAt);
-    });
-  }, [dbPrescriptions]);
-
+  // 번역서 목록 (게스트 세션 + 로그인 계정)
   useEffect(() => {
     let cancelled = false;
-
-    fetch('/api/consulting-intakes', {
+    setTranslatorLoaded(false);
+    fetch('/api/translator-intakes', {
       headers: {
         ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
         'x-guest-session-id': ensureGuestSessionId(),
@@ -145,21 +121,21 @@ export default function MyPage() {
     })
       .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
       .then(({ ok, data }) => {
-        if (!ok || cancelled) return;
-        setConsultingHistory(Array.isArray(data?.items) ? data.items : []);
+        if (cancelled) return;
+        if (ok) setTranslatorHistory(Array.isArray(data?.items) ? data.items : []);
+        setTranslatorLoaded(true);
       })
       .catch(() => {
-        if (!cancelled) setConsultingHistory([]);
+        if (cancelled) return;
+        setTranslatorHistory([]);
+        setTranslatorLoaded(true);
       });
-
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [session?.access_token, user?.id]);
 
   useEffect(() => {
-    if (!user || !supabase || consultingHistory.length === 0) return;
-    const unlocked = consultingHistory.find((e) => e.review_unlocked && e.status === 'completed');
+    if (!user || !supabase || translatorHistory.length === 0) return;
+    const unlocked = translatorHistory.find((e) => e.review_unlocked && e.status === 'completed');
     if (!unlocked) return;
     setUnlockedIntakeId(unlocked.id);
     supabase
@@ -169,7 +145,7 @@ export default function MyPage() {
       .eq('service', 'consulting')
       .maybeSingle()
       .then(({ data }) => { if (data) setReviewSubmitted(true); });
-  }, [consultingHistory, user?.id]);
+  }, [translatorHistory, user?.id]);
 
   useEffect(() => {
     if (editingNick && nickRef.current) nickRef.current.focus();
@@ -214,29 +190,14 @@ export default function MyPage() {
 
   const latestType = typeHistory[0] ?? null;
   const latestTypeResult = latestType ? types[latestType.code] : null;
+  const recommend = typeHistory.length === 0 ? 'type' : 'translator';
 
-  const recommend = typeHistory.length === 0 ? 'type' : prescriptionHistory.length === 0 ? 'prescription' : 'consulting';
-
-  const totalTypePages = Math.ceil(typeHistory.length / PAGE_SIZE);
-  const pagedTypeHistory = typeHistory.slice(typePage * PAGE_SIZE, (typePage + 1) * PAGE_SIZE);
-
-  const totalPrescriptionPages = Math.ceil(prescriptionHistory.length / PAGE_SIZE);
-  const pagedPrescriptionHistory = prescriptionHistory.slice(prescriptionPage * PAGE_SIZE, (prescriptionPage + 1) * PAGE_SIZE);
-  const totalConsultingPages = Math.ceil(consultingHistory.length / PAGE_SIZE);
-  const pagedConsultingHistory = consultingHistory.slice(consultingPage * PAGE_SIZE, (consultingPage + 1) * PAGE_SIZE);
   function formatDateTime(ts) {
     const d = new Date(ts);
     return d.toLocaleString('ko-KR', {
-      year: '2-digit',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
+      year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
     });
   }
-
-  const activeCoachingCode = COACHING_CHARS[coachingCharIdx];
-  const activeCoachingChar = typeImages[activeCoachingCode];
 
   return (
     <motion.div
@@ -276,11 +237,8 @@ export default function MyPage() {
             </div>
           )}
 
-          {/* 캐릭터 + 호칭 + 닉네임 */}
+          {/* 캐릭터 + 닉네임 */}
           <div className="flex flex-col items-center pt-4 pb-8">
-
-
-            {/* 캐릭터 이미지 */}
             {latestTypeResult ? (
               <motion.img
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -303,7 +261,6 @@ export default function MyPage() {
               />
             )}
 
-            {/* 닉네임 */}
             {editingNick ? (
               <div className="flex flex-col items-center gap-1">
                 <div className="flex items-center gap-2">
@@ -325,9 +282,7 @@ export default function MyPage() {
                     <CheckIcon />
                   </button>
                 </div>
-                {nickError && (
-                  <p className="text-xs text-stone-400">{nickError}</p>
-                )}
+                {nickError && <p className="text-xs text-stone-400">{nickError}</p>}
               </div>
             ) : (
               <button
@@ -344,235 +299,38 @@ export default function MyPage() {
 
           <div className="border-t border-stone-200" />
 
-          {/* TYPE 섹션 */}
+          {/* 스타일 번역서 섹션 */}
           <div className="py-7">
-            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">스타일 유형</p>
+            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">스타일 번역서</p>
 
-            {typeHistory.length > 0 ? (
-              <>
-                {/* 최근 결과 — 콤팩트 카드 */}
-                <button
-                  onClick={() => navigate(`/type/result/${typeHistory[0].code}`, { state: { fromHistory: true } })}
-                  className="w-full flex items-center gap-3 p-3 rounded-2xl border border-stone-200 bg-white mb-5 group hover:border-stone-300 transition-all duration-150 active:scale-[0.99]"
-                  style={{ boxShadow: '0 1px 4px 0 rgba(0,0,0,0.05)' }}
-                >
-                  <div className="shrink-0 flex items-center justify-center" style={{ width: 36, height: 44 }}>
-                    {(() => {
-                      const c = typeHistory[0].code;
-                      return (
-                        <svg width="36" height="36" viewBox="0 0 42 42" fill="none">
-                          <line x1="21" y1="19" x2="21" y2="16" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                          <line x1="21" y1="23" x2="21" y2="26" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                          <line x1="19" y1="21" x2="16" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                          <line x1="23" y1="21" x2="26" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                          <circle cx="21" cy="21" r="1.8" fill="#1c1917" opacity="0.5"/>
-                          <text x="21" y="12" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917">{c[0]}</text>
-                          <text x="33" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917">{c[1]}</text>
-                          <text x="21" y="36" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917">{c[2]}</text>
-                          <text x="9" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917">{c[3]}</text>
-                        </svg>
-                      );
-                    })()}
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <p className="text-[10px] font-mono text-stone-400 tracking-widest">{typeHistory[0].code}</p>
-                    <p className="text-[14px] font-medium text-stone-800 leading-snug mt-0.5">{types[typeHistory[0].code]?.nameKo}</p>
-                    <p className="text-[11px] text-stone-400 mt-0.5">{formatDateTime(typeHistory[0].savedAt)}</p>
-                  </div>
-                </button>
-
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-stone-500 leading-relaxed mb-1">아직 유형 테스트를 하지 않으셨어요.</p>
-                <p className="text-sm text-stone-400 leading-relaxed mb-4">내 스타일 DNA가 어떤 유형인지 지금 확인해보세요.</p>
-                <div className="relative">
-                  {recommend === 'type' && <RecommendBadge />}
-                <button
-                  onClick={() => navigate('/type/questions', { state: { source: 'mypage' } })}
-                  className="w-full px-5 py-4 rounded-3xl bg-white border border-stone-200 text-left transition-all duration-150 active:scale-[0.98] hover:border-stone-300 flex items-center gap-4"
-                  style={{ boxShadow: '0 1px 8px 0 rgba(0,0,0,0.06)' }}
-                >
-                  <div className="shrink-0 flex items-center justify-center" style={{ width: 48, height: 56 }}>
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                      <line x1="21" y1="19" x2="21" y2="16" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                      <line x1="21" y1="23" x2="21" y2="26" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                      <line x1="19" y1="21" x2="16" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                      <line x1="23" y1="21" x2="26" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35"/>
-                      <circle cx="21" cy="21" r="1.8" fill="#1c1917" opacity="0.5"/>
-                      <text x="21" y="12" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">I</text>
-                      <text x="21" y="36" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">R</text>
-                      <text x="33" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">C</text>
-                      <text x="9" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">D</text>
-                    </svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(28,25,23,0.3)' }}>STYLE TYPE</p>
-                    <p className="text-[17px] font-medium tracking-tight text-stone-800 leading-snug">스타일 유형 테스트</p>
-                    <p className="mt-1 text-[12px] text-stone-400 leading-relaxed">12문항 · 1분 소요</p>
-                  </div>
-                </button>
+            {!translatorLoaded ? (
+              <div className="w-full flex items-center gap-3 p-3 rounded-2xl border border-stone-200 bg-white" style={{ animation: 'pulse 1.5s ease-in-out infinite' }}>
+                <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
+                <div className="shrink-0 rounded-lg" style={{ width: 36, height: 44, backgroundColor: '#E7E2DA' }} />
+                <div className="flex-1 min-w-0 flex flex-col gap-2">
+                  <div style={{ height: 12, width: '55%', borderRadius: 4, backgroundColor: '#E7E2DA' }} />
+                  <div style={{ height: 10, width: '35%', borderRadius: 4, backgroundColor: '#EDE9E3' }} />
                 </div>
-              </>
-            )}
-          </div>
-
-          <div className="border-t border-stone-200" />
-
-          {/* PRESCRIPTION 섹션 */}
-          <div className="py-7">
-            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">스타일 처방전</p>
-
-            {prescriptionHistory.length > 0 ? (
+              </div>
+            ) : translatorHistory.length > 0 ? (
               <>
-                {/* 최근 처방전 — 콤팩트 카드 */}
                 {(() => {
-                  const latest = prescriptionHistory[0];
-                  const latestTitle = latest.title || '스타일 처방전';
-                  const latestPreview = latest.preview || latest.free?.insight || null;
-                  return (
-                    <button
-                      onClick={() => navigate(`/prescription/result/${latest.reportId}`)}
-                      className="w-full flex items-center gap-3 p-3 rounded-2xl mb-5 group transition-all duration-150 active:scale-[0.99]"
-                      style={{ backgroundColor: '#E8E2D9', border: '1px solid #DDD7CE', boxShadow: '0 1px 4px 0 rgba(0,0,0,0.05)' }}
-                      onMouseEnter={e => e.currentTarget.style.backgroundColor = '#DDD6CB'}
-                      onMouseLeave={e => e.currentTarget.style.backgroundColor = '#E8E2D9'}
-                    >
-                      <div className="shrink-0 flex items-center justify-center" style={{ width: 36, height: 44 }}>
-                        <div style={{ position: 'relative', width: 28, height: 36, borderRadius: 3 }}>
-                          <div style={{ position: 'absolute', top: 2, left: 2, width: 26, height: 34, borderRadius: 3, backgroundColor: '#D6CEC4', border: '1px solid #C0B9AF' }} />
-                          <div style={{ position: 'absolute', top: 0, left: 0, width: 26, height: 34, borderRadius: 3, backgroundColor: '#FAF8F5', border: '1px solid #D0C9BF', display: 'flex', flexDirection: 'column', padding: '4px 4px 3px', gap: 2.5 }}>
-                            <div style={{ fontFamily: 'Georgia, serif', fontSize: 7, fontWeight: 600, color: '#6B5E52', letterSpacing: '0.04em', lineHeight: 1 }}>Rx</div>
-                            {[100, 70, 85].map((w, i) => (
-                              <div key={i} style={{ height: 1.5, borderRadius: 2, width: `${w}%`, backgroundColor: i === 0 ? '#8C7B6E' : '#C8C0B8' }} />
-                            ))}
-                            <div style={{ height: 1, backgroundColor: '#E0D9D2', marginTop: 0.5 }} />
-                            {[60, 80].map((w, i) => (
-                              <div key={i} style={{ height: 1.5, borderRadius: 2, width: `${w}%`, backgroundColor: '#C8C0B8' }} />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-0 text-left">
-                        <p className="text-[14px] font-medium text-stone-800 leading-snug">{latestTitle}</p>
-                        {latestPreview && (
-                          <p className="text-[11px] mt-0.5 leading-relaxed"
-                            style={{ color: '#8C8278', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                            {latestPreview}
-                          </p>
-                        )}
-                        <p className="text-[11px] text-stone-400 mt-0.5">
-                          {latest.fromType ? `${latest.fromType} · ` : ''}{formatDateTime(latest.savedAt)}
-                        </p>
-                      </div>
-                    </button>
-                  );
-                })()}
-
-                {/* 이전 기록 */}
-                {prescriptionHistory.length > 1 && (
-                  <div>
-                    <p className="text-[10px] tracking-[0.24em] text-stone-300 uppercase mb-2">이전 기록</p>
-                    <div className="flex flex-col">
-                      {prescriptionHistory.slice(1, 5).map((entry) => {
-                        const entryTitle = entry.title || '스타일 처방전';
-                        const entryDate = formatDateTime(entry.savedAt);
-                        return (
-                          <button
-                            key={entry.savedAt}
-                            onClick={() => navigate(`/prescription/result/${entry.reportId}`)}
-                            className="flex items-center justify-between py-3 px-2 rounded-xl border-b border-stone-100 text-left group transition-all duration-150"
-                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#EDE9E3'}
-                            onMouseLeave={e => e.currentTarget.style.backgroundColor = ''}
-                          >
-                            <div className="flex flex-col gap-0.5">
-                              <span className="text-sm font-light text-stone-700 leading-tight">{entryTitle}</span>
-                              <span className="text-xs font-mono text-stone-400 tabular-nums">
-                                {entry.fromType ? `${entry.fromType} · ` : ''}{entryDate}
-                              </span>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-stone-500 leading-relaxed mb-1">처방전을 아직 받아보지 않으셨네요.</p>
-                <p className="text-sm text-stone-400 leading-relaxed mb-4">내 커리어·라이프스타일·추구미를 분석한 AI 스타일 보고서를 받아보세요.</p>
-                <div className="relative">
-                  {recommend === 'prescription' && <RecommendBadge />}
-                <button
-                  onClick={() => navigate('/prescription')}
-                  className="w-full px-5 py-4 rounded-3xl text-left transition-all duration-150 active:scale-[0.98] flex items-center gap-4"
-                  style={{ backgroundColor: '#E8E2D9', border: '1px solid #DDD7CE', boxShadow: '0 1px 8px 0 rgba(0,0,0,0.05)' }}
-                >
-                  <div className="shrink-0 flex items-center justify-center" style={{ width: 48, height: 56 }}>
-                    <div style={{ position: 'relative', width: 36, height: 46, borderRadius: 4 }}>
-                      <div style={{ position: 'absolute', top: 3, left: 3, width: 33, height: 43, borderRadius: 4, backgroundColor: '#E0D9CF', border: '1px solid #C8BFB3' }} />
-                      <div style={{ position: 'absolute', top: 0, left: 0, width: 33, height: 43, borderRadius: 4, backgroundColor: '#FAF8F5', border: '1px solid #D6CFC6', display: 'flex', flexDirection: 'column', padding: '5px 5px 4px', gap: 3 }}>
-                        <div style={{ fontFamily: 'Georgia, serif', fontSize: 9, fontWeight: 600, color: '#6B5E52', letterSpacing: '0.04em', lineHeight: 1 }}>Rx</div>
-                        {[100, 75, 85].map((w, i) => (
-                          <div key={i} style={{ height: 2, borderRadius: 2, width: `${w}%`, backgroundColor: i === 0 ? '#8C7B6E' : '#C8C0B8' }} />
-                        ))}
-                        <div style={{ height: 1, backgroundColor: '#E0D9D2', marginTop: 1 }} />
-                        {[65, 80].map((w, i) => (
-                          <div key={i} style={{ height: 2, borderRadius: 2, width: `${w}%`, backgroundColor: '#C8C0B8' }} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(28,25,23,0.3)' }}>AI STYLE REPORT</p>
-                    <p className="text-[17px] font-medium tracking-tight text-stone-800 leading-snug">스타일 처방전</p>
-                    <p className="mt-1 text-[12px] leading-relaxed" style={{ color: '#8C8278' }}>스타일 진단 AI 보고서 · 약 5분 소요</p>
-                  </div>
-                </button>
-                </div>
-              </>
-            )}
-          </div>
-
-          <div className="border-t border-stone-200" />
-
-          {/* CONSULTING 섹션 */}
-          <div className="py-7">
-            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">1:1 스타일 코칭</p>
-
-            {consultingHistory.length > 0 ? (
-              <>
-                {/* 최근 신청 — 콤팩트 카드 */}
-                {(() => {
-                  const latest = consultingHistory[0];
+                  const latest = translatorHistory[0];
                   const latestDate = formatDateTime(latest.created_at);
                   const latestPreview = getConsultingPreview(latest.answers);
                   return (
                     <button
-                      onClick={() => navigate(`/consulting/intakes/${latest.id}`)}
+                      onClick={() => navigate(`/translator/report/${latest.id}`)}
                       className="w-full flex items-center gap-3 p-3 rounded-2xl mb-5 group transition-all duration-150 active:scale-[0.99]"
                       style={{ backgroundColor: '#26211D', border: '1px solid #3A332D', boxShadow: '0 2px 12px 0 rgba(0,0,0,0.18)' }}
                       onMouseEnter={e => e.currentTarget.style.backgroundColor = '#2E2721'}
                       onMouseLeave={e => e.currentTarget.style.backgroundColor = '#26211D'}
                     >
-                      <div className="shrink-0 flex items-center justify-center overflow-hidden" style={{ width: 36, height: 44 }}>
-                        <AnimatePresence mode="wait">
-                          <motion.img
-                            key={activeCoachingCode}
-                            src={activeCoachingChar}
-                            alt=""
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="object-contain object-bottom"
-                            style={{ height: 44, width: 36 }}
-                          />
-                        </AnimatePresence>
+                      <div className="shrink-0 flex items-center justify-center" style={{ width: 36, height: 44 }}>
+                        <ReportIcon size={34} />
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <p className="text-[14px] font-medium leading-snug" style={{ color: '#F0EBE4' }}>1:1 스타일 코칭</p>
+                        <p className="text-[14px] font-medium leading-snug" style={{ color: '#F0EBE4' }}>스타일 번역서</p>
                         {latestPreview && (
                           <p className="text-[11px] mt-0.5 leading-relaxed"
                             style={{ color: 'rgba(240,235,228,0.45)', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
@@ -585,24 +343,23 @@ export default function MyPage() {
                   );
                 })()}
 
-                {/* 이전 기록 */}
-                {consultingHistory.length > 1 && (
+                {translatorHistory.length > 1 && (
                   <div>
                     <p className="text-[10px] tracking-[0.24em] text-stone-300 uppercase mb-2">이전 기록</p>
                     <div className="flex flex-col">
-                      {consultingHistory.slice(1, 5).map((entry) => {
+                      {translatorHistory.slice(1, 5).map((entry) => {
                         const entryDate = formatDateTime(entry.created_at);
                         const entryPreview = getConsultingPreview(entry.answers);
                         return (
                           <button
                             key={entry.id}
-                            onClick={() => navigate(`/consulting/intakes/${entry.id}`)}
+                            onClick={() => navigate(`/translator/report/${entry.id}`)}
                             className="flex items-center justify-between py-3 px-2 rounded-xl border-b border-stone-100 text-left group transition-all duration-150"
                             onMouseEnter={e => e.currentTarget.style.backgroundColor = '#EDE9E3'}
                             onMouseLeave={e => e.currentTarget.style.backgroundColor = ''}
                           >
                             <div className="flex flex-col gap-0.5">
-                              <span className="text-sm font-light text-stone-700 leading-tight">1:1 스타일 코칭 신청</span>
+                              <span className="text-sm font-light text-stone-700 leading-tight">스타일 번역서</span>
                               <span className="text-xs font-mono text-stone-400 tabular-nums">
                                 {entryPreview ? `${entryPreview.slice(0, 20)}… · ` : ''}{entryDate}
                               </span>
@@ -632,41 +389,96 @@ export default function MyPage() {
               </>
             ) : (
               <>
-                <p className="text-sm text-stone-500 leading-relaxed mb-1">아직 코칭을 신청하지 않으셨어요.</p>
-                <p className="text-sm text-stone-400 leading-relaxed mb-4">나에게 맞는 스타일 방향을 전문가와 함께 잡아보세요.</p>
-                <div className="relative">
-                  {recommend === 'consulting' && <RecommendBadge />}
+                <p className="text-sm text-stone-500 leading-relaxed mb-1">아직 번역서를 받지 않으셨어요.</p>
+                <p className="text-sm text-stone-400 leading-relaxed mb-4">25문항으로 나의 정체성을 스타일로 번역한 AI 보고서를 받아보세요.</p>
                 <button
-                  onClick={() => setShowCoachingModal(true)}
+                  onClick={() => navigate('/')}
                   className="w-full px-5 py-4 rounded-3xl text-left transition-all duration-150 active:scale-[0.98] flex items-center gap-4"
                   style={{ backgroundColor: '#26211D', border: '1px solid #3A332D', boxShadow: '0 2px 16px 0 rgba(0,0,0,0.22)' }}
                 >
-                  <div className="shrink-0 flex items-center justify-center overflow-hidden" style={{ width: 48, height: 56 }}>
-                    <AnimatePresence mode="wait">
-                      <motion.img
-                        key={activeCoachingCode}
-                        src={activeCoachingChar}
-                        alt=""
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="object-contain object-bottom"
-                        style={{ height: 56, width: 48 }}
-                      />
-                    </AnimatePresence>
+                  <div className="shrink-0 flex items-center justify-center" style={{ width: 48, height: 56 }}>
+                    <ReportIcon size={44} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(240,235,228,0.4)' }}>1:1 COACHING</p>
-                    <p className="text-[17px] font-medium tracking-tight leading-snug" style={{ color: '#F0EBE4' }}>1:1 스타일 코칭</p>
-                    <p className="mt-1 text-[12px] leading-relaxed" style={{ color: 'rgba(240,235,228,0.45)' }}>남성 맞춤형 스타일 코칭</p>
+                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(240,235,228,0.4)' }}>STYLE TRANSLATOR</p>
+                    <p className="text-[17px] font-medium tracking-tight leading-snug" style={{ color: '#F0EBE4' }}>스타일 번역서</p>
+                    <p className="mt-1 text-[12px] leading-relaxed" style={{ color: 'rgba(240,235,228,0.45)' }}>25문항 · 약 5분</p>
                   </div>
                 </button>
-                </div>
               </>
             )}
           </div>
 
+          <div className="border-t border-stone-200" />
+
+          {/* 스타일 유형 섹션 */}
+          <div className="py-7">
+            <p className="text-base font-medium text-stone-800 tracking-tight mb-5">스타일 유형</p>
+
+            {typeHistory.length > 0 ? (
+              <button
+                onClick={() => navigate(`/type/result/${typeHistory[0].code}`, { state: { fromHistory: true } })}
+                className="w-full flex items-center gap-3 p-3 rounded-2xl border border-stone-200 bg-white group hover:border-stone-300 transition-all duration-150 active:scale-[0.99]"
+                style={{ boxShadow: '0 1px 4px 0 rgba(0,0,0,0.05)' }}
+              >
+                <div className="shrink-0 flex items-center justify-center" style={{ width: 36, height: 44 }}>
+                  {(() => {
+                    const c = typeHistory[0].code;
+                    return (
+                      <svg width="36" height="36" viewBox="0 0 42 42" fill="none">
+                        <line x1="21" y1="19" x2="21" y2="16" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <line x1="21" y1="23" x2="21" y2="26" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <line x1="19" y1="21" x2="16" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <line x1="23" y1="21" x2="26" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <circle cx="21" cy="21" r="1.8" fill="#1c1917" opacity="0.5" />
+                        <text x="21" y="12" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917">{c[0]}</text>
+                        <text x="33" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917">{c[1]}</text>
+                        <text x="21" y="36" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917">{c[2]}</text>
+                        <text x="9" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917">{c[3]}</text>
+                      </svg>
+                    );
+                  })()}
+                </div>
+                <div className="flex-1 min-w-0 text-left">
+                  <p className="text-[10px] font-mono text-stone-400 tracking-widest">{typeHistory[0].code}</p>
+                  <p className="text-[14px] font-medium text-stone-800 leading-snug mt-0.5">{types[typeHistory[0].code]?.nameKo}</p>
+                  <p className="text-[11px] text-stone-400 mt-0.5">{formatDateTime(typeHistory[0].savedAt)}</p>
+                </div>
+              </button>
+            ) : (
+              <>
+                <p className="text-sm text-stone-500 leading-relaxed mb-1">아직 유형 테스트를 하지 않으셨어요.</p>
+                <p className="text-sm text-stone-400 leading-relaxed mb-4">내 스타일 DNA가 어떤 유형인지 지금 확인해보세요.</p>
+                <div className="relative">
+                  {recommend === 'type' && <RecommendBadge />}
+                  <button
+                    onClick={() => navigate('/type/questions', { state: { source: 'mypage' } })}
+                    className="w-full px-5 py-4 rounded-3xl bg-white border border-stone-200 text-left transition-all duration-150 active:scale-[0.98] hover:border-stone-300 flex items-center gap-4"
+                    style={{ boxShadow: '0 1px 8px 0 rgba(0,0,0,0.06)' }}
+                  >
+                    <div className="shrink-0 flex items-center justify-center" style={{ width: 48, height: 56 }}>
+                      <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                        <line x1="21" y1="19" x2="21" y2="16" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <line x1="21" y1="23" x2="21" y2="26" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <line x1="19" y1="21" x2="16" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <line x1="23" y1="21" x2="26" y2="21" stroke="#1c1917" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+                        <circle cx="21" cy="21" r="1.8" fill="#1c1917" opacity="0.5" />
+                        <text x="21" y="12" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">I</text>
+                        <text x="21" y="36" textAnchor="middle" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">R</text>
+                        <text x="33" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">C</text>
+                        <text x="9" y="21" textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="600" fill="#1c1917" opacity="0.55">D</text>
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: 'rgba(28,25,23,0.3)' }}>STYLE TYPE</p>
+                      <p className="text-[17px] font-medium tracking-tight text-stone-800 leading-snug">스타일 유형 진단</p>
+                      <p className="mt-1 text-[12px] text-stone-400 leading-relaxed">12문항 · 1분 소요</p>
+                    </div>
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {user && isAdminUser(user.id) && (
@@ -696,7 +508,7 @@ export default function MyPage() {
           />
         )}
         {showReviewModal && user && unlockedIntakeId && (
-          <ConsultingReviewModal
+          <TranslatorReviewModal
             key="review"
             userId={user.id}
             intakeId={unlockedIntakeId}
@@ -705,17 +517,6 @@ export default function MyPage() {
             onSubmitted={() => {
               setReviewSubmitted(true);
               setShowReviewModal(false);
-            }}
-          />
-        )}
-        {showCoachingModal && (
-          <CoachingModal
-            key="coaching"
-            onClose={() => setShowCoachingModal(false)}
-            prescriptionDone={prescriptionHistory.length > 0}
-            onNavigate={() => {
-              setShowCoachingModal(false);
-              navigate('/prescription');
             }}
           />
         )}

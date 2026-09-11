@@ -49,7 +49,7 @@ export default function AdminUserPage() {
   const row = location.state?.row ?? null;
 
   if (!loading && (!user || !isAdminUser(user.id))) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (!row) {

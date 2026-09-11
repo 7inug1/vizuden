@@ -17,46 +17,76 @@ const BASE_URL = process.env.VIZUDEN_SITE_URL || 'https://vizuden.com';
 
 let count = 0;
 
+// 처방전 페이지용 static HTML 생성 (/prescription, /prescription/result)
+const prescriptionTitle = 'VIZUDEN 스타일 처방전 — AI 진단 보고서';
+const prescriptionDesc = '커리어·취향·라이프스타일을 분석한 나만의 스타일 AI 보고서. 지금 바로 받아보세요.';
+const prescriptionOgImage = `${BASE_URL}/api/og-png?page=prescription`;
+
+for (const slug of ['prescription', 'prescription/result']) {
+  const html = template
+    .replace(/<title>[^<]*<\/title>/, `<title>${prescriptionTitle}</title>`)
+    .replace(/(<meta property="og:url" content=")[^"]*(")/,  `$1${BASE_URL}/${slug}$2`)
+    .replace(/(<meta property="og:title" content=")[^"]*(")/,       `$1${prescriptionTitle}$2`)
+    .replace(/(<meta property="og:description" content=")[^"]*(")/,  `$1${prescriptionDesc}$2`)
+    .replace(/(<meta property="og:image" content=")[^"]*(")/,        `$1${prescriptionOgImage}$2`)
+    .replace(/(<meta name="twitter:title" content=")[^"]*(")/,       `$1${prescriptionTitle}$2`)
+    .replace(/(<meta name="twitter:description" content=")[^"]*(")/,  `$1${prescriptionDesc}$2`)
+    .replace(/(<meta name="twitter:image" content=")[^"]*(")/,        `$1${prescriptionOgImage}$2`);
+
+  const dir = path.join(root, 'dist', slug);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf-8');
+  console.log(`  ✓ /${slug}`);
+  count++;
+}
+
+// 번역서 샘플 페이지
+const translatorSamples = [
+  { id: 'teo-yoo',     name: '유태오',   title: '글로벌 노마드' },
+  { id: 'bong-taegyu', name: '봉태규',   title: '정답 밖의 사람' },
+  { id: 'steven-yeun', name: '스티븐 연', title: '어디에도 속하지 않은 사람' },
+  { id: 'do-yoon',     name: '김도윤',   title: '조용한 무게감' },
+];
+
+for (const s of translatorSamples) {
+  const pageTitle = `${s.name}의 스타일 번역서 — ${s.title} | VIZUDEN`;
+  const pageDesc  = `${s.name}의 정체성을 스타일 언어로 번역한 보고서. VIZUDEN 스타일 번역서.`;
+  const ogImage   = `${BASE_URL}/api/og-png?page=translator-sample&persona=${s.id}`;
+  const ogUrl     = `${BASE_URL}/translator/sample/${s.id}`;
+
+  const html = template
+    .replace(/<title>[^<]*<\/title>/, `<title>${pageTitle}</title>`)
+    .replace(/(<meta property="og:url" content=")[^"]*(")/,          `$1${ogUrl}$2`)
+    .replace(/(<meta property="og:title" content=")[^"]*(")/,        `$1${pageTitle}$2`)
+    .replace(/(<meta property="og:description" content=")[^"]*(")/,  `$1${pageDesc}$2`)
+    .replace(/(<meta property="og:image" content=")[^"]*(")/,        `$1${ogImage}$2`)
+    .replace(/(<meta name="twitter:title" content=")[^"]*(")/,       `$1${pageTitle}$2`)
+    .replace(/(<meta name="twitter:description" content=")[^"]*(")/,  `$1${pageDesc}$2`)
+    .replace(/(<meta name="twitter:image" content=")[^"]*(")/,        `$1${ogImage}$2`);
+
+  const dir = path.join(root, 'dist/translator/sample', s.id);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf-8');
+  console.log(`  ✓ /translator/sample/${s.id}`);
+  count++;
+}
+
 Object.values(types).forEach((t) => {
   const { code, nameKo, nameEn, description, keywords } = t;
-  const title = `나만의 비주얼 정체성 진단 — 내 타입은 ${nameKo} (${nameEn})`;
-  const desc = `내 타입은 ${description} (${keywords.join(', ')})`.slice(0, 155);
+  const title = `나는 ${nameKo} — VIZUDEN 스타일 유형`;
+  const desc = `${description} (${keywords.join(', ')})`.slice(0, 155);
   const ogImage = `${BASE_URL}/api/og-png?type=${code}`;
   const ogUrl = `${BASE_URL}/type/result/${code}`;
 
   const html = template
-    // <title>
     .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
-    // og:title
-    .replace(
-      /(<meta property="og:title" content=")[^"]*(")/,
-      `$1${title}$2`
-    )
-    // og:description
-    .replace(
-      /(<meta property="og:description" content=")[^"]*(")/,
-      `$1${desc}$2`
-    )
-    // og:image
-    .replace(
-      /(<meta property="og:image" content=")[^"]*(")/,
-      `$1${ogImage}$2`
-    )
-    // twitter:title
-    .replace(
-      /(<meta name="twitter:title" content=")[^"]*(")/,
-      `$1${title}$2`
-    )
-    // twitter:description
-    .replace(
-      /(<meta name="twitter:description" content=")[^"]*(")/,
-      `$1${desc}$2`
-    )
-    // twitter:image
-    .replace(
-      /(<meta name="twitter:image" content=")[^"]*(")/,
-      `$1${ogImage}$2`
-    );
+    .replace(/(<meta property="og:url" content=")[^"]*(")/,          `$1${ogUrl}$2`)
+    .replace(/(<meta property="og:title" content=")[^"]*(")/,        `$1${title}$2`)
+    .replace(/(<meta property="og:description" content=")[^"]*(")/,  `$1${desc}$2`)
+    .replace(/(<meta property="og:image" content=")[^"]*(")/,        `$1${ogImage}$2`)
+    .replace(/(<meta name="twitter:title" content=")[^"]*(")/,       `$1${title}$2`)
+    .replace(/(<meta name="twitter:description" content=")[^"]*(")/,  `$1${desc}$2`)
+    .replace(/(<meta name="twitter:image" content=")[^"]*(")/,        `$1${ogImage}$2`);
 
   const dir = path.join(root, 'dist/type/result', code);
   fs.mkdirSync(dir, { recursive: true });

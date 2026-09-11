@@ -5,7 +5,7 @@ import SiteHeader from '../components/SiteHeader';
 import RecommendBadge from '../components/RecommendBadge';
 import PrescriptionSampleCard from '../components/PrescriptionSampleCard';
 import TypeSamplePreview from '../components/TypeSamplePreview';
-import ConsultingBeforeAfterCard from '../components/ConsultingBeforeAfterCard';
+import TranslatorBeforeAfterCard from '../components/TranslatorBeforeAfterCard';
 import { StepNumber } from '../components/ServiceStepChrome';
 import { types } from '../data/types';
 import { useNickname } from '../context/NicknameContext';
@@ -130,7 +130,7 @@ export function NicknameModal({ onSave, onSkip }) {
       transition={{ duration: 0.2 }}
       className="fixed inset-0 z-50 flex items-center justify-center px-6"
       style={{ backgroundColor: 'rgba(28,25,23,0.55)' }}
-      onClick={(e) => { if (e.target === e.currentTarget) onSkip(); }}
+      onClick={(e) => { if (e.target === e.currentTarget) onSkip?.(); }}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.97 }}
@@ -196,11 +196,11 @@ const SERVICE_DATA = {
   type: {
     step: '01',
     eyebrow: 'STYLE TYPE',
-    title: '스타일 유형 테스트',
+    title: '스타일 유형 진단',
     body: '16가지 유형 중 지금의 나를 가리키는 유형을 찾습니다.',
     cta: '유형 진단하기',
     path: '/type/questions',
-    introText: '스타일 유형 테스트 한 번 받아보는 건 어떠세요?',
+    introText: '스타일 유형 진단 한 번 받아보는 건 어떠세요?',
   },
   prescription: {
     step: '02',
@@ -217,7 +217,7 @@ const SERVICE_DATA = {
     title: '1:1 스타일 코칭',
     body: '스타일 처방전에서 찾은 기준을 바탕으로, 옷장 진단부터 쇼핑과 코디 실행까지 1:1로 함께합니다.',
     cta: '신청하기',
-    path: '/consulting/questions',
+    path: '/translator/questions',
     introText: '이제 1:1 컨설팅을 신청할 수 있습니다.',
   },
 };
@@ -262,7 +262,7 @@ function GreetingSection({ nickname, recommend, typeCode, onNavigate, ctaLabel, 
             </p>
             {recommend === 'type' && <TypeSamplePreview className="mb-6" />}
             {recommend === 'prescription' && <PrescriptionSampleCard className="mb-6" />}
-            {recommend === 'consulting' && <ConsultingBeforeAfterCard className="mb-6" />}
+            {recommend === 'consulting' && <TranslatorBeforeAfterCard className="mb-6" />}
             <div style={{ position: 'relative' }}>
               {recommend && svc.path && <RecommendBadge />}
               {svc.cta && svc.path && (

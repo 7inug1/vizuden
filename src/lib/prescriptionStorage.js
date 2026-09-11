@@ -1,9 +1,17 @@
 const CURRENT_KEY = 'vizuden_prescription';
 const CURRENT_HISTORY_KEY = 'vizuden_prescription_history';
 
+function getStorage() {
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
 function readJson(key, fallback) {
   try {
-    const raw = localStorage.getItem(key);
+    const raw = getStorage()?.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
   } catch {
     return fallback;
@@ -15,7 +23,9 @@ export function readPrescriptionSaved() {
 }
 
 export function writePrescriptionSaved(value) {
-  localStorage.setItem(CURRENT_KEY, JSON.stringify(value));
+  try {
+    getStorage()?.setItem(CURRENT_KEY, JSON.stringify(value));
+  } catch {}
 }
 
 export function readPrescriptionHistory() {
@@ -24,5 +34,7 @@ export function readPrescriptionHistory() {
 }
 
 export function writePrescriptionHistory(value) {
-  localStorage.setItem(CURRENT_HISTORY_KEY, JSON.stringify(value));
+  try {
+    getStorage()?.setItem(CURRENT_HISTORY_KEY, JSON.stringify(value));
+  } catch {}
 }

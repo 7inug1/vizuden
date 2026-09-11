@@ -34,13 +34,12 @@ function HamburgerIcon({ open }) {
 }
 
 const NAV_ITEMS = [
-  { label: '홈',        path: '/home' },
-  { label: '서비스',    path: '/services' },
+  { label: '홈',        path: '/' },
   { label: '마이페이지', path: '/mypage' },
   { label: 'About',    path: '/about' },
 ];
 
-function Drawer({ open, onClose, authLabel, onAuthAction }) {
+function Drawer({ open, onClose, authLabel, onAuthAction, userEmail }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -85,9 +84,13 @@ function Drawer({ open, onClose, authLabel, onAuthAction }) {
             style={{ width: '72vw', maxWidth: '280px', backgroundColor: '#F5F2ED' }}
           >
             {/* 로고 */}
-            <p className="text-2xl tracking-[0.18em] text-stone-900 font-medium mb-12">
+            <button
+              onClick={() => handleNav('/')}
+              className="text-2xl text-stone-900 font-bold mb-12 text-left hover:text-stone-400 transition-colors duration-150"
+              style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", letterSpacing: '0.04em' }}
+            >
               VIZUDEN
-            </p>
+            </button>
 
             {/* 메뉴 항목 */}
             <div className="flex flex-col">
@@ -119,14 +122,10 @@ function Drawer({ open, onClose, authLabel, onAuthAction }) {
               {authLabel}
             </button>
 
-            {/* 닫기 */}
-            <button
-              onClick={onClose}
-              className="mt-auto text-xs text-stone-400 tracking-widest uppercase
-                hover:text-stone-700 transition-colors duration-150 text-left"
-            >
-              닫기
-            </button>
+            {/* 이메일 */}
+            {userEmail ? (
+              <p className="mt-auto text-[11px] text-stone-600 tracking-wide truncate">{userEmail}</p>
+            ) : null}
           </motion.nav>
         </>
       )}
@@ -136,7 +135,8 @@ function Drawer({ open, onClose, authLabel, onAuthAction }) {
 
 // 전 페이지 공용 상단 헤더
 // onLogoClick: 로고 클릭 시 커스텀 동작 (없으면 기본 홈 이동)
-export default function SiteHeader({ onLogoClick }) {
+// subtitle: 로고 아래 작은 텍스트 (랜딩 전용)
+export default function SiteHeader({ onLogoClick, subtitle }) {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user, isGuest, signOut } = useAuth();
@@ -144,10 +144,10 @@ export default function SiteHeader({ onLogoClick }) {
   async function handleAuthAction() {
     if (user) {
       await signOut();
-      navigate('/home');
+      navigate('/');
       return;
     }
-    navigate('/auth', { state: { nextPath: '/mypage' } });
+    navigate('/auth/email', { state: { nextPath: '/mypage' } });
   }
 
   function handleLogoClick() {
@@ -161,49 +161,69 @@ export default function SiteHeader({ onLogoClick }) {
   return (
     <>
       <header
-        className="w-full relative flex items-center justify-center pb-8"
+        className="w-full grid items-center px-2"
         style={{
+          gridTemplateColumns: '1fr auto 1fr',
           position: 'sticky',
-          top: 'var(--notice-bar-height, 0px)',
+          // 노티스바와 1px 겹쳐 서브픽셀 이음새(미세 간격) 제거
+          top: 'calc(var(--notice-bar-height, 0px) - 1px)',
           zIndex: 40,
           backgroundColor: '#F5F2ED',
-          paddingTop: '8px',
-          boxShadow: '0 -8px 0 0 #F5F2ED',
+          paddingTop: '14px',
+          paddingBottom: '28px',
+          boxShadow: '0 -10px 0 0 #F5F2ED',
         }}
       >
-        {/* 햄버거 — 좌측 */}
-        <button
-          onClick={() => setDrawerOpen(true)}
-          className="absolute left-0 text-stone-900 hover:text-stone-400 transition-colors duration-200"
-          aria-label="메뉴 열기"
-        >
-          <HamburgerIcon open={false} />
-        </button>
+        {/* 햄버거 메뉴 — 좌측 */}
+        <div className="flex justify-start">
+          <button
+            onClick={() => setDrawerOpen(true)}
+            aria-label="메뉴 열기"
+            className="flex items-center justify-center text-stone-600 hover:text-stone-900 transition-colors"
+            style={{ height: 30, width: 34 }}
+          >
+            <HamburgerIcon open={false} />
+          </button>
+        </div>
 
         {/* 로고 — 중앙 */}
         <button
           onClick={handleLogoClick}
-          className="text-3xl tracking-[0.18em] text-stone-900
-            hover:text-stone-400 transition-colors duration-200 font-medium"
+          className="flex flex-col items-center hover:opacity-60 transition-opacity duration-200"
         >
-          VIZUDEN
+          <span
+            className="text-3xl text-stone-900 font-bold leading-none"
+            style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", letterSpacing: '0.04em' }}
+          >
+            VIZUDEN
+          </span>
+          {subtitle && (
+            <span className="mt-0.5 text-[9px] font-light text-stone-400 tracking-[0.24em]">
+              {subtitle}
+            </span>
+          )}
         </button>
 
-        {/* 프로필 — 우측 */}
-        <button
-          onClick={() => navigate('/mypage')}
-          className="absolute right-0 text-stone-900 hover:text-stone-400 transition-colors duration-200"
-          aria-label="마이페이지"
-        >
-          <PersonIcon />
-        </button>
+        {/* 마이페이지 — 우측 */}
+        <div className="flex justify-end">
+          <button
+            onClick={() => navigate('/mypage')}
+            aria-label="마이페이지"
+            className="flex items-center justify-center text-stone-600 hover:text-stone-900 transition-colors"
+            style={{ height: 30, width: 34 }}
+          >
+            <PersonIcon />
+          </button>
+        </div>
+
       </header>
 
       <Drawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        authLabel={user ? '로그아웃' : isGuest ? '로그인 / 회원가입' : '로그인 / 회원가입'}
+        authLabel={user ? '로그아웃' : '로그인'}
         onAuthAction={handleAuthAction}
+        userEmail={user?.email ?? null}
       />
     </>
   );

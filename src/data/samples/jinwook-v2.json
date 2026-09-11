@@ -1,0 +1,264 @@
+{
+  "version": 2,
+  "issue": {
+    "season": "2026 SUMMER",
+    "no": "0000"
+  },
+  "naming": {
+    "name": "기준을 세우는 사람",
+    "tagline": "덜어낸 자리에 자기 것을 놓는 사람"
+  },
+  "diagnosis": {
+    "photo": {
+      "url": "/demo-me.jpg",
+      "credit": "제출하신 사진 · 보고서 생성 후 폐기됩니다",
+      "points": [
+        {
+          "x": 50,
+          "y": 14,
+          "label": "상안부가 짧은 편 — 이마를 열고 볼륨을 위로. 얼굴의 무게중심이 올라갑니다"
+        },
+        {
+          "x": 50,
+          "y": 88,
+          "label": "중·하안부가 긴 얼굴 — 칼라·크루넥으로 목 위를 채우면 균형이 섭니다. 깊은 브이넥은 얼굴을 더 길게 만들어요"
+        },
+        {
+          "x": 22,
+          "y": 55,
+          "label": "복합성 피부 — 광택 소재는 피부의 광과 싸웁니다. 무광 면·울이 답"
+        }
+      ]
+    },
+    "observed": {
+      "label": "관찰 — 사진에서 본 것",
+      "lead": "자신을 고치겠다고 민낯을 제출하는 사람은 드뭅니다.",
+      "body": "이 사진은 메이크업 컨설팅에 제출됐던 정면 민낯이에요. 개선에 진심인 사람만 찍는 종류의 사진이죠. 얼굴 데이터는 명확해요 — 무게중심이 아래에 있는 성숙한 얼굴(상안부 0.89 : 중안부 1 : 하안부 1.29), 부드러운 골격, 그리고 '자연스럽고 성숙하고 분위기 있는' 이미지가 어울린다는 진단. 화려한 옷이 아니라 정돈된 옷이 이기는 얼굴입니다."
+    },
+    "tension": {
+      "label": "긴장 — 답변 사이에서 읽은 것",
+      "lead": "남자들에게 스타일 기준을 주겠다는 사람이, 자기 옷장의 기준은 미뤄뒀어요.",
+      "body": "화면의 1px 어긋남을 그냥 못 넘기는 눈을 갖고 있으면서, 새벽까지 그 기준으로 서비스를 깎으면서 — 옷 앞에서만 그 눈을 꺼둡니다. 옷이 어려운 게 아니에요. 님은 기준이 서면 1초에 결정하는 사람이고, 기준이 없으면 결정 자체를 미루는 사람이에요. 그러니 필요한 건 옷이 아니라 옷의 기준, 즉 유니폼입니다. 그리고 하나 더 — 님은 이미 얼굴을 걸었어요. 릴스에 나오고, 브랜드의 얼굴이 됐죠. 이제 옷장은 취향 문제가 아니라 브랜드 자산입니다."
+    },
+    "reference": {
+      "label": "추구미 — 사람 대신 문장",
+      "body": "닮고 싶은 인물을 묻는 칸에, 님은 사람 대신 문장을 갖고 있는 사람이에요. '자기 스타일 기준을 찾지 못한 채 삶을 마감하는 남자는 없어야 한다.' 이 보고서가 할 일은 하나 — 그 문장의 '남자'를 '나'로 바꾸는 것."
+    },
+    "verdict": "그래서 이름을 이렇게 붙입니다 — 기준을 세우는 사람. 화면의 1px을 잡아내는 그 눈은 이미 있습니다. 옷장에서 아직 켜지지 않았을 뿐이에요. 이 보고서가 그 스위치입니다."
+  },
+  "rules": [
+    "유니폼을 정하세요. 같은 셔츠 셋, 같은 팬츠 둘 — 아침의 결정을 0으로.",
+    "색은 당신이 만든 팔레트에서만 사세요 — 크림·잉크·브론즈. 서비스와 창업자가 같은 톤일 때 브랜드가 됩니다.",
+    "사기 전에 카메라로 확인하세요. 릴스 썸네일에서 죽는 옷은 옷장에서도 죽습니다."
+  ],
+  "system": {
+    "colors": {
+      "core": [
+        {
+          "name": "크림",
+          "hex": "#EFE9DD",
+          "note": "vizuden의 바탕색 — 셔츠·티. 얼굴을 밝히는 상의 전용",
+          "products": [
+            {
+              "title": "무신사스탠다드 오버사이즈 옥스포드 셔츠 MMASLAZ09",
+              "link": "https://search.shopping.naver.com/catalog/59489463963",
+              "image": "https://shopping-phinf.pstatic.net/main_5948946/59489463963.20260704070629.jpg",
+              "price": 33860,
+              "brand": "무신사스탠다드",
+              "mall": "네이버"
+            },
+            {
+              "title": "마인드브릿지 올데이 옥스포드 오버핏 반팔 셔츠",
+              "link": "https://search.shopping.naver.com/catalog/59495015301",
+              "image": "https://shopping-phinf.pstatic.net/main_5949501/59495015301.20260704070538.jpg",
+              "price": 19900,
+              "brand": "마인드브릿지",
+              "mall": "네이버"
+            }
+          ]
+        },
+        {
+          "name": "잉크 차콜",
+          "hex": "#26221E",
+          "note": "본문의 색 — 팬츠·아우터. 아래를 눌러주는 축",
+          "products": [
+            {
+              "title": "무신사스탠다드 세미 와이드 히든 밴딩 슬랙스 MM0PL0Z03",
+              "link": "https://search.shopping.naver.com/catalog/60229339805",
+              "image": "https://shopping-phinf.pstatic.net/main_6022933/60229339805.20260529160657.jpg",
+              "price": 32100,
+              "brand": "무신사스탠다드",
+              "mall": "네이버"
+            },
+            {
+              "title": "제로 딥 원 턱 스웨트 쇼츠",
+              "link": "https://search.shopping.naver.com/catalog/57612621996",
+              "image": "https://shopping-phinf.pstatic.net/main_5761262/57612621996.20251106171307.jpg",
+              "price": 30970,
+              "brand": "제로",
+              "mall": "네이버"
+            }
+          ]
+        },
+        {
+          "name": "브론즈 브라운",
+          "hex": "#9A7259",
+          "note": "당신의 악센트 컬러 — 니트 한 벌로 충분합니다",
+          "products": [
+            {
+              "title": "탑텐 쿨라이트 크루넥 반팔 스웨터 MSE2ER1001",
+              "link": "https://search.shopping.naver.com/catalog/57557056945",
+              "image": "https://shopping-phinf.pstatic.net/main_5755705/57557056945.20251104122805.jpg",
+              "price": 13700,
+              "brand": "탑텐",
+              "mall": "네이버"
+            },
+            {
+              "title": "지오지아 변형 조직 크루넥 반팔 스웨터 ABD2ER1103",
+              "link": "https://search.shopping.naver.com/catalog/54346928904",
+              "image": "https://shopping-phinf.pstatic.net/main_5434692/54346928904.20260628073127.jpg",
+              "price": 17820,
+              "brand": "지오지아",
+              "mall": "네이버"
+            }
+          ]
+        },
+        {
+          "name": "스톤 그레이",
+          "hex": "#8d8680",
+          "note": "크림과 잉크 사이의 다리 — 이너·양말",
+          "products": [
+            {
+              "title": "지오다노 남자 반팔 카라/폴로넥 코튼 피케 무지 티셔츠",
+              "link": "https://search.shopping.naver.com/catalog/60031149460",
+              "image": "https://shopping-phinf.pstatic.net/main_6003114/60031149460.20260622070535.jpg",
+              "price": 17460,
+              "brand": "지오다노",
+              "mall": "네이버"
+            },
+            {
+              "title": "유니클로 크루넥T 반팔 기본 면 베이직 무지 티셔츠",
+              "link": "https://search.shopping.naver.com/catalog/59776731586",
+              "image": "https://shopping-phinf.pstatic.net/main_5977673/59776731586.20260619172532.jpg",
+              "price": 24980,
+              "brand": "유니클로",
+              "mall": "네이버"
+            }
+          ]
+        }
+      ],
+      "banned": [
+        {
+          "name": "쨍한 원색",
+          "hex": "#e03131",
+          "reason": "크림·잉크 사이에서 소음이 됩니다"
+        },
+        {
+          "name": "네온·형광",
+          "hex": "#82f062",
+          "reason": "당신이 만든 어떤 화면에도 이 색은 없습니다"
+        }
+      ]
+    },
+    "dont": [
+      {
+        "rule": "광택 나는 소재",
+        "reason": "복합성 피부의 광과 싸웁니다 — 무광이 답"
+      },
+      {
+        "rule": "가슴에 큰 로고",
+        "reason": "남의 브랜드를 광고할 시간에 자기 브랜드를 입으세요"
+      },
+      {
+        "rule": "세일이라서 사는 옷",
+        "reason": "기준 없이 산 옷 한 벌이 아침 결정을 하나 늘립니다"
+      }
+    ]
+  },
+  "action": {
+    "wardrobe": {
+      "keep": [
+        "이미 매일 손이 가는 무지 티·다크 팬츠 — 그게 유니폼의 초안입니다"
+      ],
+      "tailor": [
+        "셔츠 소매·팬츠 기장 수선 — 화면 1px 보는 눈으로 옷의 1cm를 보세요"
+      ],
+      "release": [
+        "로고가 주인공인 옷 전부",
+        "최근 1년간 손이 안 간 옷 전부"
+      ]
+    }
+  },
+  "letter": {
+    "body": "새벽까지 화면의 1px을 옮기는 사람이 자기 옷장은 손님처럼 대하는 걸 오래 지켜봤습니다. 이 보고서는 당신이 만든 기계가 당신을 읽은 결과예요. 크림 바탕에 잉크로 쓰고 브론즈로 강조하는 것 — 당신은 자기 팔레트를 이미 매일 보고 있었습니다. 만들어 놓고 몰랐을 뿐이에요. 유니폼이 정해지면 아침이 빨라지고, 릴스 속 당신과 화면 속 vizuden이 같은 톤이 되는 날, 그때부터는 옷이 일을 합니다.",
+    "principle": "고민되면 하나만 물으세요 — 이 옷, 릴스에 나와도 되는가.",
+    "next": "다음 시즌, 유니폼이 잘 작동하는지 다시 봅시다.",
+    "signed": "VIZUDEN 스타일 번역가 — 당신이 만든"
+  },
+  "looks": [
+    {
+      "id": "uniform",
+      "name": "유니폼",
+      "caption": "아침 결정 0초 — 매일 같아서 브랜드가 되는 착장",
+      "items": [
+        {
+          "role": "상의",
+          "name": "크림 옥스포드 셔츠",
+          "title": "무신사스탠다드 오버사이즈 옥스포드 셔츠 MMASLAZ09",
+          "link": "https://search.shopping.naver.com/catalog/59489463963",
+          "image": "https://shopping-phinf.pstatic.net/main_5948946/59489463963.20260704070629.jpg",
+          "price": 33860,
+          "brand": "무신사스탠다드",
+          "mall": "네이버"
+        },
+        {
+          "role": "하의",
+          "name": "차콜 테이퍼드 슬랙스",
+          "title": "지오다노 테이퍼드 이지케어 쿨 슬랙스",
+          "link": "https://search.shopping.naver.com/catalog/59899431660",
+          "image": "https://shopping-phinf.pstatic.net/main_5989943/59899431660.20260628070542.jpg",
+          "price": 18900,
+          "brand": "지오다노",
+          "mall": "네이버"
+        },
+        {
+          "role": "신발",
+          "name": "화이트 미니멀 스니커즈",
+          "title": "반스 어센틱 44dx 에메랄드 그린 드레스 블루 블랙 레드 오렌지 네이비 화이트 페이즐리",
+          "link": "https://smartstore.naver.com/main/products/6035663878",
+          "image": "https://shopping-phinf.pstatic.net/main_8358016/83580163366.11.jpg",
+          "price": 49000,
+          "brand": "반스",
+          "mall": "디거샵"
+        }
+      ]
+    },
+    {
+      "id": "camera",
+      "name": "카메라 앞",
+      "caption": "릴스와 미팅 — 브론즈 악센트를 당신이 입는 날",
+      "items": [
+        {
+          "role": "하의",
+          "name": "블랙 와이드 슬랙스",
+          "title": "후러브스아트 유니섹스 세미 와이드 밴딩 슬랙스",
+          "link": "https://search.shopping.naver.com/catalog/59488130461",
+          "image": "https://shopping-phinf.pstatic.net/main_5948813/59488130461.20260628070556.jpg",
+          "price": 30500,
+          "brand": "후러브스아트",
+          "mall": "네이버"
+        },
+        {
+          "role": "신발",
+          "name": "다크브라운 스웨이드 로퍼",
+          "title": "반스 로퍼 53 스웨이드",
+          "link": "https://search.shopping.naver.com/catalog/59528250035",
+          "image": "https://shopping-phinf.pstatic.net/main_5952825/59528250035.20260621070942.jpg",
+          "price": 65500,
+          "brand": "반스",
+          "mall": "네이버"
+        }
+      ]
+    }
+  ]
+}

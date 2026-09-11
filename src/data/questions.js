@@ -24,7 +24,7 @@ export const questions = [
   },
   {
     id: 3,
-    text: '옷을 입고 나서 "오늘 잘 입었다"고 느낄 때는?',
+    text: '오늘 옷을 잘 입었다고 느낄 때는?',
     optionA: '내가 딱 입고 싶었던 걸 입고 나왔을 때',
     optionB: '그날 만났던 사람들 사이에서 잘 어울렸다고 느낄 때',
     axis: 'motivation',
@@ -43,7 +43,7 @@ export const questions = [
   },
   {
     id: 5,
-    text: '새 스타일을 시도했다가 잘 안 됐을 때 보통 어떻게 되나?',
+    text: '새 스타일을 시도했다가 잘 안 됐을 때 보통 어떻게 하나?',
     optionA: '역시 내 스타일대로 입는 게 낫다고 생각한다',
     optionB: '아쉽지만, 다음엔 다른 걸 또 시도해보고 싶어진다',
     axis: 'orientation',
@@ -108,7 +108,7 @@ export const questions = [
   },
   {
     id: 12,
-    text: '지금 유행하는 스타일이 내 취향과 다를 때 어떻게 되나?',
+    text: '지금 유행하는 스타일이 내 취향과 다를 때 어떻게 하나?',
     optionA: '유행이어도 내 기준에 맞지 않으면 그냥 넘긴다',
     optionB: '한번쯤 시도해본다. 잘 맞으면 내 것으로 만들 수 있으니까',
     axis: 'temporality',

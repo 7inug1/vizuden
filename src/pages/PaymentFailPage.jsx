@@ -13,13 +13,13 @@ export default function PaymentFailPage() {
       navigate(`/prescription/result/${saved.reportId}`, { replace: true });
       return;
     }
-    navigate('/home', { replace: true });
+    navigate('/', { replace: true });
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center px-6" style={{ backgroundColor: '#F5F2ED' }}>
       <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
-        <SiteHeader onLogoClick={() => navigate('/home')} />
+        <SiteHeader onLogoClick={() => navigate('/')} />
         <div className="flex-1 flex flex-col justify-center py-8">
           <p className="text-xs tracking-widest text-stone-400 uppercase mb-6">결제 실패</p>
           <h2 className="text-2xl font-light text-stone-900 leading-snug mb-4"

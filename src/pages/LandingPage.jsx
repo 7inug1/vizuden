@@ -3,10 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SiteHeader from '../components/SiteHeader';
 import RecommendBadge from '../components/RecommendBadge';
-import CoachingModal from '../components/CoachingModal';
 import { typeImages } from '../data/typeImages';
 import { types } from '../data/types';
 import { useReportStatus } from '../hooks/useReportStatus';
+import { useNickname } from '../context/NicknameContext';
+import { NicknameModal } from './HubPage';
+import BetaCodeModal from '../components/BetaCodeModal';
+import TranslatorStartButton from '../components/TranslatorStartButton';
+import { STORAGE_KEYS, getStoredString, setStoredString } from '../lib/storage';
 
 const CHAR_OFFSET = {
   ICEN: { img: { transform: 'translateX(8px)' } },
@@ -31,30 +35,59 @@ const BUTTON_CHARS = ['ICMT', 'RDMT', 'RCET', 'IDET'];
 export default function LandingPage() {
   const navigate = useNavigate();
   const [charIdx, setCharIdx] = useState(0);
-  const [showConsultingModal, setShowConsultingModal] = useState(false);
+  const [showCodeModal, setShowCodeModal] = useState(false);
   const { prescription, dbTypeHistory } = useReportStatus();
+  const { nickname, setNickname } = useNickname();
   const [localTypeDone, setLocalTypeDone] = useState(false);
+  const [localTypeCode, setLocalTypeCode] = useState(null);
+  const [showNickModal, setShowNickModal] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => setCharIdx(i => (i + 1) % BUTTON_CHARS.length), 3000);
     return () => clearInterval(t);
   }, []);
 
+  // 사이트 첫 진입 시 닉네임 소프트 프롬프트 (스킵 가능)
+  useEffect(() => {
+    if (nickname) return;
+    if (getStoredString(STORAGE_KEYS.nicknamePromptVisits) !== null) return;
+    const t = setTimeout(() => setShowNickModal(true), 900);
+    return () => clearTimeout(t);
+  }, [nickname]);
+
+  function handleNickSave(name) {
+    setNickname(name);
+    setStoredString(STORAGE_KEYS.nicknamePromptVisits, '1');
+    setShowNickModal(false);
+  }
+  function handleNickSkip() {
+    setStoredString(STORAGE_KEYS.nicknamePromptVisits, '1');
+    setShowNickModal(false);
+  }
+
   useEffect(() => {
     try {
       const raw = JSON.parse(localStorage.getItem('vizuden_type_history') || '[]');
-      if (Array.isArray(raw) && raw.length > 0) { setLocalTypeDone(true); return; }
+      if (Array.isArray(raw) && raw.length > 0) {
+        setLocalTypeDone(true);
+        setLocalTypeCode(raw[0].code);
+        return;
+      }
       const single = JSON.parse(localStorage.getItem('vizuden_type'));
-      if (single?.code) setLocalTypeDone(true);
+      if (single?.code) {
+        setLocalTypeDone(true);
+        setLocalTypeCode(single.code);
+      }
     } catch {}
   }, []);
 
   const typeDone = localTypeDone || (dbTypeHistory?.length > 0);
+  const typeCode = localTypeCode || dbTypeHistory?.[0]?.code;
   const prescriptionDone = prescription.done;
-  const recommend = !typeDone ? 'type' : !prescriptionDone ? 'prescription' : 'consulting';
+  const recommend = !typeDone ? 'type' : !prescriptionDone ? 'translator' : 'consulting';
 
   const activeCode = BUTTON_CHARS[charIdx];
-  const activeChar = typeImages[activeCode];
+
 
   return (
     <div className="min-h-svh flex flex-col items-center px-6" style={{ backgroundColor: '#F5F2ED' }}>
@@ -116,7 +149,10 @@ export default function LandingPage() {
             <div className="relative">
               {recommend === 'type' && <RecommendBadge />}
               <button
-                onClick={() => navigate('/type/questions')}
+                onClick={() => typeDone && typeCode
+                  ? navigate(`/type/result/${typeCode}`, { state: { fromHistory: true } })
+                  : navigate('/type/questions')
+                }
                 className="w-full px-5 py-5 rounded-3xl bg-white border border-stone-200 text-left transition-all duration-150 active:scale-[0.98] hover:border-stone-300 flex items-center gap-4"
                 style={{ boxShadow: '0 1px 8px 0 rgba(0,0,0,0.06)' }}
               >
@@ -141,127 +177,74 @@ export default function LandingPage() {
                   <p className="text-[10px] tracking-[0.22em] uppercase mb-1.5" style={{ color: 'rgba(28,25,23,0.3)' }}>
                     STYLE TYPE
                   </p>
-                  <p className="text-[18px] font-medium tracking-tight text-stone-800 leading-snug">
-                    스타일 유형 테스트
-                  </p>
-                  <p className="mt-1 text-[12px] text-stone-400 leading-relaxed">
-                    12문항 · 1분 · 16가지 유형
-                  </p>
+                  {typeDone && typeCode ? (
+                    <>
+                      <p className="text-[11px] font-mono text-stone-400 tracking-widest mb-0.5">{typeCode}</p>
+                      <p className="text-[18px] font-medium tracking-tight text-stone-800 leading-snug">
+                        {types[typeCode]?.nameKo ?? '내 유형 보기'}
+                      </p>
+                      <p className="mt-1 text-[12px] text-stone-400 leading-relaxed">결과 보기 →</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-[18px] font-medium tracking-tight text-stone-800 leading-snug">
+                        스타일 유형 진단
+                      </p>
+                      <p className="mt-1 text-[12px] text-stone-400 leading-relaxed">
+                        12문항 · 1분 · 16가지 유형
+                      </p>
+                    </>
+                  )}
                 </div>
               </button>
             </div>
 
-            {/* ② 처방전 — 베이지 */}
+            {/* ② 번역서 — 다크 히어로 */}
             <div className="relative">
-              {recommend === 'prescription' && <RecommendBadge />}
-            <button
-              onClick={() => navigate('/prescription')}
-              className="w-full px-5 py-5 rounded-3xl text-left transition-all duration-150 active:scale-[0.98] flex items-center gap-4"
-              style={{
-                backgroundColor: '#EDE8E1',
-                border: '1px solid #DDD7CE',
-                boxShadow: '0 1px 8px 0 rgba(0,0,0,0.05)',
-              }}
-            >
-              <div className="shrink-0 flex items-center justify-center" style={{ width: 52, height: 60 }}>
-                <div style={{ position: 'relative', width: 38, height: 48, borderRadius: 4 }}>
-                  <div style={{
-                    position: 'absolute', top: 3, left: 3,
-                    width: 35, height: 45, borderRadius: 4,
-                    backgroundColor: '#D6CEC4', border: '1px solid #C0B9AF',
-                  }} />
-                  <div style={{
-                    position: 'absolute', top: 0, left: 0,
-                    width: 35, height: 45, borderRadius: 4,
-                    backgroundColor: '#FAF8F5', border: '1px solid #D0C9BF',
-                    display: 'flex', flexDirection: 'column',
-                    padding: '6px 6px 5px', gap: 3,
-                  }}>
-                    <div style={{
-                      fontFamily: 'Georgia, serif',
-                      fontSize: 10, fontWeight: 600,
-                      color: '#6B5E52', letterSpacing: '0.04em', lineHeight: 1,
-                    }}>Rx</div>
-                    {[100, 72, 88].map((w, i) => (
-                      <div key={i} style={{
-                        height: 2, borderRadius: 2, width: `${w}%`,
-                        backgroundColor: i === 0 ? '#8C7B6E' : '#C8C0B8',
-                      }} />
-                    ))}
-                    <div style={{ height: 1, backgroundColor: '#E0D9D2', marginTop: 1 }} />
-                    {[60, 78].map((w, i) => (
-                      <div key={i} style={{
-                        height: 2, borderRadius: 2, width: `${w}%`,
-                        backgroundColor: '#C8C0B8',
-                      }} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] tracking-[0.22em] uppercase mb-1.5" style={{ color: 'rgba(28,25,23,0.3)' }}>
-                  AI STYLE REPORT
-                </p>
-                <p className="text-[18px] font-medium tracking-tight text-stone-800 leading-snug">
-                  스타일 처방전
-                </p>
-                <p className="mt-1 text-[12px] text-stone-500 leading-relaxed">
-                  설문 기반 AI 진단 보고서 · 약 5분
-                </p>
-              </div>
-            </button>
+              {recommend === 'translator' && <RecommendBadge />}
+              <TranslatorStartButton onClick={() => setShowCodeModal(true)} />
             </div>
 
-            {/* ③ 컨설팅 — 다크 */}
-            <div className="relative">
-              {recommend === 'consulting' && <RecommendBadge />}
-            <button
-              onClick={() => setShowConsultingModal(true)}
-              className="w-full px-5 py-5 rounded-3xl text-left transition-all duration-150 active:scale-[0.98] flex items-center gap-4"
-              style={{
-                backgroundColor: '#3A3028',
-                border: '1px solid #4A3E35',
-                boxShadow: '0 2px 16px 0 rgba(0,0,0,0.2)',
-              }}
-            >
-              <div className="shrink-0 flex items-center justify-center overflow-hidden" style={{ width: 52, height: 60 }}>
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={activeCode}
-                    src={activeChar}
-                    alt=""
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="object-contain object-bottom"
-                    style={{ height: 60, width: 52 }}
-                  />
-                </AnimatePresence>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] tracking-[0.22em] uppercase mb-1.5" style={{ color: 'rgba(240,235,228,0.5)' }}>
-                  1:1 COACHING
-                </p>
-                <p className="text-[18px] font-medium tracking-tight leading-snug" style={{ color: '#F5F0EB' }}>
-                  1:1 스타일 코칭
-                </p>
-                <p className="mt-1 text-[12px] leading-relaxed" style={{ color: 'rgba(240,235,228,0.65)' }}>
-                  처방전 완료 후 신청 가능
-                </p>
-              </div>
-            </button>
+            {/* ③ 1:1 코칭 — 준비 중, 임시 숨김 */}
+
+            {/* 소셜 아이콘 — 중앙정렬 */}
+            <div className="w-full flex justify-center gap-5 pt-3">
+              {[
+                {
+                  href: 'https://instagram.com/vizuden',
+                  icon: (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                      <circle cx="12" cy="12" r="4"/>
+                      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                  ),
+                },
+                {
+                  href: 'https://www.youtube.com/@VIZUDEN',
+                  icon: (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+                      <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/>
+                    </svg>
+                  ),
+                },
+              ].map(({ href, icon }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-150 hover:text-stone-700 active:text-stone-700"
+                  style={{ color: '#78716c' }}
+                >
+                  {icon}
+                </a>
+              ))}
             </div>
 
-            {/* 이메일 로그인 — 텍스트 링크 */}
-            <p className="w-full pt-1 pb-2 text-[12px] text-stone-400 text-center">
-              이미 계정이 있으신가요?{' '}
-              <button
-                onClick={() => navigate('/auth/email')}
-                className="underline underline-offset-2 hover:text-stone-600 transition-colors duration-150 cursor-pointer"
-              >
-                로그인
-              </button>
+            <p className="text-center text-[11px] tracking-widest uppercase pt-2" style={{ color: '#d6d3d1' }}>
+              © {new Date().getFullYear()} VIZUDEN
             </p>
           </div>
         </motion.div>
@@ -269,15 +252,11 @@ export default function LandingPage() {
       </div>
 
       <AnimatePresence>
-        {showConsultingModal && (
-          <CoachingModal
-            onClose={() => setShowConsultingModal(false)}
-            prescriptionDone={prescriptionDone}
-            onNavigate={() => {
-              setShowConsultingModal(false);
-              navigate('/prescription');
-            }}
-          />
+        {showNickModal && (
+          <NicknameModal key="nickname" onSave={handleNickSave} onSkip={handleNickSkip} />
+        )}
+        {showCodeModal && (
+          <BetaCodeModal onClose={() => setShowCodeModal(false)} showSamplesLink />
         )}
       </AnimatePresence>
 

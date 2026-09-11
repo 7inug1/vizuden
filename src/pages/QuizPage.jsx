@@ -53,6 +53,30 @@ export default function QuizPage() {
   if (!sessionIdRef.current) sessionIdRef.current = ensureTrackingSessionId();
 
   useEffect(() => {
+    // localStorage 체크
+    try {
+      const history = JSON.parse(localStorage.getItem('vizuden_type_history') || '[]');
+      const single = JSON.parse(localStorage.getItem('vizuden_type') || 'null');
+      const doneCode = history[0]?.code || single?.code;
+      if (doneCode) {
+        navigate(`/type/result/${doneCode}`, { replace: true, state: { fromHistory: true } });
+        return;
+      }
+    } catch {}
+    // 로그인 상태면 DB도 체크 (새 기기 / 캐시 클리어 대응)
+    if (session?.access_token) {
+      fetch('/api/report-status', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      })
+        .then(r => r.json())
+        .then(data => {
+          const dbCode = data?.typeHistory?.[0]?.code;
+          if (dbCode) {
+            navigate(`/type/result/${dbCode}`, { replace: true, state: { fromHistory: true } });
+          }
+        })
+        .catch(() => {});
+    }
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -94,10 +118,8 @@ export default function QuizPage() {
         const tz = (() => {
           try { return Intl.DateTimeFormat().resolvedOptions().timeZone || null; } catch { return null; }
         })();
-        const newEntry = { code: type, savedAt: Date.now(), timeZone: tz };
+        const newEntry = { code: type, savedAt: Date.now(), timeZone: tz, axisScores };
         localStorage.setItem('vizuden_type', JSON.stringify(newEntry));
-        const prev = JSON.parse(localStorage.getItem('vizuden_type_history') || '[]');
-        localStorage.setItem('vizuden_type_history', JSON.stringify([newEntry, ...prev]));
       } catch {}
       const durationSec = Math.max(0, Math.round((Date.now() - new Date(startedAtRef.current).getTime()) / 1000));
       fetch('/api/type-count', {
@@ -119,7 +141,9 @@ export default function QuizPage() {
           started_at: startedAtRef.current,
         }),
       }).catch(() => {});
-      navigate(`/type/result/${type}`, {
+      // ?s=3122 형식으로 scoreA 인코딩 (I, C, M, T 순, 각 0-3)
+      const scoreParam = axisScores.map(ax => Math.round(ax.scoreA)).join('');
+      navigate(`/type/result/${type}?s=${scoreParam}`, {
         state: {
           axisScores,
           source: location.state?.source || 'direct',
@@ -130,7 +154,7 @@ export default function QuizPage() {
 
   function handleBack() {
     if (currentIndex === 0) {
-      navigate('/home');
+      navigate('/');
       return;
     }
     setDirection(-1);

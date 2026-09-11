@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
     let query = supabase
       .from("consulting_intakes")
-      .select("id, created_at, answers, fit_pics, consents, user_id, guest_session_id")
+      .select("id, created_at, answers, fit_pics, consents, user_id, guest_session_id, review_unlocked, status")
       .order("created_at", { ascending: false });
 
     query = applyConsultingOwnerFilter(query, user, guestSessionId);
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
       items: Array.isArray(data) ? data : [],
     });
   } catch (error) {
-    console.error("consulting-intakes error:", error);
+    console.error("translator-intakes error:", error);
     return res.status(500).json({ error: error?.message || "Server error" });
   }
 }
