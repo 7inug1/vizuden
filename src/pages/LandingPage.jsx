@@ -205,17 +205,39 @@ export default function LandingPage() {
               {/* 코드를 먼저 묻지 않는다. 하루 한도를 넘겼을 때만 제출 단계에서 받는다 */}
               <TranslatorStartButton onClick={() => navigate('/translator/questions')} />
 
-              {/* 설문은 5분이 든다. 그전에 결과물이 어떤지 볼 수 있어야 한다 —
-                  샘플로 가는 길이 베타 코드 모달 안에만 있어서, 막혀야 보였다. */}
+              {/* 설문은 25문항·5분이 든다. 그전에 결과물이 어떤지 볼 수 있어야 한다.
+                  글자 한 줄로는 묻혀서, 실려 있는 인물의 얼굴을 먼저 보여준다. */}
               <button
                 onClick={() => navigate('/translator/samples')}
-                className="w-full mt-2 py-2.5 text-[12.5px] transition-opacity active:opacity-60"
-                style={{ color: 'rgba(58,48,40,0.62)' }}
+                className="w-full mt-2.5 px-4 py-3.5 rounded-2xl flex items-center gap-3
+                           transition-all duration-150 active:scale-[0.98]"
+                style={{ backgroundColor: '#FFFFFF', border: '1px solid #E2DACE' }}
               >
-                먼저 샘플 번역서 보기
-                <span className="ml-1" style={{ color: 'rgba(58,48,40,0.38)' }}>
-                  유태오 · 봉태규 · 스티븐 연 · 손석구
-                </span>
+                <div className="flex shrink-0 items-center">
+                  {['IDMT', 'RDMT', 'ICMT', 'ICMN'].map((code, i) => (
+                    <img
+                      key={code}
+                      src={`/characters/${code}.png`}
+                      alt=""
+                      className="w-8 h-8 object-contain rounded-full"
+                      style={{
+                        backgroundColor: '#F5F2ED',
+                        border: '1.5px solid #FFFFFF',
+                        marginLeft: i === 0 ? 0 : -10,
+                        zIndex: 4 - i,
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="flex-1 min-w-0 text-left">
+                  <p className="text-[13.5px] font-medium" style={{ color: '#2A241E' }}>
+                    샘플 번역서 먼저 보기
+                  </p>
+                  <p className="text-[11px] mt-0.5" style={{ color: 'rgba(58,48,40,0.5)' }}>
+                    유태오 · 봉태규 · 스티븐 연 · 손석구
+                  </p>
+                </div>
+                <span className="shrink-0 text-[15px]" style={{ color: 'rgba(58,48,40,0.35)' }}>→</span>
               </button>
             </div>
 
