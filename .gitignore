@@ -39,3 +39,4 @@ dist/
 
 # 내용이 사라진 껍데기 파일(dataless). 복구 전까지 제외
 supabase-reviews.sql
+.env*
