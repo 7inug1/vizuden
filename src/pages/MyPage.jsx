@@ -113,7 +113,7 @@ export default function MyPage() {
   useEffect(() => {
     let cancelled = false;
     setTranslatorLoaded(false);
-    fetch('/api/translator-intakes', {
+    fetch('/api/translator-intake', {
       headers: {
         ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
         'x-guest-session-id': ensureGuestSessionId(),
