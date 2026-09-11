@@ -661,7 +661,7 @@ export default function TranslatorReportPage() {
     if (!intakeId) return;
     const headers = { 'x-guest-session-id': ensureGuestSessionId() };
     if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`;
-    fetch(`/api/translator-intake-detail?id=${encodeURIComponent(intakeId)}`, { headers })
+    fetch(`/api/translator-intake?id=${encodeURIComponent(intakeId)}`, { headers })
       .then(r => r.json())
       .then(data => {
         const pics = (data?.item?.fit_pics || []).filter(p => p?.signedUrl);

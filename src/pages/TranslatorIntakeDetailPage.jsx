@@ -39,7 +39,7 @@ export default function ConsultingIntakeDetailPage() {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(`/api/translator-intake-detail?id=${encodeURIComponent(intakeId)}`, {
+    fetch(`/api/translator-intake?id=${encodeURIComponent(intakeId)}`, {
       headers: {
         ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
         'x-guest-session-id': ensureGuestSessionId(),
