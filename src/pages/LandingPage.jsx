@@ -202,7 +202,8 @@ export default function LandingPage() {
             {/* ② 번역서 — 다크 히어로 */}
             <div className="relative">
               {recommend === 'translator' && <RecommendBadge />}
-              <TranslatorStartButton onClick={() => setShowCodeModal(true)} />
+              {/* 코드를 먼저 묻지 않는다. 하루 한도를 넘겼을 때만 제출 단계에서 받는다 */}
+              <TranslatorStartButton onClick={() => navigate('/translator/questions')} />
 
               {/* 설문은 5분이 든다. 그전에 결과물이 어떤지 볼 수 있어야 한다 —
                   샘플로 가는 길이 베타 코드 모달 안에만 있어서, 막혀야 보였다. */}
