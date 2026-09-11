@@ -203,6 +203,19 @@ export default function LandingPage() {
             <div className="relative">
               {recommend === 'translator' && <RecommendBadge />}
               <TranslatorStartButton onClick={() => setShowCodeModal(true)} />
+
+              {/* 설문은 5분이 든다. 그전에 결과물이 어떤지 볼 수 있어야 한다 —
+                  샘플로 가는 길이 베타 코드 모달 안에만 있어서, 막혀야 보였다. */}
+              <button
+                onClick={() => navigate('/translator/samples')}
+                className="w-full mt-2 py-2.5 text-[12.5px] transition-opacity active:opacity-60"
+                style={{ color: 'rgba(58,48,40,0.62)' }}
+              >
+                먼저 샘플 번역서 보기
+                <span className="ml-1" style={{ color: 'rgba(58,48,40,0.38)' }}>
+                  유태오 · 봉태규 · 스티븐 연 · 손석구
+                </span>
+              </button>
             </div>
 
             {/* ③ 1:1 코칭 — 준비 중, 임시 숨김 */}
