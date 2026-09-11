@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import html2canvas from 'html2canvas';
 import { Download, Share2 } from 'lucide-react';
 import SiteHeader from '../components/SiteHeader';
+import RecommendBadge from '../components/RecommendBadge';
 import AxisBar from '../components/AxisBar';
 import TypeCodeDisplay from '../components/TypeCodeDisplay';
 import { types } from '../data/types';
@@ -11,44 +12,12 @@ import { typeImages } from '../data/typeImages';
 import { useAuth } from '../context/AuthContext';
 import { useNickname } from '../context/NicknameContext';
 import { useReportStatus } from '../hooks/useReportStatus';
-import PrescriptionSampleCard from '../components/PrescriptionSampleCard';
-import ConsultingBeforeAfterCard from '../components/ConsultingBeforeAfterCard';
+import TranslatorBeforeAfterCard from '../components/TranslatorBeforeAfterCard';
 import { StepNumber } from '../components/ServiceStepChrome';
-import { ensureGuestSessionId, ensureTrackingSessionId } from '../lib/storage';
+import { ensureGuestSessionId, ensureTrackingSessionId, STORAGE_KEYS, getStoredString, setStoredString } from '../lib/storage';
+import { NicknameModal, WelcomeModal } from './HubPage';
 
 const TYPE_RESULT_VERSION = 'type_result.v1';
-
-function RecommendBadge() {
-  return (
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      style={{ position: 'absolute', top: '-12px', right: '12px', zIndex: 1 }}
-    >
-      <div style={{
-        display: 'inline-flex', alignItems: 'center',
-        padding: '3px 10px', border: '1px solid #1c1917',
-        backgroundColor: '#F5F2ED', borderRadius: '999px',
-        fontSize: '10px', letterSpacing: '0.08em', color: '#1c1917', whiteSpace: 'nowrap',
-      }}>
-        추천
-      </div>
-      <div style={{
-        position: 'absolute', bottom: '-6px', right: '20px',
-        width: 0, height: 0,
-        borderLeft: '5px solid transparent', borderRight: '5px solid transparent',
-        borderTop: '6px solid #1c1917',
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '-4px', right: '21px',
-        width: 0, height: 0,
-        borderLeft: '4px solid transparent', borderRight: '4px solid transparent',
-        borderTop: '5px solid #F5F2ED',
-      }} />
-    </motion.div>
-  );
-}
 
 const pageVariants = {
   initial: { opacity: 0, y: 16 },
@@ -60,18 +29,53 @@ export default function ResultPage() {
   const { code } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const cardRef = useRef(null);
   const [shared, setShared] = useState(false);
   const [saving, setSaving] = useState(false);
   const { prescription } = useReportStatus();
   const { session } = useAuth();
 
-  const { axisScores, fromHistory } = location.state ?? {};
+  const { axisScores: stateAxisScores, fromHistory } = location.state ?? {};
+
+  // axisScores 복원 우선순위: state → URL ?s= → localStorage
+  const axisScores = stateAxisScores ?? (() => {
+    // URL ?s=3122 디코딩
+    const s = searchParams.get('s');
+    if (s && /^\d{4}$/.test(s)) {
+      const axes = [
+        { axis: 'motivation',   labelA: 'I', labelB: 'R' },
+        { axis: 'orientation',  labelA: 'C', labelB: 'D' },
+        { axis: 'energy',       labelA: 'M', labelB: 'E' },
+        { axis: 'temporality',  labelA: 'T', labelB: 'N' },
+      ];
+      return axes.map((ax, i) => ({
+        ...ax,
+        scoreA: parseInt(s[i], 10),
+        scoreB: 3 - parseInt(s[i], 10),
+      }));
+    }
+    // localStorage 복원
+    try {
+      const history = JSON.parse(localStorage.getItem('vizuden_type_history') || '[]');
+      const match = history.find(e => e.code === code);
+      if (match?.axisScores) return match.axisScores;
+      const single = JSON.parse(localStorage.getItem('vizuden_type') || 'null');
+      if (single?.code === code && single?.axisScores) return single.axisScores;
+    } catch {}
+    return null;
+  })();
+
   const result = types[code];
-  useNickname();
+  const { nickname, setNickname } = useNickname();
+  const [showNicknameModal, setShowNicknameModal] = useState(false);
+  const [welcomeName, setWelcomeName] = useState('');
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [typeStat, setTypeStat] = useState(null);
+  const [statExpanded, setStatExpanded] = useState(false);
 
   if (!result) {
-    navigate('/home', { replace: true });
+    navigate('/', { replace: true });
     return null;
   }
 
@@ -119,6 +123,32 @@ export default function ResultPage() {
     }).catch(() => {});
   }
 
+  useEffect(() => {
+    const setMeta = (sel, val) => document.querySelector(sel)?.setAttribute('content', val);
+    const ogImage = `https://vizuden.com/api/og-png?type=${code}`;
+    const title = `VIZUDEN — ${result.ko1} ${result.ko2}`;
+    document.title = title;
+    setMeta('meta[property="og:title"]', title);
+    setMeta('meta[property="og:description"]', result.description);
+    setMeta('meta[property="og:image"]', ogImage);
+    setMeta('meta[name="twitter:title"]', title);
+    setMeta('meta[name="twitter:description"]', result.description);
+    setMeta('meta[name="twitter:image"]', ogImage);
+    return () => { document.title = 'VIZUDEN — 스타일 정체성 진단'; };
+  }, [code, result]);
+
+  useEffect(() => {
+    fetch('/api/type-count')
+      .then((r) => r.json())
+      .then(({ count, distribution }) => {
+        if (!count) return;
+        const typeCount = distribution?.[code] ?? 0;
+        const pct = Math.round((typeCount / count) * 100);
+        if (pct > 0) setTypeStat({ pct, total: count, distribution });
+      })
+      .catch(() => {});
+  }, [code]);
+
   const recordedRef = useRef(false);
   useEffect(() => {
     if (recordedRef.current) return;
@@ -131,12 +161,24 @@ export default function ResultPage() {
     });
   }, [fromHistory, code, location.pathname, isSharedView, session?.access_token]);
 
+  // 닉네임 미설정 + 첫 결과 뷰(기록 조회·공유 뷰 제외) → 1.2초 후 모달
+  useEffect(() => {
+    if (isSharedView || fromHistory) return;
+    if (nickname) return;
+    if (getStoredString(STORAGE_KEYS.nicknamePromptVisits) !== null) return;
+    const t = setTimeout(() => setShowNicknameModal(true), 1200);
+    return () => clearTimeout(t);
+  }, [isSharedView, fromHistory, nickname]);
+
   async function handleShare() {
     recordTypeEvent('share_click', { shared_view: isSharedView }, {
       duration_ms: Date.now() - enteredAtRef.current,
       position: 'sticky_share',
     });
-    const url = `${window.location.origin}/type/result/${code}`;
+    const scoreParam = axisScores?.length
+      ? `?s=${axisScores.map(ax => Math.round(ax.scoreA)).join('')}`
+      : searchParams.get('s') ? `?s=${searchParams.get('s')}` : '';
+    const url = `${window.location.origin}/type/result/${code}${scoreParam}`;
     if (navigator.share) {
       try {
         await navigator.share({
@@ -173,6 +215,14 @@ export default function ResultPage() {
         onclone: (clonedDoc) => {
           clonedDoc.querySelectorAll('[data-tooltip-icon]').forEach((el) => {
             el.style.display = 'none';
+          });
+          clonedDoc.querySelectorAll('[data-onboarding-hint]').forEach((el) => {
+            el.style.display = 'none';
+          });
+          clonedDoc.querySelectorAll('p').forEach((el) => {
+            if (el.textContent.trim() === '나는') {
+              el.style.marginBottom = '0';
+            }
           });
           clonedDoc.querySelectorAll('[data-code-box]').forEach((el) => {
             const text = (el.textContent || '').trim();
@@ -222,6 +272,19 @@ export default function ResultPage() {
     }
   }
 
+  function handleNicknameSave(name) {
+    setNickname(name);
+    setStoredString(STORAGE_KEYS.nicknamePromptVisits, '1');
+    setShowNicknameModal(false);
+    setWelcomeName(name);
+    setShowWelcome(true);
+  }
+
+  function handleNicknameSkip() {
+    setStoredString(STORAGE_KEYS.nicknamePromptVisits, '1');
+    setShowNicknameModal(false);
+  }
+
   const year = new Date().getFullYear();
 
   return (
@@ -259,35 +322,35 @@ export default function ResultPage() {
             </div>
           )}
 
-          {/* 유형 이름 */}
-          <div className="mb-3">
-            <p className="text-[10px] tracking-[0.3em] text-stone-400 uppercase mb-1.5">나는</p>
-            <h1
-              className="text-[1.75rem] font-light text-stone-900 leading-[1.2]"
-              style={{ fontFamily: 'Georgia, "Times New Roman", serif', letterSpacing: '-0.01em' }}
-            >
+          {/* 유형 이름 — 모두 inline style (html2canvas Tailwind 클래스 미적용 방지) */}
+          <div style={{ marginBottom: 12 }}>
+            <p style={{ fontSize: 10, letterSpacing: '0.3em', color: '#a8a29e', textTransform: 'uppercase', marginBottom: 3 }}>
+              나는
+            </p>
+            <h1 style={{ fontSize: 28, fontWeight: 300, color: '#1c1917', lineHeight: 1.35, letterSpacing: '-0.01em' }}>
               {result.ko1}
             </h1>
-            <h1
-              className="text-[1.75rem] font-light text-stone-900 leading-[1.2] mb-1.5"
-              style={{ fontFamily: 'Georgia, "Times New Roman", serif', letterSpacing: '-0.01em' }}
-            >
+            <h1 style={{ fontSize: 28, fontWeight: 300, color: '#1c1917', lineHeight: 1.35, letterSpacing: '-0.01em', marginBottom: 4 }}>
               {result.ko2}
             </h1>
-            <p className="text-xs text-stone-400">{result.nameEn}</p>
+            <p style={{ fontSize: 12, color: '#a8a29e', letterSpacing: '0.01em', wordSpacing: '0.1em', lineHeight: 1.4 }}>
+              {result.nameEn}
+            </p>
           </div>
 
-          <div className="border-t border-stone-200 mb-4" />
+          <div style={{ borderTop: '1px solid #e7e5e4', marginBottom: 14 }} />
 
           {/* 유형 코드 + 스타일 DNA */}
-          <div className="mb-4">
-            <p className="text-[10px] tracking-widest text-stone-400 uppercase mb-3">유형 코드</p>
-            <div className="mb-4">
-              <TypeCodeDisplay parts={code.split('')} size="md" />
+          <div style={{ marginBottom: 14 }}>
+            <p style={{ fontSize: 10, letterSpacing: '0.1em', color: '#a8a29e', textTransform: 'uppercase', marginBottom: 10 }}>
+              유형 코드
+            </p>
+            <div style={{ marginBottom: 14 }}>
+              <TypeCodeDisplay parts={code.split('')} size="md" showHint />
             </div>
             {axisScores?.length > 0 && (
               <>
-                <div className="border-t border-stone-200 mb-3" />
+                <div style={{ borderTop: '1px solid #e7e5e4', marginBottom: 10 }} />
                 {axisScores.map((ax) => (
                   <AxisBar key={ax.axis} {...ax} />
                 ))}
@@ -295,7 +358,7 @@ export default function ResultPage() {
             )}
           </div>
 
-          <div className="border-t border-stone-200 mb-4" />
+          <div style={{ borderTop: '1px solid #e7e5e4', marginBottom: 14 }} />
 
           {/* 설명 */}
           <p className="text-sm font-light text-stone-500 leading-relaxed">
@@ -307,6 +370,95 @@ export default function ResultPage() {
           </div>
         </div>
         {/* ===== 캡처 카드 끝 ===== */}
+
+        {/* 유형 비율 — 캡처 영역 밖, 확장 가능 */}
+        {typeStat && (
+          <div className="px-5 pb-3">
+            <button
+              onClick={() => setStatExpanded((v) => !v)}
+              className="w-full text-left transition-colors duration-150"
+              style={{
+                backgroundColor: '#EDE8E1', border: '1px solid #DDD7CE',
+                borderRadius: statExpanded ? '16px 16px 0 0' : 16,
+                padding: '12px 16px',
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <p style={{ fontSize: 14, color: '#1c1917', letterSpacing: '-0.01em' }}>
+                  전체 중{' '}
+                  <span style={{ fontWeight: 600 }}>{typeStat.pct}%</span>
+                  만이{' '}
+                  <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 13 }}>{code}</span>
+                  에 속해요!
+                </p>
+                <svg
+                  width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  style={{ transform: statExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }}
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+            </button>
+
+            {/* 확장 시 전체 유형 비율 */}
+            <AnimatePresence initial={false}>
+              {statExpanded && (
+                <motion.div
+                  key="stat-expanded"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div style={{
+                    backgroundColor: '#EDE8E1', border: '1px solid #DDD7CE',
+                    borderTop: 'none', borderRadius: '0 0 16px 16px',
+                    padding: '8px 16px 14px',
+                  }}>
+                    {Object.entries(typeStat.distribution)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([typeCode, cnt]) => {
+                        const pct = Math.round((cnt / typeStat.total) * 100);
+                        const isCurrent = typeCode === code;
+                        return (
+                          <div key={typeCode} className="flex items-center gap-2 mb-1.5">
+                            <span style={{
+                              fontFamily: 'ui-monospace, monospace', fontSize: 11,
+                              color: isCurrent ? '#1c1917' : '#a8a29e',
+                              fontWeight: isCurrent ? 600 : 400,
+                              width: 36, flexShrink: 0,
+                            }}>
+                              {typeCode}
+                            </span>
+                            <div style={{ flex: 1, height: 4, backgroundColor: '#DDD7CE', borderRadius: 2, overflow: 'hidden' }}>
+                              <div style={{
+                                height: '100%', borderRadius: 2,
+                                backgroundColor: isCurrent ? '#1c1917' : '#C4BDB5',
+                                width: `${pct}%`,
+                                transition: 'width 0.4s ease',
+                              }} />
+                            </div>
+                            <span style={{
+                              fontSize: 11, width: 28, textAlign: 'right', flexShrink: 0,
+                              color: isCurrent ? '#1c1917' : '#a8a29e',
+                              fontWeight: isCurrent ? 600 : 400,
+                            }}>
+                              {pct}%
+                            </span>
+                          </div>
+                        );
+                      })}
+                    <p style={{ fontSize: 10, color: '#c0bab4', marginTop: 8, letterSpacing: '0.02em' }}>
+                      총 {typeStat.total.toLocaleString()}명 기준
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
 
         {/* sticky CTA — 본인 결과 뷰 */}
         {!isSharedView && (
@@ -361,46 +513,8 @@ export default function ResultPage() {
 
         {/* Next Step */}
         {!isSharedView && (
-          <div className="px-7 pt-8 pb-2">
-            <p className="text-[10px] tracking-[0.3em] text-stone-400 uppercase mb-3">다음 단계</p>
-            <div className="mb-6">
-              <div className="mb-4">
-                <StepNumber n={!prescription.done ? '02' : '03'} status="active" />
-              </div>
-              {!prescription.done ? (
-                <>
-                  <p className="text-[10px] tracking-[0.22em] text-stone-400 uppercase mb-2">
-                    Style Prescription
-                  </p>
-                  <h2
-                    className="text-2xl font-light text-stone-900 leading-tight mb-3"
-                    style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
-                  >
-                    스타일 처방전
-                  </h2>
-                  <p className="text-sm text-stone-500 leading-relaxed mb-6" style={{ marginTop: '-0.5rem' }}>
-                    어떤 옷이 나답고, 어떻게 입어야 할지 기준을 정리합니다.
-                  </p>
-                  <PrescriptionSampleCard />
-                </>
-              ) : (
-                <>
-                  <p className="text-[10px] tracking-[0.22em] text-stone-400 uppercase mb-2">
-                    Visual Consulting
-                  </p>
-                  <h2
-                    className="text-2xl font-light text-stone-900 leading-tight mb-3"
-                    style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
-                  >
-                    비주얼 컨설팅
-                  </h2>
-                  <p className="text-sm text-stone-500 leading-relaxed mb-6" style={{ marginTop: '-0.5rem' }}>
-                    스타일 처방전에서 찾은 기준을 바탕으로, 옷장 진단부터 쇼핑과 코디 실행까지 1:1로 함께합니다.
-                  </p>
-                  <ConsultingBeforeAfterCard />
-                </>
-              )}
-            </div>
+          <div className="px-5 pt-8 pb-2">
+            <p className="text-[10px] tracking-[0.3em] text-stone-400 uppercase mb-4 px-1">다음 단계</p>
             {!prescription.done ? (
               <div className="relative">
                 <RecommendBadge />
@@ -410,20 +524,88 @@ export default function ResultPage() {
                       duration_ms: Date.now() - enteredAtRef.current,
                       position: 'next_step',
                     });
-                    navigate('/prescription/questions', { state: { type: code, axisScores } });
+                    navigate('/prescription', { state: { type: code, axisScores } });
                   }}
-                  className="w-full py-4 bg-stone-900 text-stone-50 text-sm tracking-widest uppercase hover:bg-stone-800 transition-colors duration-150"
+                  className="w-full px-5 py-5 rounded-3xl text-left transition-all duration-150 active:scale-[0.98] flex items-center gap-4"
+                  style={{
+                    backgroundColor: '#EDE8E1',
+                    border: '1px solid #DDD7CE',
+                    boxShadow: '0 1px 8px 0 rgba(0,0,0,0.05)',
+                  }}
                 >
-                  처방전 만들기
+                  <div className="shrink-0 flex items-center justify-center" style={{ width: 52, height: 60 }}>
+                    <div style={{ position: 'relative', width: 38, height: 48, borderRadius: 4 }}>
+                      <div style={{
+                        position: 'absolute', top: 3, left: 3,
+                        width: 35, height: 45, borderRadius: 4,
+                        backgroundColor: '#D6CEC4', border: '1px solid #C0B9AF',
+                      }} />
+                      <div style={{
+                        position: 'absolute', top: 0, left: 0,
+                        width: 35, height: 45, borderRadius: 4,
+                        backgroundColor: '#FAF8F5', border: '1px solid #D0C9BF',
+                        display: 'flex', flexDirection: 'column',
+                        padding: '6px 6px 5px', gap: 3,
+                      }}>
+                        <div style={{
+                          fontFamily: 'Georgia, serif',
+                          fontSize: 10, fontWeight: 600,
+                          color: '#6B5E52', letterSpacing: '0.04em', lineHeight: 1,
+                        }}>Rx</div>
+                        {[100, 72, 88].map((w, i) => (
+                          <div key={i} style={{
+                            height: 2, borderRadius: 2, width: `${w}%`,
+                            backgroundColor: i === 0 ? '#8C7B6E' : '#C8C0B8',
+                          }} />
+                        ))}
+                        <div style={{ height: 1, backgroundColor: '#E0D9D2', marginTop: 1 }} />
+                        {[60, 78].map((w, i) => (
+                          <div key={i} style={{
+                            height: 2, borderRadius: 2, width: `${w}%`,
+                            backgroundColor: '#C8C0B8',
+                          }} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] tracking-[0.22em] uppercase mb-1.5" style={{ color: 'rgba(28,25,23,0.3)' }}>
+                      AI STYLE REPORT
+                    </p>
+                    <p className="text-[18px] font-medium tracking-tight text-stone-800 leading-snug">
+                      스타일 처방전
+                    </p>
+                    <p className="mt-1 text-[12px] text-stone-500 leading-relaxed">
+                      설문 기반 AI 진단 보고서 · 약 5분
+                    </p>
+                  </div>
                 </button>
               </div>
             ) : (
-              <button
-                disabled
-                className="w-full py-4 bg-stone-200 text-stone-400 text-sm tracking-widest uppercase cursor-not-allowed"
-              >
-                준비 중
-              </button>
+              <div className="px-1">
+                <div className="mb-4">
+                  <StepNumber n="03" status="active" />
+                </div>
+                <p className="text-[10px] tracking-[0.22em] text-stone-400 uppercase mb-2">
+                  Visual Consulting
+                </p>
+                <h2
+                  className="text-2xl font-light text-stone-900 leading-tight mb-3"
+                  style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
+                >
+                  1:1 스타일 코칭
+                </h2>
+                <p className="text-sm text-stone-500 leading-relaxed mb-6" style={{ marginTop: '-0.5rem' }}>
+                  스타일 처방전에서 찾은 기준을 바탕으로, 옷장 진단부터 쇼핑과 코디 실행까지 1:1로 함께합니다.
+                </p>
+                <TranslatorBeforeAfterCard />
+                <button
+                  disabled
+                  className="w-full mt-6 py-4 bg-stone-200 text-stone-400 text-sm tracking-widest uppercase cursor-not-allowed"
+                >
+                  준비 중
+                </button>
+              </div>
             )}
           </div>
         )}
@@ -433,6 +615,23 @@ export default function ResultPage() {
         </div>
 
       </div>
+
+      <AnimatePresence>
+        {showNicknameModal && (
+          <NicknameModal
+            key="nickname"
+            onSave={handleNicknameSave}
+            onSkip={handleNicknameSkip}
+          />
+        )}
+        {showWelcome && (
+          <WelcomeModal
+            key="welcome"
+            name={welcomeName}
+            onClose={() => setShowWelcome(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

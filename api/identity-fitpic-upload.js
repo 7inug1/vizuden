@@ -6,6 +6,7 @@ const supabase = createClient(
 );
 
 const BUCKET = process.env.SUPABASE_IDENTITY_FITPIC_BUCKET || "identity-fitpics";
+const SUPABASE_URL = process.env.SUPABASE_URL;
 
 function sanitizeSegment(value) {
   return String(value || "")
@@ -34,9 +35,12 @@ export default async function handler(req, res) {
 
       if (error) throw error;
 
+      const signedUrl = `${SUPABASE_URL}/storage/v1/object/upload/sign/${BUCKET}/${path}?token=${encodeURIComponent(data.token)}`;
+
       return {
         path,
         token: data.token,
+        signedUrl,
         contentType,
       };
     }));

@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 import SiteHeader from '../components/SiteHeader';
 import TypeSamplePreview from '../components/TypeSamplePreview';
 import PrescriptionSampleCard from '../components/PrescriptionSampleCard';
-import ConsultingBeforeAfterCard from '../components/ConsultingBeforeAfterCard';
+import TranslatorBeforeAfterCard from '../components/TranslatorBeforeAfterCard';
 import { StepLine, StepNumber } from '../components/ServiceStepChrome';
+import ComingSoonBadge from '../components/ComingSoonBadge';
 import { types } from '../data/types';
 import { useReportStatus } from '../hooks/useReportStatus';
 
@@ -92,7 +93,7 @@ export default function ServicesPage() {
       style={{ backgroundColor: '#F5F2ED' }}
     >
       <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
-        <SiteHeader onLogoClick={() => navigate('/home')} />
+        <SiteHeader onLogoClick={() => navigate('/')} />
 
         <div className="flex-1 flex flex-col py-10">
 
@@ -108,7 +109,7 @@ export default function ServicesPage() {
                 className="text-2xl font-light text-stone-900 leading-tight mb-3"
                 style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
               >
-                스타일 유형 테스트
+                스타일 유형 진단
               </h2>
               <p className="text-sm text-stone-500 leading-relaxed mb-6" style={{ marginTop: '-0.5rem' }}>
                 16가지 유형 중 지금의 나를 가리키는 유형을 찾습니다.
@@ -178,27 +179,25 @@ export default function ServicesPage() {
               <StepNumber n="03" status={consultingStatus} />
             </div>
             <div className="flex-1" style={{ paddingTop: 2 }}>
-              <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">VISUAL CONSULTING</p>
+              <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">1:1 STYLE COACHING</p>
               <h2
                 className="text-2xl font-light text-stone-900 leading-tight mb-3"
                 style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
               >
-                비주얼 컨설팅
+                1:1 스타일 코칭
               </h2>
               <p className="text-sm text-stone-500 leading-relaxed mb-6" style={{ marginTop: '-0.5rem' }}>
                 스타일 처방전에서 찾은 기준을 바탕으로, 옷장 진단부터 쇼핑과 코디 실행까지 1:1로 함께합니다.
               </p>
-              <ConsultingBeforeAfterCard className="mb-6" />
+              <TranslatorBeforeAfterCard className="mb-6" />
               <div className="relative">
                 {recommend === 'consulting' && <RecommendBadge />}
                 <button
-                  onClick={() => !consultingLocked && navigate('/consulting/questions')}
-                  disabled={consultingLocked}
+                  onClick={() => navigate('/services/consulting')}
                   className="w-full py-4 text-sm tracking-widest uppercase transition-colors duration-200
-                    disabled:bg-stone-200 disabled:text-stone-400 disabled:cursor-not-allowed
-                    enabled:bg-stone-900 enabled:text-stone-50 enabled:hover:bg-stone-800 enabled:active:bg-stone-700"
+                    bg-stone-900 text-stone-50 hover:bg-stone-800 active:bg-stone-700"
                 >
-                  {consultingLocked ? '처방전 완료 후 신청 가능' : '신청하기'}
+                  자세히 보기
                 </button>
               </div>
             </div>

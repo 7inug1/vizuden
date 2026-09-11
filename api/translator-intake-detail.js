@@ -66,7 +66,7 @@ export default async function handler(req, res) {
       },
     });
   } catch (error) {
-    console.error("consulting-intake-detail error:", error);
+    console.error("translator-intake-detail error:", error);
     return res.status(500).json({ error: error?.message || "Server error" });
   }
 }

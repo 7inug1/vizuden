@@ -15,7 +15,7 @@ export default function NotFoundPage() {
       style={{ backgroundColor: '#F5F2ED' }}
     >
       <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
-        <SiteHeader onLogoClick={() => navigate('/home')} />
+        <SiteHeader onLogoClick={() => navigate('/')} />
 
         <div className="flex-1 flex flex-col justify-center py-8">
           <p className="text-xs tracking-widest text-stone-400 uppercase mb-6">404</p>
@@ -29,7 +29,7 @@ export default function NotFoundPage() {
             주소가 잘못됐거나 삭제된 페이지입니다.
           </p>
           <button
-            onClick={() => navigate('/home')}
+            onClick={() => navigate('/')}
             className="w-full py-4 bg-stone-900 text-stone-50 text-xs tracking-widest uppercase"
           >
             홈으로

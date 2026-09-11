@@ -27,3 +27,15 @@ dist-ssr
 
 # Internal docs — service strategy, not for public
 docs/
+
+# 내부 문서 — 사업 전략·프롬프트 원본. 공개 저장소에 올리지 않는다
+docs/
+VIZUDEN_*.md
+content/
+*.bak
+
+# 빌드 산출물
+dist/
+
+# 내용이 사라진 껍데기 파일(dataless). 복구 전까지 제외
+supabase-reviews.sql

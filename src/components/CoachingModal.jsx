@@ -54,42 +54,16 @@ export default function CoachingModal({ onClose, prescriptionDone = false, onNav
             1:1 스타일 코칭
           </h2>
           <p className="text-[14px] leading-relaxed mb-6 text-stone-500">
-            옷장 진단부터 실제 쇼핑 코디 실행까지, 스타일 디렉터와 1:1로 함께합니다.
+            스타일 디렉터가 여러분의 삶의 이야기를 토대로<br />스타일로 변환해드립니다.
           </p>
 
-          <div className="flex flex-col gap-3 mb-8">
-            {FEATURES.map(({ icon, label, desc }) => (
-              <div key={label} className="flex items-start gap-3">
-                <span className="text-[18px] mt-0.5">{icon}</span>
-                <div>
-                  <p className="text-[13px] font-medium text-stone-900">{label}</p>
-                  <p className="text-[12px] mt-0.5 text-stone-400">{desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-[11px] leading-relaxed mb-4 text-stone-400">
-            코칭 세션 신청 전 스타일 처방전이 선행돼야 합니다.
-          </p>
-
-          {prescriptionDone ? (
-            <button
-              disabled
-              className="w-full py-4 rounded-2xl text-[14px] font-medium tracking-wide cursor-not-allowed"
-              style={{ backgroundColor: '#e7e5e4', color: '#a8a29e' }}
-            >
-              준비 중
-            </button>
-          ) : (
-            <button
-              onClick={onNavigate}
-              className="w-full py-4 rounded-2xl text-[14px] font-medium tracking-wide transition-all duration-150 active:scale-[0.98]"
-              style={{ backgroundColor: '#1c1917', color: '#F5F2ED' }}
-            >
-              스타일 처방전 먼저 받기
-            </button>
-          )}
+          <button
+            disabled
+            className="w-full py-4 rounded-2xl text-[14px] font-medium tracking-wide cursor-not-allowed"
+            style={{ backgroundColor: '#e7e5e4', color: '#a8a29e' }}
+          >
+            곧 오픈합니다
+          </button>
         </div>
       </motion.div>
     </motion.div>

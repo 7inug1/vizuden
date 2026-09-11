@@ -8,7 +8,8 @@ import {
   getConsentItems,
   getConsultingResponseText,
   getFitPicCount,
-} from '../lib/consultingIntake';
+  getConsultingStatusLabel,
+} from '../lib/translatorIntake';
 
 const pageVariants = {
   initial: { opacity: 0, y: 16 },
@@ -38,7 +39,7 @@ export default function ConsultingIntakeDetailPage() {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(`/api/consulting-intake-detail?id=${encodeURIComponent(intakeId)}`, {
+    fetch(`/api/translator-intake-detail?id=${encodeURIComponent(intakeId)}`, {
       headers: {
         ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
         'x-guest-session-id': ensureGuestSessionId(),
@@ -80,10 +81,10 @@ export default function ConsultingIntakeDetailPage() {
       style={{ backgroundColor: '#F5F2ED' }}
     >
       <div className="w-full max-w-sm flex flex-col" style={{ minHeight: '100svh' }}>
-        <SiteHeader onLogoClick={() => navigate('/home')} />
+        <SiteHeader onLogoClick={() => navigate('/')} />
 
         <div className="flex-1 flex flex-col py-8">
-          <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">03 VISUAL CONSULTING</p>
+          <p className="text-xs tracking-[0.28em] text-stone-400 uppercase mb-5">03 1:1 STYLE COACHING</p>
           <h1
             className="text-2xl font-light text-stone-900 leading-tight mb-3"
             style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.02em' }}
@@ -116,6 +117,10 @@ export default function ConsultingIntakeDetailPage() {
                   <div>
                     <p className="tracking-widest text-stone-300 uppercase mb-1">Consent</p>
                     <p>{consentItems.length ? `${consentItems.length}개 동의` : '없음'}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="tracking-widest text-stone-300 uppercase mb-1">Status</p>
+                    <p>{getConsultingStatusLabel(item?.status)}</p>
                   </div>
                 </div>
               </div>
