@@ -7,7 +7,7 @@ import { typeImages } from '../data/typeImages';
 import { types } from '../data/types';
 import { useReportStatus } from '../hooks/useReportStatus';
 import { useNickname } from '../context/NicknameContext';
-import { NicknameModal } from './HubPage';
+import { NicknameModal } from '../components/AccountModals';
 import BetaCodeModal from '../components/BetaCodeModal';
 import TranslatorStartModal from '../components/TranslatorStartModal';
 import TranslatorStartButton from '../components/TranslatorStartButton';

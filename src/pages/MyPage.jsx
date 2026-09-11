@@ -9,7 +9,7 @@ import { types } from '../data/types';
 import { typeImages } from '../data/typeImages';
 import { useAuth } from '../context/AuthContext';
 import { useNickname } from '../context/NicknameContext';
-import { WelcomeModal } from './HubPage';
+import { WelcomeModal } from '../components/AccountModals';
 import { STORAGE_KEYS, ensureGuestSessionId, getStoredBoolean, setStoredBoolean } from '../lib/storage';
 import { getConsultingPreview } from '../lib/translatorIntake';
 import { isAdminUser } from '../lib/admin';

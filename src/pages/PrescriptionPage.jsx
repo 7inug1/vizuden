@@ -7,7 +7,7 @@ import Tooltip from '../components/Tooltip';
 import { types } from '../data/types';
 import { QUESTIONS, CHAPTERS, PRESCRIPTION_TOTAL } from '../data/prescriptionQuestions';
 import { useNickname } from '../context/NicknameContext';
-import { NicknameModal } from './HubPage';
+import { NicknameModal } from '../components/AccountModals';
 import { useAuth } from '../context/AuthContext';
 import { useReportStatus } from '../hooks/useReportStatus';
 import { ensureGuestSessionId } from '../lib/storage';

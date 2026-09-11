@@ -15,7 +15,7 @@ import { useReportStatus } from '../hooks/useReportStatus';
 import TranslatorBeforeAfterCard from '../components/TranslatorBeforeAfterCard';
 import { StepNumber } from '../components/ServiceStepChrome';
 import { ensureGuestSessionId, ensureTrackingSessionId, STORAGE_KEYS, getStoredString, setStoredString } from '../lib/storage';
-import { NicknameModal, WelcomeModal } from './HubPage';
+import { NicknameModal, WelcomeModal } from '../components/AccountModals';
 
 const TYPE_RESULT_VERSION = 'type_result.v1';
 
