@@ -18,10 +18,13 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Supadata 를 거치지 않는 가벼운 조회로 DB 를 깨운다
+      - name: DB 를 한 번 두드린다
         run: |
+          # 파라미터를 주지 않으면 400 을 돌려주는데, 그 전에 Supabase 에
+          # 접속하므로 깨우는 데는 충분하다. LLM 은 부르지 않아 값이 안 든다.
           code=$(curl -s -o /tmp/out.json -w "%{http_code}" --max-time 60 \
-            https://vizuden.com/api/type-count)
+            https://vizuden.com/api/prescription-full)
           echo "HTTP $code"; cat /tmp/out.json; echo
-          # 실패를 조용히 넘기지 않는다 — 멈춘 것도 모르게 되면 의미가 없다
-          test "$code" = "200"
+          # Supabase 가 멈춰 있으면 5xx 가 온다. 그때만 실패로 본다 —
+          # 조용히 넘기면 멈춘 것도 모르게 된다.
+          case "$code" in 5*|000) echo "DB 가 응답하지 않는다"; exit 1;; esac
