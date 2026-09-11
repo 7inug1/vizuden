@@ -235,7 +235,7 @@ export default function SampleReportPage() {
         )}
 
         {/* 페이월 */}
-        <Paywall onStart={() => setShowCode(true)} />
+        <Paywall onStart={() => navigate('/translator/questions')} />
 
         <div style={{ marginTop: 40 }}>
           <div style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.sub, marginBottom: 10 }}>다른 인물의 번역서</div>

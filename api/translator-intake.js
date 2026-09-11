@@ -14,6 +14,7 @@ import {
   getGuestSessionId,
   supabase,
 } from "./_lib/consultingAccess.js";
+import { DAILY_LIMIT, codeIsValid, ipHash, usedToday } from "./_lib/dailyLimit.js";
 
 const DEFAULT_FITPIC_BUCKET = process.env.SUPABASE_IDENTITY_FITPIC_BUCKET || "identity-fitpics";
 const ADMIN_USER_IDS = new Set(["bb212db4-994c-42b2-951b-c6a860ec09ec"]);
@@ -141,19 +142,20 @@ async function createIntake(req, res) {
     return res.status(401).json({ error: "auth_required" });
   }
 
+  /* 베타 코드를 먼저 묻지 않는다.
+   *
+   *  코드를 가진 사람만 써볼 수 있으면 방문자는 결과물을 볼 수 없다. 대신 같은
+   *  곳에서 하루 DAILY_LIMIT 건까지 열어 두고, 그 위로는 코드를 받는다.
+   *  인테이크 1건이 Claude 호출 1회라 이 숫자가 곧 하루 비용 상한이다. */
+  const hash = ipHash(req);
   if (!devMode) {
-    if (!code || typeof code !== "string") {
-      return res.status(403).json({ error: "code_required" });
-    }
-
-    const { data: codeData, error: codeErr } = await supabase
-      .from("consulting_codes")
-      .select("use_count, max_uses, is_active")
-      .eq("code", code.trim())
-      .maybeSingle();
-
-    if (codeErr || !codeData || !codeData.is_active) {
-      return res.status(403).json({ error: "code_invalid" });
+    const used = await usedToday(supabase, hash);
+    if (used >= DAILY_LIMIT && !(await codeIsValid(supabase, code))) {
+      return res.status(429).json({
+        error: "daily_limit",
+        used,
+        limit: DAILY_LIMIT,
+      });
     }
   }
 
@@ -165,6 +167,7 @@ async function createIntake(req, res) {
       answers,
       fit_pics: fitPics ?? [],
       consents: consents ?? null,
+      ip_hash: hash,
     })
     .select("id")
     .single();
@@ -174,6 +177,7 @@ async function createIntake(req, res) {
     return res.status(500).json({ error: "db error" });
   }
 
+  // 코드를 써서 한도를 넘긴 경우에만 사용 횟수를 올린다
   if (!devMode && code) {
     const { data: codeData } = await supabase
       .from("consulting_codes")
