@@ -4,7 +4,7 @@ import {
   getConsultingPreview,
   getFitPicCount,
   getConsentItems,
-} from './consultingIntake';
+} from './translatorIntake';
 
 describe('consultingIntake helpers', () => {
   describe('getConsultingAnswer', () => {

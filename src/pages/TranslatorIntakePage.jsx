@@ -8,7 +8,7 @@ import { useNickname } from '../context/NicknameContext';
 import { useReportStatus } from '../hooks/useReportStatus';
 import { ensureGuestSessionId } from '../lib/storage';
 import { startStream } from '../lib/translatorReportStream';
-import { NicknameModal } from './HubPage';
+import { NicknameModal } from '../components/AccountModals';
 import {
   QUESTIONS, ORDER, CHAPTERS, COLOR_CHIPS, STYLE_TIPS, BRAND_LIST, OCCUPATION_TAX,
 } from '../data/translatorIntakeQuestions';

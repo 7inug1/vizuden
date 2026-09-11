@@ -5,7 +5,6 @@ import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/AuthContext';
 import { NicknameProvider } from './context/NicknameContext';
 import NoticeBar from './components/NoticeBar';
-import HubPage from './pages/HubPage';
 import AuthPage from './pages/AuthPage';
 import AuthEmailPage from './pages/AuthEmailPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
@@ -17,21 +16,16 @@ import MyPage from './pages/MyPage';
 import NotFoundPage from './pages/NotFoundPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentFailPage from './pages/PaymentFailPage';
-import ServicesPage from './pages/ServicesPage';
 import AboutPage from './pages/AboutPage';
 import TranslatorIntakePage from './pages/TranslatorIntakePage';
 import TranslatorReportPage from './pages/TranslatorReportPage';
 import TranslatorReportV2Demo from './pages/TranslatorReportV2Demo';
-import TranslatorIntakeDetailPage from './pages/TranslatorIntakeDetailPage';
 import AdminPage from './pages/AdminPage';
 import AdminUserPage from './pages/AdminUserPage';
 import AdminPrescriptionPage from './pages/AdminPrescriptionPage';
-import TranslatorDetailPage from './pages/TranslatorDetailPage';
 import SampleReportPage from './pages/SampleReportPage';
 import LandingPage from './pages/LandingPage';
-import TranslatorResultPage from './pages/TranslatorResultPage';
 import TranslatorSamplesPage from './pages/TranslatorSamplesPage';
-import TranslatorPage from './pages/TranslatorPage';
 import FloatingFeedbackButton from './components/FloatingFeedbackButton';
 
 function ScrollToTop() {
@@ -95,7 +89,6 @@ function AnimatedRoutes() {
         <Route path="/translator/report/:intakeId" element={<TranslatorReportPage />} />
         <Route path="/translator/samples" element={<TranslatorSamplesPage />} />
         <Route path="/translator/sample/:personaId" element={<TranslatorSampleRedirect />} />
-        <Route path="/translator/result/:reportId" element={<TranslatorResultPage />} />
         <Route path="/translator/:personaId" element={<SampleReportPage />} />
         <Route path="/translator" element={<Navigate to="/translator/samples" replace />} />
         <Route path="/translators" element={<Navigate to="/translator/samples" replace />} />
