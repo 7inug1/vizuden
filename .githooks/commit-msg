@@ -1,0 +1,3 @@
+#!/bin/sh
+# 커밋 메시지 형식 검사 (scripts/check-commit-msg.mjs). npm install 때 core.hooksPath 로 연결된다.
+exec node "$(git rev-parse --show-toplevel)/scripts/check-commit-msg.mjs" "$1"
