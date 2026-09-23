@@ -1,3 +1,4 @@
+import { saveTranslatorReport } from "./_lib/saveTranslatorReport.js";
 import Anthropic from "@anthropic-ai/sdk";
 import { getAuthenticatedUser, supabase } from "./_lib/auth.js";
 import {
@@ -63,6 +64,7 @@ export default async function handler(req, res) {
   // POST: 보고서 생성 (어드민 전용)
   if (req.method !== "POST") return res.status(405).end();
 
+  let keepalive;
   try {
     const user = await getAuthenticatedUser(req);
     const guestSessionId = (req.headers["x-guest-session-id"] || "").trim() || null;
@@ -180,6 +182,11 @@ export default async function handler(req, res) {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
     res.setHeader("X-Accel-Buffering", "no");
+    // 윤문·저장 동안에는 보낼 데이터가 없고, 화면은 30초 무응답이면 연결을 끊는다.
+    // SSE 주석 줄은 화면 파서가 무시하므로 연결이 살아 있다는 신호로만 쓰인다.
+    keepalive = setInterval(() => {
+      try { res.write(": keepalive\n\n"); } catch { /* 연결이 이미 끊겼으면 보낼 곳이 없다 */ }
+    }, 10000);
 
     let fullText = "";
 
@@ -243,12 +250,7 @@ export default async function handler(req, res) {
 
     // Supabase 저장
     const genAt = new Date().toISOString();
-    const { error: updateError } = await supabase
-      .from("consulting_intakes")
-      .update({ report, report_generated_at: genAt })
-      .eq("id", intakeId);
-
-    if (updateError) console.error("report save error:", updateError);
+    await saveTranslatorReport(supabase, intakeId, report, genAt);
 
     // 실제 발행 순번
     let reportNo = null;
@@ -271,5 +273,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: err?.message || "server_error" });
     }
     try { res.write(`data: ${JSON.stringify({ type: "error", error: err?.message })}\n\n`); res.end(); } catch {}
+  } finally {
+    clearInterval(keepalive);
   }
 }

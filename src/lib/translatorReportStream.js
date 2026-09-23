@@ -152,13 +152,12 @@ export async function startStream(intakeId, session, guestSessionId, nickname) {
   let streamEnded = false;
   let errored = false;
   let productsAcc = {};
-  let lastDataAt = Date.now();
 
   const finalize = () => {
     clearInterval(drip);
     const parsed = tryExtractSections(fullText);
-    // done 이벤트가 왔으면 서버 최종 report, 아니면 스트림에서 파싱한 것으로 마무리
-    setConsultingReportStream({ status: 'done', report: doneReport || parsed, reportNo: doneReportNo, ...parsed });
+    // 서버가 저장 완료를 확인한 최종 결과만 완료로 표시
+    setConsultingReportStream({ status: 'done', report: doneReport, reportNo: doneReportNo, ...parsed });
   };
 
   const drip = setInterval(() => {
@@ -171,10 +170,6 @@ export async function startStream(intakeId, session, guestSessionId, nickname) {
       if (Object.keys(sections).length > 0) setConsultingReportStream(sections);
     } else if (streamEnded) {
       finalize();
-    } else {
-      // watchdog — closing 본문까지 다 왔는데 done이 10초 넘게 안 오면(모바일 연결 끊김 등) 강제 마무리
-      const done = tryExtractSections(fullText);
-      if (done.closing?.body && Date.now() - lastDataAt > 10000) finalize();
     }
   }, 50);
 
@@ -210,38 +205,30 @@ export async function startStream(intakeId, session, guestSessionId, nickname) {
       buffer = lines.pop() ?? '';
       for (const line of lines) {
         if (!line.startsWith('data: ')) continue;
-        try {
-          const event = JSON.parse(line.slice(6));
-          lastDataAt = Date.now();
-          if (event.type === 'delta') {
-            fullText += event.text;
-          } else if (event.type === 'products') {
-            productsAcc = { ...productsAcc, ...event.products };
-            setConsultingReportStream({ products: productsAcc });
-          } else if (event.type === 'done') {
-            doneReport = event.report;
-            doneReportNo = event.reportNo ?? null;
-            streamEnded = true;
-          } else if (event.type === 'error') {
-            throw new Error(event.error ?? 'stream error');
+        let event;
+        try { event = JSON.parse(line.slice(6)); }
+        catch { continue; } // 손상된 JSON만 건너뛴다. 서버 오류는 아래에서 처리한다.
+        if (event.type === 'delta') {
+          fullText += event.text;
+        } else if (event.type === 'products') {
+          productsAcc = { ...productsAcc, ...event.products };
+          setConsultingReportStream({ products: productsAcc });
+        } else if (event.type === 'done') {
+          if (!event.report || typeof event.report !== 'object' || Array.isArray(event.report)) {
+            throw new Error('invalid final report');
           }
-        } catch (e) {
-          // server error 이벤트만 재throw; JSON 파싱 실패(불완전 라인·malformed done)는 skip
-          if (e.message && !e.message.startsWith('stream error')) continue;
-          throw e;
+          doneReport = event.report;
+          doneReportNo = event.reportNo ?? null;
+          streamEnded = true;
+          await reader.cancel().catch(() => {}); // 저장은 이미 확인됨. 연결 정리 실패로 오류 처리하지 않는다.
+          return;
+        } else if (event.type === 'error') {
+          throw new Error(event.error || 'stream error');
         }
       }
     }
-    streamEnded = true; // done 이벤트 유실 대비
+    throw new Error("저장 완료를 확인하지 못했습니다. 페이지를 다시 열어 확인해 주세요.");
   } catch (err) {
-    // closing 본문까지 수신됐으면 에러 대신 정상 마무리 (read timeout·연결 끊김·malformed JSON 공통)
-    try {
-      const parsed = tryExtractSections(fullText);
-      if (parsed.closing?.body) {
-        streamEnded = true; // drip watchdog이 finalize
-        return;
-      }
-    } catch {}
     console.error('translator report stream error:', err);
     errored = true;
     clearInterval(drip);
