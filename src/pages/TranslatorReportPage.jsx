@@ -694,7 +694,9 @@ export default function TranslatorReportPage() {
 
   // 현재 표시할 보고서 데이터
   const isStreaming = isThisStream && stream.status === 'streaming';
-  const reportData = isThisStream ? {
+  // 생성 중에는 받은 조각을, 완료 후에는 서버가 저장을 확인한 최종본(윤문 반영)을 그린다.
+  // 그래야 완료 직후 화면과 나중에 다시 연 화면이 같다.
+  const reportData = isStreaming ? {
     subtitle: stream.subtitle,
     translation: stream.translation,
     mirror: stream.mirror,
@@ -707,7 +709,7 @@ export default function TranslatorReportPage() {
     plan: stream.plan,
     closing: stream.closing,
     products: stream.products ?? stream.report?.products,
-  } : storedReport;
+  } : isThisStream ? stream.report : storedReport;
 
   const hasAnySection = reportData && Object.values(reportData).some(v => v !== undefined && v !== null);
 
