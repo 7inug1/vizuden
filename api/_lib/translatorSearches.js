@@ -74,7 +74,8 @@ export async function searchNaverProducts(term, maxPrice = 300000) {
       brand: it.brand || null,
     }));
     const inRange = mapped.filter((p) => p.price && p.price >= 5000 && p.price <= maxPrice);
-    const pool = inRange.length ? inRange : mapped.filter((p) => p.price && p.price >= 5000);
+    // 상한 내 상품이 없으면 빈 결과를 반환한다. 초과 상품으로 대체하지 않는다.
+    const pool = inRange;
     // 브랜드 등록 상품 우선 (스마트스토어 잡화 밀어내기) — 그룹 내에서는 정확도순 유지
     const sorted = [...pool].sort((a, b) => (b.brand ? 1 : 0) - (a.brand ? 1 : 0));
     return sorted.slice(0, 3);
