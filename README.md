@@ -30,7 +30,7 @@ npm run dev
 
 **현재 Vite 개발 서버는 `/api` 요청을 기본적으로 운영 서비스로 전달합니다.** 로컬 API를 사용하려면 별도로 API 서버를 실행하고 `VITE_API_TARGET`을 해당 주소로 지정하세요.
 
-서버 API에는 `ANTHROPIC_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`가 필요합니다. 검색 연동에는 `TAVILY_API_KEY`, `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`을 사용합니다. 실제 키는 커밋하지 않습니다.
+서버 API에는 `ANTHROPIC_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`가 필요합니다. 검색 연동에는 `TAVILY_API_KEY`를 사용합니다. 실제 키는 커밋하지 않습니다.
 
 ## 빌드
 
