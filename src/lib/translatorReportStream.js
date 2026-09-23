@@ -151,7 +151,6 @@ export async function startStream(intakeId, session, guestSessionId, nickname) {
   let doneReportNo = null;
   let streamEnded = false;
   let errored = false;
-  let productsAcc = {};
 
   const finalize = () => {
     clearInterval(drip);
@@ -210,9 +209,6 @@ export async function startStream(intakeId, session, guestSessionId, nickname) {
         catch { continue; } // 손상된 JSON만 건너뛴다. 서버 오류는 아래에서 처리한다.
         if (event.type === 'delta') {
           fullText += event.text;
-        } else if (event.type === 'products') {
-          productsAcc = { ...productsAcc, ...event.products };
-          setConsultingReportStream({ products: productsAcc });
         } else if (event.type === 'done') {
           if (!event.report || typeof event.report !== 'object' || Array.isArray(event.report)) {
             throw new Error('invalid final report');

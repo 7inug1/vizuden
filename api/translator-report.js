@@ -4,11 +4,9 @@ import { getAuthenticatedUser, supabase } from "./_lib/auth.js";
 import {
   SYSTEM_PROMPT, buildAnswerText,
   extractReferencePerson, extractStyleHint,
-  parseBudgetFromAnswers, itemPriceCap,
 } from "./_lib/translatorPrompt.js";
 import {
   searchReferenceStyle, searchCurrentWeatherContext, searchEditorialTrends,
-  searchNaverProducts, extractProductTerms, enrichWithProducts,
 } from "./_lib/translatorSearches.js";
 import { humanizeReport } from "./_lib/translatorHumanize.js";
 
@@ -190,30 +188,6 @@ export default async function handler(req, res) {
 
     let fullText = "";
 
-    // 실시간 상품 resolve — 스트림 중간에 완성된 검색어를 감지해 즉시 네이버 조회 후 push
-    const budget = parseBudgetFromAnswers(answers);
-    const priceCap = itemPriceCap(budget);
-    const productMap = {};
-    const seenTerms = new Set();
-    const productJobs = [];
-    let streamOpen = true;
-    let lastScan = 0;
-    const scanAndResolve = () => {
-      for (const term of extractProductTerms(fullText)) {
-        if (seenTerms.has(term) || seenTerms.size >= 14) continue;
-        seenTerms.add(term);
-        productJobs.push(
-          searchNaverProducts(term, priceCap).then((items) => {
-            if (!items?.length) return;
-            productMap[term] = items;
-            if (streamOpen) {
-              try { res.write(`data: ${JSON.stringify({ type: "products", products: { [term]: items } })}\n\n`); } catch {}
-            }
-          }).catch(() => {})
-        );
-      }
-    };
-
     // 1단계: Sonnet으로 보고서 생성
     const stream = anthropic.messages.stream({
       model: "claude-sonnet-4-6",
@@ -227,23 +201,14 @@ export default async function handler(req, res) {
         const text = event.delta.text;
         fullText += text;
         res.write(`data: ${JSON.stringify({ type: "delta", text })}\n\n`);
-        if (Date.now() - lastScan > 1200) { lastScan = Date.now(); scanAndResolve(); }
       }
     }
-    scanAndResolve(); // 마지막 스캔
 
     const rawReport = parseJson(fullText);
 
     // 2단계: 한국어 어투 자동 윤문
     res.write(`data: ${JSON.stringify({ type: "status", message: "윤문 중…" })}\n\n`);
     const report = await humanizeReport(rawReport);
-
-    // 3단계: 남은 검색어 resolve 후 스트리밍 중 만든 상품 맵과 병합
-    try {
-      await Promise.all(productJobs);
-      await enrichWithProducts(report, budget, productMap);
-    } catch (e) { console.error("product enrich error:", e); }
-    streamOpen = false;
 
     // 닉네임을 리포트에 저장 — 공유 링크(다른 브라우저)에서도 제목에 이름이 뜨도록
     if (nickname && String(nickname).trim()) report.nickname = String(nickname).trim();

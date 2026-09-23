@@ -209,25 +209,6 @@ export function extractStyleHint(answers) {
   return String(val || '').slice(0, 40);
 }
 
-
-// 설문 답변에서 예산 파싱 → 단일 아이템 가격 상한 산출
-export function parseBudgetFromAnswers(answers) {
-  const q = (answers || []).find((a) => a?.id === "budget" || (a?.question || "").includes("예산"));
-  const s = String(q?.answer || (Array.isArray(q?.selected) ? q.selected[0] : "") || "");
-  const range = s.match(/(\d+)\s*(?:만원?)?\s*[~～–-]\s*(\d+)\s*만/);
-  if (range) return Math.round((Number(range[1]) + Number(range[2])) * 5000);
-  const nums = [...s.matchAll(/(\d+)\s*만/g)].map((m) => Number(m[1]) * 10000);
-  if (nums.length >= 2) return Math.round((nums[0] + nums[1]) / 2);
-  if (nums.length === 1) return /미만|이하/.test(s) ? Math.round(nums[0] * 0.8) : nums[0];
-  return 300000;
-}
-export function itemPriceCap(budget) {
-  return Math.min(budget, Math.max(80000, Math.round(budget * 0.5)));
-}
-
-// 스트림 텍스트에서 완성된 상품 검색어 추출 (search 필드 + shop_items 배열)
-
-
 export function buildAnswerText(answers = []) {
   if (!Array.isArray(answers)) return "";
   return answers
