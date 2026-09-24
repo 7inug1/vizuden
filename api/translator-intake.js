@@ -129,7 +129,7 @@ async function createIntake(req, res) {
   }
 
   // 인테이크 제출
-  const { answers, fitPics, code, consents, devMode } = body;
+  const { answers, fitPics, code, consents } = body;
 
   if (!Array.isArray(answers) || answers.length === 0) {
     return res.status(400).json({ error: "answers required" });
@@ -145,18 +145,16 @@ async function createIntake(req, res) {
   /* 베타 코드를 먼저 묻지 않는다.
    *
    *  코드를 가진 사람만 써볼 수 있으면 방문자는 결과물을 볼 수 없다. 대신 같은
-   *  곳에서 하루 DAILY_LIMIT 건까지 열어 두고, 그 위로는 코드를 받는다.
-   *  인테이크 1건이 Claude 호출 1회라 이 숫자가 곧 하루 비용 상한이다. */
+   *  곳에서 최근 24시간 DAILY_LIMIT 건까지 열어 두고, 그 위로는 코드를 받는다.
+   *  개발 화면에서 보낸 값으로 서버의 한도 검사를 건너뛰지 않는다. */
   const hash = ipHash(req);
-  if (!devMode) {
-    const used = await usedToday(supabase, hash);
-    if (used >= DAILY_LIMIT && !(await codeIsValid(supabase, code))) {
-      return res.status(429).json({
-        error: "daily_limit",
-        used,
-        limit: DAILY_LIMIT,
-      });
-    }
+  const used = await usedToday(supabase, hash);
+  if (used >= DAILY_LIMIT && !(await codeIsValid(supabase, code))) {
+    return res.status(429).json({
+      error: "daily_limit",
+      used,
+      limit: DAILY_LIMIT,
+    });
   }
 
   const { data, error } = await supabase
@@ -178,7 +176,7 @@ async function createIntake(req, res) {
   }
 
   // 코드를 써서 한도를 넘긴 경우에만 사용 횟수를 올린다
-  if (!devMode && code) {
+  if (code) {
     const { data: codeData } = await supabase
       .from("consulting_codes")
       .select("use_count")

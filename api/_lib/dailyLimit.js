@@ -1,15 +1,9 @@
 import crypto from "node:crypto";
 
-/** 하루에 몇 건까지 허용할지.
- *
- *  인테이크 1건이 보고서 1건이고, 보고서 1건이 Claude 호출 1회다
- *  (translator-report 에 멱등 가드가 있어 다시 열어도 재생성하지 않는다).
- *  그래서 여기서 세면 값이 잡힌다.
- *
- *  베타 코드는 이 한도를 넘기는 열쇠로만 남긴다 — 코드가 없어도 하루 몇 번은
- *  써볼 수 있어야 방문자가 결과물을 확인할 수 있다.
- */
-export const DAILY_LIMIT = Number(process.env.TRANSLATOR_DAILY_LIMIT ?? 3);
+/** 베타 코드 없이 제출할 수 있는 최근 24시간 인테이크 수. */
+const configuredLimit = process.env.TRANSLATOR_DAILY_LIMIT?.trim();
+const parsedLimit = configuredLimit ? Number(configuredLimit) : 3;
+export const DAILY_LIMIT = Number.isSafeInteger(parsedLimit) && parsedLimit >= 0 ? parsedLimit : 3;
 
 /** 요청한 곳을 해시로 남긴다. 원본 IP 는 저장하지 않는다 —
  *  세는 데는 해시로 충분하고, 남겨 두면 지킬 것이 늘어난다. */
