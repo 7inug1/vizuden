@@ -750,7 +750,7 @@ export default function TranslatorIntakePage() {
   const storedCode = (() => { try { return sessionStorage.getItem('vizuden_translator_access_code') || ''; } catch { return ''; } })();
   const initialCode = urlCode || storedCode;
   if (urlCode) { try { sessionStorage.setItem('vizuden_translator_access_code', urlCode); } catch {} }
-  const [phase, setPhase] = useState(initialCode ? 'check' : 'code');
+  const [phase, setPhase] = useState(initialCode ? 'check' : 'questions');
   const [accessCode, setAccessCode] = useState(initialCode);
   const [codeError, setCodeError] = useState('');
   const [codeLoading, setCodeLoading] = useState(false);
@@ -917,9 +917,8 @@ export default function TranslatorIntakePage() {
         body: JSON.stringify({
           answers: formattedAnswers,
           fitPics: uploadedFitPics,
-          code: isDev ? 'DEV' : accessCode.trim(),
+          code: accessCode.trim(),
           prescriptionReportId: isDev ? null : (prescription.reportId || null),
-          devMode: isDev,
         }),
       });
 
