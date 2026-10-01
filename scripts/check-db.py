@@ -13,7 +13,7 @@ def main():
         return 1
     request = urllib.request.Request(
         url + "/rest/v1/reports?select=id&limit=1",
-        method="HEAD",
+        method="GET",
         headers={"apikey": key, "Authorization": "Bearer " + key},
     )
     try:
