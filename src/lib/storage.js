@@ -5,7 +5,6 @@ export const STORAGE_KEYS = {
   guestMode: 'vizuden_guest_mode',
   nickname: 'vizuden_nickname',
   nicknamePromptVisits: 'vizuden_home_visits_without_nickname',
-  noticeDismissed: 'vizuden_notice_dismissed_v2',
   onboardingDone: 'vizuden_onboarding_done',
   prescriptionAccessCode: 'vizuden_access_code',
   trackingSessionId: 'vizuden_tracking_session_id',
