@@ -40,3 +40,7 @@ dist/
 # 내용이 사라진 껍데기 파일(dataless). 복구 전까지 제외
 supabase-reviews.sql
 .env*
+
+# 코칭 보고서 입력·결과(개인 정보)
+scripts/coaching-report-input*.json
+scripts/coaching-report-*.md
