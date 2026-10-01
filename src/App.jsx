@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/AuthContext';
 import { NicknameProvider } from './context/NicknameContext';
-import NoticeBar from './components/NoticeBar';
 import AuthPage from './pages/AuthPage';
 import AuthEmailPage from './pages/AuthEmailPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
@@ -118,8 +117,6 @@ export default function App() {
       <AuthProvider>
         <NicknameProvider>
           <ScrollToTop />
-          {/* NoticeBar — 풀 스크린 너비 */}
-          <NoticeBar />
           {/* 콘텐츠 컨테이너 — 모바일/태블릿/데스크탑 중앙 정렬 */}
           <div style={{ maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
             <AnimatedRoutes />
